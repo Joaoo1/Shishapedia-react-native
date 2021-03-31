@@ -6,14 +6,15 @@ const styles = StyleSheet.create({
   container: {
     padding: metrics.screenHorizontalPadding,
     backgroundColor: '#fff',
+    flex: 1,
   },
   headerContainer: {
     alignItems: 'center',
   },
   logo: {
     paddingTop: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     paddingBottom: 5,
     backgroundColor: colors.primaryColor,
     marginBottom: 20,
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.regularSize,
     textAlign: 'justify',
     color: colors.text,
+    marginTop: 20,
   },
   loading: {
     position: 'absolute',

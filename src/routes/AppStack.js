@@ -17,6 +17,7 @@ import Login from '../pages/Login';
 import CreateUser from '../pages/CreateUser';
 import SearchMixes from '../pages/SearchMixes';
 import ForgotPassword from '../pages/ForgotPassword';
+import CreateMix from '../pages/CreateMix';
 
 const { Navigator, Screen } = createStackNavigator();
 const Routes = () => {
@@ -47,6 +48,7 @@ const Routes = () => {
       <Screen name="SearchMixes" component={SearchMixes} />
       <Screen name="ForgotPassword" component={ForgotPassword} />
       <Screen name="NotificationInfo" component={NotificationInfo} />
+      <Screen name="CreateMix" component={CreateMix} />
     </Navigator>
   );
 };

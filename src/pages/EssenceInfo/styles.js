@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     paddingHorizontal: metrics.screenHorizontalPadding + 10,
     paddingTop: 30,
+    marginBottom: 80,
   },
   infoHeader: {
     flexDirection: 'row',

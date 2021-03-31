@@ -53,7 +53,7 @@ const SearchMixes = () => {
 
   return (
     <>
-      <PageHeader title="Essências" backButton />
+      <PageHeader title="Buscar mixes" backButton />
       <SafeAreaView style={styles.container}>
         <ActivityIndicator
           style={styles.loading}

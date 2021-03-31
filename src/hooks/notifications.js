@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useState,
-  useContext,
-  useEffect,
-} from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
 
 import { useAuth } from './auth';

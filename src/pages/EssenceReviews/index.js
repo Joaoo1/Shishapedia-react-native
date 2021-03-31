@@ -7,6 +7,7 @@ import {
   TextInput,
   ToastAndroid,
   ActivityIndicator,
+  LogBox,
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -20,7 +21,11 @@ import Star from '../../assets/icons/Star';
 import { colors } from '../../styles';
 import styles from './styles';
 
-const EssenceReviews = ({ route }) => {
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
+const EssenceReviews = ({ route, navigation: { setParams } }) => {
   const { user } = useAuth();
 
   const [isLoading, setLoading] = useState(true);
@@ -29,7 +34,7 @@ const EssenceReviews = ({ route }) => {
   const [averageRating, setAverageRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const { essence } = route.params;
+  const { essence, onSendReview } = route.params;
 
   async function fetchReviews() {
     try {
@@ -73,6 +78,7 @@ const EssenceReviews = ({ route }) => {
       setRating(0);
       fetchReviews();
       ToastAndroid.show('Publicado com sucesso!', ToastAndroid.SHORT);
+      onSendReview();
     } catch (err) {
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
@@ -157,7 +163,7 @@ const EssenceReviews = ({ route }) => {
               </Text>
             ) : (
               reviews.map((review) => (
-                <View style={styles.review} key={review.id}>
+                <View style={styles.review} key={`${review.id}a`}>
                   <Text style={styles.reviewAuthor}>{review.user.name}</Text>
                   <View style={styles.reviewRatingContainer}>
                     {[...Array(review.rating)].map(() => (

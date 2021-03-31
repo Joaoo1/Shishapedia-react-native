@@ -8,13 +8,15 @@ import { colors } from '../../styles';
 const propTypes = {
   title: PropTypes.string.isRequired,
   onSave: PropTypes.func,
+  saveButtonText: PropTypes.string,
 };
 
 const defaultProps = {
   onSave: null,
+  saveButtonText: 'SALVAR',
 };
 
-const DrawerPageHeader = ({ title, onSave, navigation }) => {
+const DrawerPageHeader = ({ title, onSave, navigation, saveButtonText }) => {
   function handleBackPress() {
     navigation.goBack();
   }
@@ -36,7 +38,7 @@ const DrawerPageHeader = ({ title, onSave, navigation }) => {
       <View style={styles.rightIconContainer}>
         {onSave && (
           <Text style={styles.save} onPress={handleSavePress}>
-            SALVAR
+            {saveButtonText}
           </Text>
         )}
       </View>

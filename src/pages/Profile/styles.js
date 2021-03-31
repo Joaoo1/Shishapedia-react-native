@@ -57,6 +57,13 @@ const styles = StyleSheet.create({
     marginLeft: '37%',
     zIndex: 1,
   },
+  deleteUserText: {
+    fontFamily: fonts.light,
+    fontSize: fonts.regularSize,
+    color: 'red',
+    textDecorationLine: 'underline',
+    marginTop: 30,
+  },
 });
 
 export default styles;

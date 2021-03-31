@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { View, Image, Text, SafeAreaView, ToastAndroid } from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  SafeAreaView,
+  ToastAndroid,
+  ScrollView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { useAuth } from '../../hooks/auth';
@@ -47,8 +54,16 @@ const EssenceInfo = ({ navigation, route }) => {
     fetchFavorite();
   }, []);
 
+  async function fetchReviews() {
+    const response = await api.get(`/essence/${essence.id}/reviews`);
+    setEssence({ ...essence, averageRating: response.data.averageRating });
+  }
+
   function handleNavigateToReviews() {
-    navigation.navigate('EssenceReviews', { essence });
+    navigation.navigate('EssenceReviews', {
+      essence,
+      onSendReview: fetchReviews,
+    });
   }
 
   async function handleFavoriteButtonPress() {
@@ -98,47 +113,51 @@ const EssenceInfo = ({ navigation, route }) => {
     <>
       <PageHeader backButton title="Informações" notifications={false} />
       <SafeAreaView style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={essence.image && { uri: essence.image.url }}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.infoHeader}>
-            <Text style={styles.essenceName}>{essence.name}</Text>
-            <View onTouchStart={handleFavoriteButtonPress}>
-              <FavoriteIcon
-                enabled={isFavorite != null}
-                active={isFavorite}
-                size={32}
-              />
+        <ScrollView>
+          <View style={styles.imageContainer}>
+            <Image
+              source={essence.image && { uri: essence.image.url }}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.infoContainer}>
+            <View style={styles.infoHeader}>
+              <Text style={styles.essenceName}>{essence.name}</Text>
+              <View onTouchStart={handleFavoriteButtonPress}>
+                <FavoriteIcon
+                  enabled={isFavorite != null}
+                  active={isFavorite}
+                  size={32}
+                />
+              </View>
             </View>
+            <View
+              style={styles.ratesContainer}
+              onTouchStart={handleNavigateToReviews}
+            >
+              <Icon name="star" color="#FFDD55" size={14} />
+              <Text style={styles.rate}>{essence.averageRating}</Text>
+              <Text style={styles.reviews}>
+                {`${essence.reviews} Avaliações`}
+              </Text>
+            </View>
+            {essence.proposal && (
+              <Text style={styles.boldText}>
+                {'Proposta: '}
+                <Text style={styles.descriptionText}>{essence.proposal}</Text>
+              </Text>
+            )}
+            {essence.release_date !== null && (
+              <Text style={styles.boldText}>
+                {'Data da lançamento: '}
+                <Text style={styles.descriptionText}>
+                  {essence.release_date}
+                </Text>
+              </Text>
+            )}
+            <Text style={styles.descriptionText}>{essence.description}</Text>
           </View>
-          <View
-            style={styles.ratesContainer}
-            onTouchStart={handleNavigateToReviews}
-          >
-            <Icon name="star" color="#FFDD55" size={14} />
-            <Text style={styles.rate}>{essence.averageRating}</Text>
-            <Text style={styles.reviews}>
-              {`${essence.reviews} Avaliações`}
-            </Text>
-          </View>
-          <Text style={styles.descriptionText}>{essence.description}</Text>
-          {essence.proposal && (
-            <Text style={styles.boldText}>
-              {'Proposta: '}
-              <Text style={styles.descriptionText}>{essence.proposal}</Text>
-            </Text>
-          )}
-          {essence.release_date !== null && (
-            <Text style={styles.boldText}>
-              {'Data da lançamento: '}
-              <Text style={styles.descriptionText}>{essence.release_date}</Text>
-            </Text>
-          )}
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </>
   );

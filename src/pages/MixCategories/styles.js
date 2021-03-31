@@ -21,6 +21,26 @@ const styles = StyleSheet.create({
     marginLeft: '37%',
     zIndex: 1000,
   },
+  floatingButton: {
+    borderRadius: 25,
+    width: 50,
+    height: 50,
+    backgroundColor: colors.accentColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+
+    alignSelf: 'flex-end',
+    marginRight: 20,
+    marginBottom: 20,
+  },
 });
 
 export default styles;

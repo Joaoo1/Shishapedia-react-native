@@ -10,6 +10,7 @@ const News = ({ navigation }) => (
   <>
     <PageHeader title="Notícias" drawerNavigation={navigation} />
     <SafeAreaView style={styles.container}>
+      <Text style={styles.headline}>Ops...</Text>
       <Text style={styles.text}>
         Seção de notícias ainda não está disponível
       </Text>

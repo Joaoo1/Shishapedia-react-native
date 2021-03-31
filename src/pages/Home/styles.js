@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     paddingHorizontal: metrics.screenHorizontalPadding,
-    height: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    height: '100%',
+    marginTop: -30,
   },
   baseButton: {
     minWidth: '40%',

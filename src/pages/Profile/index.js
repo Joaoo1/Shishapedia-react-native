@@ -4,7 +4,9 @@ import {
   ScrollView,
   ToastAndroid,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RectButton } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
@@ -21,7 +23,8 @@ import { useAuth } from '../../hooks/auth';
 
 const Profile = ({ navigation }) => {
   const formRef = useRef(null);
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const { goBack } = useNavigation();
 
   const passwordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
@@ -76,7 +79,7 @@ const Profile = ({ navigation }) => {
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       } else {
-        ToastAndroid.show('Erro ao atualizar usúario');
+        ToastAndroid.show('Erro ao atualizar usúario', ToastAndroid.SHORT);
       }
     } finally {
       setLoading(false);
@@ -85,6 +88,42 @@ const Profile = ({ navigation }) => {
 
   function handleUploadImage() {
     ToastAndroid.show('Ainda não está disponível', ToastAndroid.SHORT);
+  }
+
+  async function deleteUser() {
+    try {
+      await api.delete('/users');
+      signOut();
+      goBack();
+      ToastAndroid.show('Usuário excluido com sucesso :(', ToastAndroid.SHORT);
+    } catch (err) {
+      if (err.response) {
+        ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show('Ocorreu um erro', ToastAndroid.SHORT);
+      }
+    }
+  }
+
+  function handleDeleteUserPress() {
+    Alert.alert(
+      'Excluir usuário',
+      'Esta ação é irreversivel e o seu usuario estará perdido para todo o sempre! Deseja Continuar?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Excluir',
+          onPress: deleteUser,
+          style: 'destructive',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
   }
 
   return (
@@ -155,6 +194,9 @@ const Profile = ({ navigation }) => {
                 placeholder="Confirme a nova senha"
                 editable={!isOAuth}
               />
+            </View>
+            <View onTouchStart={handleDeleteUserPress}>
+              <Text style={styles.deleteUserText}>Excluir usuário</Text>
             </View>
           </Form>
         </View>

@@ -49,52 +49,53 @@ const Help = ({ navigation }) => {
   return (
     <>
       <PageHeader title="Ajuda" navigation={navigation} />
-
-      <ScrollView>
-        <ActivityIndicator
-          size="large"
-          color={colors.accentColor}
-          animating={isLoading}
-          style={styles.loading}
-        />
-        <View style={styles.container}>
-          <View style={styles.headerContainer}>
-            <View style={styles.logo}>
-              <Logo />
-            </View>
-            <Text style={styles.headerText}>
-              Shishapedia - O guia do narguileiro
-            </Text>
-            <Text style={styles.headerText}>1.0.0</Text>
-            <Text style={styles.headerText}>
-              Desenvolvido por João Vitor da Silva
-            </Text>
-          </View>
+      <View style={styles.container}>
+        <ScrollView>
+          <ActivityIndicator
+            size="large"
+            color={colors.accentColor}
+            animating={isLoading}
+            style={styles.loading}
+          />
           <View>
-            <Text style={styles.description}>
-              Está passando por algum problema ou bug? Deixe uma mensagem
-              descrevendo qual o problema e se necessário, entraremos em
-              contato.
-            </Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Escreva aqui sua mensagem"
-                placeholderTextColor="#c1bccc"
-                multiline
-                value={message}
-                onChangeText={(text) => setMessage(text)}
-              />
+            <View style={styles.headerContainer}>
+              <View style={styles.logo}>
+                <Logo />
+              </View>
+              <Text style={styles.headerText}>
+                Shishapedia - O guia do narguileiro
+              </Text>
+              <Text style={styles.headerText}>1.0.0</Text>
+              <Text style={styles.headerText}>
+                Desenvolvido por João Vitor da Silva
+              </Text>
             </View>
-            <RectButton
-              style={styles.button}
-              onPress={handleSubmitFeedbackPress}
-            >
-              <Text style={styles.buttonText}>Enviar</Text>
-            </RectButton>
+            <View>
+              <Text style={styles.description}>
+                Está passando por algum problema ou bug? Deixe uma mensagem
+                descrevendo qual o problema e se necessário, entraremos em
+                contato.
+              </Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Escreva aqui sua mensagem"
+                  placeholderTextColor="#c1bccc"
+                  multiline
+                  value={message}
+                  onChangeText={(text) => setMessage(text)}
+                />
+              </View>
+              <RectButton
+                style={styles.button}
+                onPress={handleSubmitFeedbackPress}
+              >
+                <Text style={styles.buttonText}>Enviar</Text>
+              </RectButton>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </>
   );
 };

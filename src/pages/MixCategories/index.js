@@ -3,14 +3,14 @@ import {
   SafeAreaView,
   FlatList,
   Text,
-  View,
-  TextInput,
   ToastAndroid,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useNavigation } from '@react-navigation/native';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixCategoryListItem from '../../components/MixCategoryListItem';
@@ -41,6 +41,10 @@ const MixCategories = ({ navigation }) => {
     fetchCategories();
   }, []);
 
+  function handleCreateMixButtonPress() {
+    navigate('CreateMix');
+  }
+
   return (
     <>
       <PageHeader
@@ -63,6 +67,13 @@ const MixCategories = ({ navigation }) => {
             <MixCategoryListItem category={item} isFirst={index === 0} />
           )}
         />
+
+        <TouchableOpacity
+          style={styles.floatingButton}
+          onPress={handleCreateMixButtonPress}
+        >
+          <Icon name="add" size={28} color="white" />
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );

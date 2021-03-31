@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   ToastAndroid,
+  Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -12,6 +13,7 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixListItem from '../../components/MixListItem';
+import NotFoundImg from '../../assets/illustrations/not_found.svg';
 
 import styles from './styles';
 import { colors } from '../../styles';
@@ -82,30 +84,46 @@ const Mixes = ({ route }) => {
         style={styles.loading}
       />
       <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite o nome da essência"
-            placeholderTextColor="#c1bccc"
-            value={searchString}
-            onChangeText={(text) => setSearchString(text)}
-            onSubmitEditing={handleSearchMixes}
-          />
-          <Icon
-            name="search"
-            size={28}
-            color="#c1bccc"
-            style={styles.icon}
-            onPress={handleSearchMixes}
-          />
-        </View>
-        <FlatList
-          data={mixes}
-          keyExtractor={(item) => `${item.id}`}
-          renderItem={({ item, index }) => (
-            <MixListItem mix={item} isFirst={index === 0} />
-          )}
-        />
+        {!isLoading && mixes.length === 0 ? (
+          <>
+            <Text style={styles.noFoundMixesTitle}>Nada por aqui...</Text>
+            <Text style={styles.noFoundMixesText}>
+              {
+                'Ainda não existe mixes cadastrados nesta categoria. \n Seja o primeiro a indicar um!'
+              }
+            </Text>
+            <View style={styles.imageContainer}>
+              <NotFoundImg />
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite o nome da essência"
+                placeholderTextColor="#c1bccc"
+                value={searchString}
+                onChangeText={(text) => setSearchString(text)}
+                onSubmitEditing={handleSearchMixes}
+              />
+              <Icon
+                name="search"
+                size={28}
+                color="#c1bccc"
+                style={styles.icon}
+                onPress={handleSearchMixes}
+              />
+            </View>
+            <FlatList
+              data={mixes}
+              keyExtractor={(item) => `${item.id}`}
+              renderItem={({ item, index }) => (
+                <MixListItem mix={item} isFirst={index === 0} />
+              )}
+            />
+          </>
+        )}
       </SafeAreaView>
     </>
   );

@@ -68,7 +68,7 @@ const Feedback = ({ navigation }) => {
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>
-            Caso prefira, pode enviar um email para silva.joao1@outlook.com.br
+            Caso prefira, pode enviar um email para shishapedia@outlook.com
           </Text>
         </View>
       </View>

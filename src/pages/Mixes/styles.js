@@ -39,6 +39,28 @@ const styles = StyleSheet.create({
     marginLeft: '37%',
     zIndex: 1000,
   },
+  noFoundMixesTitle: {
+    fontFamily: fonts.bold,
+    fontSize: fonts.titleSize,
+    color: colors.text,
+    textAlign: 'center',
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  noFoundMixesText: {
+    fontFamily: fonts.regular,
+    fontSize: fonts.regularSize,
+    color: colors.text,
+    textAlign: 'center',
+    paddingHorizontal: 20,
+    marginTop: 15,
+  },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
 });
 
 export default styles;

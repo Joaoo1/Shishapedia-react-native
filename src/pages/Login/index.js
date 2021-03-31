@@ -31,12 +31,12 @@ const Login = () => {
 
   function handleGoogleButtonPress() {
     setLoading(true);
-    Linking.openURL('http://shishapedia.pagekite.me/auth/google');
+    Linking.openURL('https://api.shishapedia.com.br/auth/google');
   }
 
   function handleFacebookButtonPress() {
     setLoading(true);
-    Linking.openURL('http://shishapedia.pagekite.me/auth/facebook');
+    Linking.openURL('https://api.shishapedia.com.br/auth/facebook');
   }
 
   function handleCreateAccountButtonPress() {
@@ -139,6 +139,7 @@ const Login = () => {
           placeholderTextColor="#c1bccc"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          autoCapitalize="none"
           onSubmitEditing={() => passwordInputRef.current.focus()}
         />
         <TextInput
