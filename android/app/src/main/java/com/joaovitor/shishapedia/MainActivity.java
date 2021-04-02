@@ -1,9 +1,9 @@
-package com.shishapediarn;
+package com.joaovitor.shishapedia;
 
 import android.os.Bundle; 
 
 import com.facebook.react.ReactActivity;
-import com.zoontek.rnbootsplash.RNBootSplash; 
+import com.zoontek.rnbootsplash.RNBootSplash;
 
 public class MainActivity extends ReactActivity {
 
@@ -18,6 +18,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "shishapediarn";
+    return "com.joaovitor.shishapedia";
   }
 }
