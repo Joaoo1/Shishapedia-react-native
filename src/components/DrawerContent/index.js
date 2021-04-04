@@ -3,6 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Text, ToastAndroid } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import InAppReview from 'react-native-in-app-review';
+
 import { useAuth } from '../../hooks/auth';
 import DrawerHeader from '../DrawerHeader';
 
@@ -36,6 +39,12 @@ const DrawerContent = () => {
 
   function onHelpItemPress() {
     navigation.navigate('Help');
+  }
+
+  function onReviewItemPress() {
+    InAppReview.RequestInAppReview().then((hasFinished) => {
+      if (hasFinished) console.log('Success!');
+    });
   }
 
   return (
@@ -74,6 +83,13 @@ const DrawerContent = () => {
               )}
               label="Deixe um feedback"
               onPress={onFeedbackItemPress}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
+                <MaterialIcon name="google-play" size={size} color={color} />
+              )}
+              label="Avalie o app"
+              onPress={onReviewItemPress}
             />
             <DrawerItem
               icon={({ color, size }) => (

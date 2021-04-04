@@ -11,9 +11,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: metrics.screenHorizontalPadding,
   },
   title: {
-    fontFamily: fonts.bold,
+    fontFamily: fonts.regular,
     fontSize: fonts.titleSize,
     color: colors.systemText,
+    marginTop: 2,
   },
   leftIcon: {
     marginRight: 30,
