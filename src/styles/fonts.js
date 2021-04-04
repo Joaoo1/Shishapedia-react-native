@@ -4,9 +4,9 @@ const fonts = {
   tinySize: 13,
   titleSize: 21,
   inputSize: 15,
-  regular: 'notosans-regular',
-  bold: 'notosans-medium',
-  light: 'notosans-light',
+  regular: 'Poppins-regular',
+  bold: 'Poppins-bold',
+  light: 'Poppins-light',
 };
 
 export default fonts;
