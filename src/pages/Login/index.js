@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import {
   Text,
   SafeAreaView,
@@ -7,16 +8,15 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { useEffect, useRef, useState } from 'react';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import { useAuth } from '../../hooks/auth';
 import GetUrlParams from '../../helpers/GetUrlParams';
-import GoogleIcon from '../../assets/icons/google-icon.svg';
 import api from '../../services/api';
 
+import GoogleIcon from '../../assets/icons/google-icon.svg';
 import { colors } from '../../styles';
 import styles from './styles';
 

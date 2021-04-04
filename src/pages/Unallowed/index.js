@@ -1,6 +1,6 @@
 import { Text, View, BackHandler } from 'react-native';
-import Logo from '../../assets/illustrations/Logo.svg';
 
+import Logo from '../../assets/illustrations/Logo.svg';
 import styles from './styles';
 
 const Unallowed = () => {

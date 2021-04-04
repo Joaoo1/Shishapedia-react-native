@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView, View, Text, BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PageHeader from '../../components/DrawerPageHeader';
+import { useAuth } from '../../hooks/auth';
+
 import NarguileIcon from '../../assets/icons/Narguile';
 import EssenceIcon from '../../assets/icons/Essence';
 import NewsIcon from '../../assets/icons/News';
-
 import styles from './styles';
-import { useAuth } from '../../hooks/auth';
 
 const Home = ({ navigation }) => {
   const { user } = useAuth();

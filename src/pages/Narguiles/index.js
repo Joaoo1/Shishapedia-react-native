@@ -1,9 +1,9 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import PageHeader from '../../components/DrawerPageHeader';
-import NarguilesImg from '../../assets/images/narguiles.png';
 
+import NarguilesImg from '../../assets/images/narguiles.png';
 import styles from './styles';
 
 const Narguiles = ({ navigation }) => (

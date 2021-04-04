@@ -2,7 +2,9 @@ import { Text, View, Image, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { useAuth } from '../../hooks/auth';
+
 import FavoriteIcon from '../../assets/images/ic_favorites.png';
 import styles from './styles';
 

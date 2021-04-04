@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { useNotifications } from '../../hooks/notifications';
+
 import styles from './styles';
 import { colors } from '../../styles';
 

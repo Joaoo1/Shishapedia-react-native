@@ -1,3 +1,6 @@
+/*
+ * Format the params of a url and return it as an object
+ */
 function getAllUrlParams(url) {
   // get query string from url (optional) or window
   const queryString = url && url.split('?')[1];

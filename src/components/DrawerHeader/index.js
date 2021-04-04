@@ -1,5 +1,5 @@
-import { Svg, Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { View } from 'react-native';
+import { Svg, Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import PropTypes from 'prop-types';
 
 import styles from './styles';

@@ -1,9 +1,8 @@
+import { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import RNBootSplash from 'react-native-bootsplash';
 
-import { useEffect } from 'react';
 import DrawerNavigation from './DrawerNavigation';
-
 import Essences from '../pages/Essences';
 import EssenceInfo from '../pages/EssenceInfo';
 import EssenceReviews from '../pages/EssenceReviews';

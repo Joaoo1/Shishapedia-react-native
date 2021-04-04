@@ -1,8 +1,8 @@
 import { ScrollView, Text, View } from 'react-native';
 
 import PageHeader from '../../components/DrawerPageHeader';
-import NarguilesImg from '../../assets/illustrations/news_not_available.svg';
 
+import NarguilesImg from '../../assets/illustrations/news_not_available.svg';
 import styles from './styles';
 
 const News = ({ navigation }) => (

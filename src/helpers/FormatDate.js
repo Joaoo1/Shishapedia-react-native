@@ -1,3 +1,7 @@
+/*
+ * Receive a date object or timestamp
+ * and returns a string date on format DD/MM/YYYY
+ */
 const FormatDate = (date) => {
   const mDate = new Date(date);
 
@@ -17,6 +21,10 @@ const FormatDate = (date) => {
   return `${dt}/${month}/${year}`;
 };
 
+/*
+ * Receive a date object or timestamp
+ * and returns a string datetime on format DD/MM/YYYY HH:mm
+ */
 const FormatDateWithHour = (date) => {
   const mDate = new Date(date);
   mDate.setHours(mDate.getHours() - 3);
