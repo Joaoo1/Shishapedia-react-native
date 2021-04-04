@@ -6,6 +6,8 @@ import {
   useEffect,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import messaging from '@react-native-firebase/messaging';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import { ToastAndroid } from 'react-native';
 import api from '../services/api';
@@ -19,17 +21,23 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function loadStorageData() {
       try {
-        const [token, user] = await AsyncStorage.multiGet([
+        const [token, userJson] = await AsyncStorage.multiGet([
           '@Shishapedia:userToken',
           '@Shishapedia:user',
         ]);
 
-        if (token[1] && user[1]) {
+        if (token[1] && userJson[1]) {
           api.defaults.headers.authorization = `Bearer ${token[1]}`;
+          const user = JSON.parse(userJson[1]);
 
-          setData({ token: token[1], user: JSON.parse(user[1]) });
+          setData({ token: token[1], user });
+
+          const fcmToken = await messaging().getToken();
+          api.put('/remote_notifications', { fcm_token: fcmToken });
+          await crashlytics().setUserId(user.id.toString());
         }
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show('Erro ao carregar usuário', ToastAndroid.SHORT);
       } finally {
         setLoading(false);
@@ -44,12 +52,18 @@ const AuthProvider = ({ children }) => {
 
     try {
       const response = await api.get('/users');
+      const user = response.data;
       await AsyncStorage.multiSet([
         ['@Shishapedia:userToken', token],
-        ['@Shishapedia:user', JSON.stringify(response.data)],
+        ['@Shishapedia:user', JSON.stringify(user)],
       ]);
       setData({ token, user: response.data });
+
+      const fcmToken = await messaging().getToken();
+      api.put('/remote_notifications', { fcm_token: fcmToken });
+      await crashlytics().setUserId(user.id.toString());
     } catch (err) {
+      crashlytics().recordError(err);
       ToastAndroid.show('Erro ao carregar usuário', ToastAndroid.SHORT);
     }
   }, []);
@@ -59,6 +73,9 @@ const AuthProvider = ({ children }) => {
       '@Shishapedia:user',
       '@Shishapedia:userToken',
     ]);
+
+    const fcmToken = await messaging().getToken();
+    api.delete('/remote_notifications', { fcm_token: fcmToken });
 
     setData({});
   }, []);
