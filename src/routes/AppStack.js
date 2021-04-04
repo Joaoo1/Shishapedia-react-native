@@ -30,7 +30,6 @@ const Routes = () => {
     <Navigator
       initialRouteName="Under18"
       screenOptions={{
-        cardStyle: { backgroundColor: '#fff' },
         headerShown: false,
       }}
     >

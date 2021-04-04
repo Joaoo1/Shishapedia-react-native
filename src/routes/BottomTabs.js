@@ -35,7 +35,7 @@ const BottomTabs = () => (
         height: 25,
       },
       labelStyle: {
-        fontFamily: 'notosans-regular',
+        fontFamily: 'Poppins-regular',
         fontSize: 14,
       },
       inactiveBackgroundColor: colors.primaryColor,
