@@ -1,22 +1,24 @@
-import { Text, SafeAreaView, Alert, ToastAndroid } from 'react-native';
+import { useEffect } from 'react';
+import { Text, SafeAreaView, ToastAndroid } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import styles from './styles';
 
 const Under18 = () => {
   const navigation = useNavigation();
 
-  function onYesPress() {
+  async function onYesPress() {
     // Reset the stack to exit app when back button is pressed on Home screen
+    await AsyncStorage.setItem('@Shishapedia/UnderAge', 'false');
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: 'DrawerNavigation' }],
+        routes: [{ name: 'Login' }],
       }),
     );
-    AsyncStorage.setItem('@Shishapedia/UnderAge', 'false');
   }
   function onNoPress() {
     navigation.navigate('Unallowed');
@@ -26,15 +28,23 @@ const Under18 = () => {
   useEffect(() => {
     async function fetchInitialRoute() {
       try {
-        const underAge = await AsyncStorage.getItem('@Shishapedia/UnderAge');
-        if (underAge !== null) {
-          if (underAge === 'true') {
+        const [underAge, user] = await AsyncStorage.multiGet([
+          '@Shishapedia/UnderAge',
+          '@Shishapedia:user',
+        ]);
+        if (underAge[1] !== null) {
+          if (underAge[1] === 'true') {
             navigation.navigate('Unallowed');
-          } else if (underAge === 'false') {
-            onYesPress();
+          } else if (underAge[1] === 'false') {
+            if (user[1]) {
+              navigation.navigate('DrawerNavigation');
+            } else {
+              onYesPress();
+            }
           }
         }
-      } catch (e) {
+      } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show('Ocorreu um erro', ToastAndroid.SHORT);
       }
     }
