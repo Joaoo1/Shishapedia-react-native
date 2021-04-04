@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    marginBottom: 70,
+    fontSize: 17,
+    marginBottom: 80,
     textAlign: 'center',
     maxWidth: 250,
     color: colors.text,

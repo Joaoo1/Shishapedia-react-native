@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
     fontSize: fonts.titleSize,
     fontFamily: fonts.bold,
     color: colors.text,
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 50,
   },
   divider: {
     marginTop: 20,

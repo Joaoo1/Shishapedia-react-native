@@ -35,6 +35,12 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontFamily: fonts.bold,
     color: colors.text,
+    maxWidth: 260,
+  },
+  boldText: {
+    color: colors.text,
+    fontFamily: fonts.bold,
+    marginBottom: 10,
   },
   descriptionText: {
     color: colors.text,
@@ -42,11 +48,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.light,
     marginBottom: 10,
     textAlign: 'justify',
-  },
-  boldText: {
-    color: colors.text,
-    fontFamily: fonts.bold,
-    marginBottom: 10,
   },
   ratesContainer: {
     flexDirection: 'row',

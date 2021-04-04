@@ -75,6 +75,11 @@ const styles = StyleSheet.create({
   starsContainer: {
     flexDirection: 'row',
   },
+  reviewInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   reviewRatingContainer: {
     flexDirection: 'row',
     alignItems: 'center',

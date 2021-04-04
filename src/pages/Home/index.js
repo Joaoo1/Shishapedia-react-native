@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { SafeAreaView, View, Text, BackHandler, Alert } from 'react-native';
+import { SafeAreaView, View, Text, BackHandler } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 

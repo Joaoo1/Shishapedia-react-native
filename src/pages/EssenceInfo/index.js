@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import ImageView from 'react-native-image-viewing';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
@@ -18,9 +20,17 @@ import FavoriteIcon from '../../assets/icons/Favorite';
 import styles from './styles';
 
 const EssenceInfo = ({ navigation, route }) => {
+  const { user } = useAuth();
+
   const [isFavorite, setFavorite] = useState(null);
   const [essence, setEssence] = useState({});
-  const { user } = useAuth();
+  const [showImage, setShowImage] = useState(false);
+
+  const images = [
+    {
+      uri: essence.image ? essence.image.url : '',
+    },
+  ];
 
   useEffect(() => {
     const { release_date: releaseDate } = route.params.essence;
@@ -41,9 +51,10 @@ const EssenceInfo = ({ navigation, route }) => {
             `/favorite_essence/${route.params.essence.id}`,
           );
           setFavorite(response.data.favorite);
-        } catch (error) {
-          if (error.response) {
-            ToastAndroid.show(error.response.data.error, ToastAndroid.SHORT);
+        } catch (err) {
+          crashlytics().recordError(err);
+          if (err.response) {
+            ToastAndroid.show(err.response.data.err, ToastAndroid.SHORT);
           } else {
             ToastAndroid.show('Erro ao carregar favoritos', ToastAndroid.SHORT);
           }
@@ -97,9 +108,10 @@ const EssenceInfo = ({ navigation, route }) => {
       }
 
       setFavorite(!isFavorite);
-    } catch (error) {
-      if (error.response) {
-        ToastAndroid.show(error.response.data.error, ToastAndroid.SHORT);
+    } catch (err) {
+      crashlytics().recordError(err);
+      if (err.response) {
+        ToastAndroid.show(err.response.data.err, ToastAndroid.SHORT);
       } else {
         ToastAndroid.show(
           'Erro ao adicionar aos favoritos',
@@ -112,9 +124,18 @@ const EssenceInfo = ({ navigation, route }) => {
   return (
     <>
       <PageHeader backButton title="Informações" notifications={false} />
+      <ImageView
+        images={images}
+        imageIndex={0}
+        visible={showImage}
+        onRequestClose={() => setShowImage(false)}
+      />
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <View style={styles.imageContainer}>
+          <View
+            style={styles.imageContainer}
+            onTouchEnd={() => setShowImage(true)}
+          >
             <Image
               source={essence.image && { uri: essence.image.url }}
               style={styles.image}
@@ -143,16 +164,12 @@ const EssenceInfo = ({ navigation, route }) => {
             </View>
             {essence.proposal && (
               <Text style={styles.boldText}>
-                {'Proposta: '}
-                <Text style={styles.descriptionText}>{essence.proposal}</Text>
+                {`Proposta: ${essence.proposal}`}
               </Text>
             )}
             {essence.release_date !== null && (
               <Text style={styles.boldText}>
-                {'Data da lançamento: '}
-                <Text style={styles.descriptionText}>
-                  {essence.release_date}
-                </Text>
+                {`Data da lançamento: ${essence.release_date}`}
               </Text>
             )}
             <Text style={styles.descriptionText}>{essence.description}</Text>

@@ -94,13 +94,27 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     color: colors.whiteText,
     textDecorationLine: 'underline',
-    marginTop: 40,
+    marginTop: 30,
   },
   loading: {
     position: 'absolute',
     marginTop: '65%',
     marginLeft: '37%',
     zIndex: 1000,
+  },
+  continueWithoutLoginText: {
+    fontSize: fonts.bigSize,
+    fontFamily: fonts.bold,
+    color: colors.whiteText,
+  },
+  continueWithoutLoginButton: {
+    borderColor: '#ffffff',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    marginTop: 30,
+    opacity: 0.8,
   },
 });
 

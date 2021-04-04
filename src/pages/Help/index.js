@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/SavePageHeader';
 import api from '../../services/api';
@@ -37,6 +38,7 @@ const Help = ({ navigation }) => {
       );
       setMessage('');
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.error, ToastAndroid.SHORT);
       } else {

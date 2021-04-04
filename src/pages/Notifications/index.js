@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Text, ToastAndroid, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import { FormatDate } from '../../helpers/FormatDate';
 
+import NoNotificationsImg from '../../assets/illustrations/no_notifications.svg';
 import styles from './styles';
 import { colors } from '../../styles';
 
@@ -29,6 +32,7 @@ const Notifications = () => {
 
         setNotificationList(list);
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Ocorreu um erro ao carregar notificações',
           ToastAndroid.LONG,
@@ -54,12 +58,11 @@ const Notifications = () => {
   }
 
   function renderNotificationList() {
-    if (notificationList.length === 0) {
+    if (notificationList.length === 0 && !isLoading) {
       return (
         <View style={styles.container}>
-          <Text style={styles.text}>
-            {!isLoading && 'Não há novas notificações'}
-          </Text>
+          <Text style={styles.text}>Não há novas notificações</Text>
+          <NoNotificationsImg />
         </View>
       );
     }
@@ -99,7 +102,7 @@ const Notifications = () => {
           <Text style={styles.text}>Faça login para receber notificações</Text>
         </View>
       ) : (
-        renderNotificationList()
+        <ScrollView>{renderNotificationList()}</ScrollView>
       )}
     </>
   );

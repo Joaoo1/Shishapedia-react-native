@@ -5,12 +5,12 @@ import {
   Text,
   ToastAndroid,
   ActivityIndicator,
-  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import crashlytics from '@react-native-firebase/crashlytics';
 import { useNavigation } from '@react-navigation/native';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixCategoryListItem from '../../components/MixCategoryListItem';
@@ -29,6 +29,7 @@ const MixCategories = ({ navigation }) => {
         const response = await api.get('/flavor_categories');
         setCategories(response.data);
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Ocorreu um erro ao carregar marcas de essência',
           ToastAndroid.SHORT,

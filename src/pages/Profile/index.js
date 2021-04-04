@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -10,16 +11,16 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RectButton } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
-
-import { useRef, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import PageHeader from '../../components/SavePageHeader';
 import Input from '../../components/Input';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 
 import styles from './styles';
-import api from '../../services/api';
 import { colors } from '../../styles';
-import { useAuth } from '../../hooks/auth';
 
 const Profile = ({ navigation }) => {
   const formRef = useRef(null);
@@ -41,6 +42,7 @@ const Profile = ({ navigation }) => {
         formRef.current.setFieldValue('email', email);
         setOAuth(oauth);
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Erro ao carregar informações do usuário',
           ToastAndroid.SHORT,
@@ -76,6 +78,7 @@ const Profile = ({ navigation }) => {
       );
       ToastAndroid.show('Usúario atualizado com sucesso!', ToastAndroid.SHORT);
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       } else {
@@ -97,6 +100,7 @@ const Profile = ({ navigation }) => {
       goBack();
       ToastAndroid.show('Usuário excluido com sucesso :(', ToastAndroid.SHORT);
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       } else {

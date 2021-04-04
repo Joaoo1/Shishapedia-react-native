@@ -9,6 +9,7 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import EssenceListItem from '../../components/EssenceListItem';
@@ -39,6 +40,7 @@ const Essences = ({ route }) => {
           setEssences(response.data);
         }
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Ocorreu um erro ao carregar essências',
           ToastAndroid.SHORT,
@@ -73,6 +75,7 @@ const Essences = ({ route }) => {
 
       setEssences(response.data);
     } catch (err) {
+      crashlytics().recordError(err);
       ToastAndroid.show('Erro ao carregar essências', ToastAndroid.SHORT);
     } finally {
       setLoading(false);

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   View,
   TextInput,
@@ -8,13 +9,13 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import crashlytics from '@react-native-firebase/crashlytics';
 
-import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixListItem from '../../components/MixListItem';
-import NotFoundImg from '../../assets/illustrations/not_found.svg';
 
+import NotFoundImg from '../../assets/illustrations/not_found.svg';
 import styles from './styles';
 import { colors } from '../../styles';
 
@@ -37,6 +38,7 @@ const Mixes = ({ route }) => {
           setAllMixes(response.data.mixes);
         }
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Ocorreu um erro ao carregar mixes',
           ToastAndroid.SHORT,
@@ -66,6 +68,7 @@ const Mixes = ({ route }) => {
 
       setMixes(response.data.mixes);
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.data.error.ToastAndroid.SHORT);
       }

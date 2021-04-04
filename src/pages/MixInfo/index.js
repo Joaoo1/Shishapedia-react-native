@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Image, Text, SafeAreaView, ToastAndroid } from 'react-native';
+import crashlytics from '@react-native-firebase/crashlytics';
+
 import PageHeader from '../../components/DrawerPageHeader';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
@@ -27,9 +29,10 @@ const MixInfo = ({ route }) => {
         try {
           const response = await api.get(`/favorite_mix/${id}`);
           setFavorite(response.data.favorite);
-        } catch (error) {
-          if (error.response) {
-            ToastAndroid.show(error.response.data.error, ToastAndroid.SHORT);
+        } catch (err) {
+          crashlytics().recordError(err);
+          if (err.response) {
+            ToastAndroid.show(err.response.data.err, ToastAndroid.SHORT);
           } else {
             ToastAndroid.show('Erro ao carregar favoritos', ToastAndroid.SHORT);
           }
@@ -71,9 +74,10 @@ const MixInfo = ({ route }) => {
       }
 
       setFavorite(!isFavorite);
-    } catch (error) {
-      if (error.response) {
-        ToastAndroid.show(error.response.data.error, ToastAndroid.SHORT);
+    } catch (err) {
+      crashlytics().recordError(err);
+      if (err.response) {
+        ToastAndroid.show(err.response.data.err, ToastAndroid.SHORT);
       } else {
         ToastAndroid.show(
           'Erro ao adicionar aos favoritos',

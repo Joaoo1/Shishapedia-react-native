@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import EssenceBrandListItem from '../../components/EssenceBrandListItem';
@@ -29,6 +30,7 @@ const EssencesBrands = ({ navigation }) => {
         setAllBrands(response.data);
         setBrands(response.data);
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Ocorreu um erro ao carregar marcas de essência',
           ToastAndroid.SHORT,

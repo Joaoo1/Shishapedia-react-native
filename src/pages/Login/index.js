@@ -6,10 +6,11 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import { useEffect, useRef, useState } from 'react';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import { useAuth } from '../../hooks/auth';
 import GetUrlParams from '../../helpers/GetUrlParams';
@@ -21,7 +22,7 @@ import styles from './styles';
 
 const Login = () => {
   const navigation = useNavigation();
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,13 +30,19 @@ const Login = () => {
 
   const passwordInputRef = useRef(null);
 
+  function navigateToHome() {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: 'DrawerNavigation' }],
+      }),
+    );
+  }
   function handleGoogleButtonPress() {
-    setLoading(true);
     Linking.openURL('https://api.shishapedia.com.br/auth/google');
   }
 
   function handleFacebookButtonPress() {
-    setLoading(true);
     Linking.openURL('https://api.shishapedia.com.br/auth/facebook');
   }
 
@@ -60,18 +67,13 @@ const Login = () => {
 
       await signIn({ id, token });
 
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: 'DrawerNavigation' }],
-        }),
+      navigateToHome();
+    } catch (err) {
+      crashlytics().recordError(err);
+      ToastAndroid.show(
+        err.response?.data?.err ?? 'Ocorreu um erro!',
+        ToastAndroid.SHORT,
       );
-    } catch (error) {
-      if (error.response) {
-        ToastAndroid.show(error.response.data.error, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show('Ocorreu um erro!', ToastAndroid.SHORT);
-      }
     } finally {
       setLoading(false);
     }
@@ -83,6 +85,7 @@ const Login = () => {
 
   async function handleOpenURL({ url }) {
     try {
+      setLoading(true);
       await signIn(GetUrlParams(url));
 
       navigation.dispatch(
@@ -92,15 +95,23 @@ const Login = () => {
         }),
       );
     } catch (err) {
-      ToastAndroid.show('Error on login', ToastAndroid.SHORT);
+      crashlytics().recordError(err);
+      ToastAndroid.show('Erro no login', ToastAndroid.SHORT);
     } finally {
       setLoading(false);
     }
   }
 
-  useEffect(() => {
-    Linking.addEventListener('url', handleOpenURL);
+  function handleContinueWithoutLogin() {
+    navigateToHome();
+  }
 
+  useEffect(() => {
+    if (user) {
+      navigateToHome();
+    }
+
+    Linking.addEventListener('url', handleOpenURL);
     return function cleanup() {
       Linking.removeAllListeners('url');
     };
@@ -168,6 +179,14 @@ const Login = () => {
         >
           Crie uma conta
         </Text>
+        <TouchableOpacity
+          style={styles.continueWithoutLoginButton}
+          onPress={handleContinueWithoutLogin}
+        >
+          <Text style={styles.continueWithoutLoginText}>
+            Continuar sem fazer login
+          </Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );

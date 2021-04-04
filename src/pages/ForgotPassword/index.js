@@ -7,8 +7,9 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-
+import crashlytics from '@react-native-firebase/crashlytics';
 import { RectButton } from 'react-native-gesture-handler';
+
 import PageHeader from '../../components/SavePageHeader';
 import api from '../../services/api';
 
@@ -39,6 +40,7 @@ const ForgotPassword = () => {
       const response = await api.post('/recover', { email });
       ToastAndroid.show(response.data.message, ToastAndroid.LONG);
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       } else {

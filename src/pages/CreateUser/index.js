@@ -7,8 +7,9 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-
+import crashlytics from '@react-native-firebase/crashlytics';
 import { RectButton } from 'react-native-gesture-handler';
+
 import PageHeader from '../../components/SavePageHeader';
 import api from '../../services/api';
 
@@ -57,6 +58,7 @@ const CreateUser = () => {
       ToastAndroid.show('Conta cadastrada com sucesso!', ToastAndroid.SHORT);
       navigation.goBack();
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       } else {

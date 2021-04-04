@@ -8,9 +8,12 @@ import {
   ToastAndroid,
   ActivityIndicator,
   LogBox,
+  Alert,
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
@@ -25,7 +28,7 @@ LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
 
-const EssenceReviews = ({ route, navigation: { setParams } }) => {
+const EssenceReviews = ({ route }) => {
   const { user } = useAuth();
 
   const [isLoading, setLoading] = useState(true);
@@ -47,6 +50,7 @@ const EssenceReviews = ({ route, navigation: { setParams } }) => {
       setReviews(mReviews);
       setAverageRating(response.data.averageRating);
     } catch (err) {
+      crashlytics().recordError(err);
       ToastAndroid.show(
         'Ocorreu um erro ao carregar avaliações da essência',
         ToastAndroid.SHORT,
@@ -76,18 +80,50 @@ const EssenceReviews = ({ route, navigation: { setParams } }) => {
 
       setComment('');
       setRating(0);
-      fetchReviews();
       ToastAndroid.show('Publicado com sucesso!', ToastAndroid.SHORT);
+      fetchReviews();
       onSendReview();
     } catch (err) {
+      crashlytics().recordError(err);
       if (err.response) {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       } else {
         ToastAndroid.show('Ocorreu um erro ao publicar avaliação');
       }
-    } finally {
-      setLoading(false);
     }
+  }
+
+  async function deleteReview(reviewId) {
+    try {
+      await api.delete(`/essence_review/${reviewId}`);
+
+      ToastAndroid.show('Avaliação excluida com sucesso', ToastAndroid.SHORT);
+      fetchReviews();
+    } catch (err) {
+      crashlytics().recordError(err);
+      ToastAndroid.show(
+        err.response?.data?.error ?? 'Ocorreu um erro ao excluir avaliação',
+        ToastAndroid.SHORT,
+      );
+    }
+  }
+
+  function handleDeleteButtonPress(reviewId) {
+    Alert.alert(
+      'Excluir avaliação',
+      'Voce realmente deseja excluir sua avaliação?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          style: 'destructive',
+          text: 'SIM',
+          onPress: () => deleteReview(reviewId),
+        },
+      ],
+    );
   }
 
   return (
@@ -164,13 +200,34 @@ const EssenceReviews = ({ route, navigation: { setParams } }) => {
             ) : (
               reviews.map((review) => (
                 <View style={styles.review} key={`${review.id}a`}>
-                  <Text style={styles.reviewAuthor}>{review.user.name}</Text>
-                  <View style={styles.reviewRatingContainer}>
-                    {[...Array(review.rating)].map(() => (
-                      <Icon name="star" color="#FFDD55" size={15} />
-                    ))}
-                    <Text style={styles.reviewDate}>{review.date}</Text>
+                  <View style={styles.reviewInfoContainer}>
+                    <View>
+                      <Text style={styles.reviewAuthor}>
+                        {review.user.name}
+                      </Text>
+                      <View style={styles.reviewRatingContainer}>
+                        {[...Array(review.rating)].map((v, idx) => (
+                          <Icon
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={idx}
+                            name="star"
+                            color="#FFDD55"
+                            size={15}
+                          />
+                        ))}
+                        <Text style={styles.reviewDate}>{review.date}</Text>
+                      </View>
+                    </View>
+                    {review.user.id === user?.id && (
+                      <MaterialIcon
+                        name="delete-outline"
+                        size={24}
+                        color="#f23f3f"
+                        onPress={() => handleDeleteButtonPress(review.id)}
+                      />
+                    )}
                   </View>
+
                   {review.comment !== '' && (
                     <Text style={styles.reviewText}>{review.comment}</Text>
                   )}

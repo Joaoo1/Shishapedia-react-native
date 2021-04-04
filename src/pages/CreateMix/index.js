@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { Text, View, ScrollView, ToastAndroid } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import Input from '../../components/Input';
 import SavePageHeader from '../../components/SavePageHeader';
@@ -29,6 +30,7 @@ const CreateMix = () => {
         }));
         setCategoryList(list);
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show('Erro ao carregar categorias', ToastAndroid.SHORT);
       }
     }
@@ -50,6 +52,7 @@ const CreateMix = () => {
       navigation.goBack();
       ToastAndroid.show('Enviado com sucesso!', ToastAndroid.SHORT);
     } catch (err) {
+      crashlytics().recordError(err);
       ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
     }
   }

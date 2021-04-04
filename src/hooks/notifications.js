@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import { useAuth } from './auth';
 import api from '../services/api';
@@ -17,6 +18,7 @@ const NotificationProvider = ({ children }) => {
         const response = await api.get('/unread_notifications');
         setUnreadNotifications(response.data.notifications);
       } catch (err) {
+        crashlytics().recordError(err);
         ToastAndroid.show(
           'Ocorreu um erro ao carregar notificações',
           ToastAndroid.LONG,

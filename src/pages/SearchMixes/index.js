@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import MixListItem from '../../components/MixListItem';
@@ -45,6 +46,7 @@ const SearchMixes = () => {
 
       setMixes(response.data.mixes);
     } catch (err) {
+      crashlytics().recordError(err);
       ToastAndroid.show('Erro ao carregar mixes', ToastAndroid.SHORT);
     } finally {
       setLoading(false);
