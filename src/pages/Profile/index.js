@@ -132,12 +132,15 @@ const Profile = ({ navigation }) => {
 
   return (
     <>
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader
         title="Perfil"
         navigation={navigation}

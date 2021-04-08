@@ -84,13 +84,16 @@ const Essences = ({ route }) => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader title="Essências" backButton />
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
       <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput

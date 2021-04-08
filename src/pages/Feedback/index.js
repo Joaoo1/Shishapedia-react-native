@@ -5,6 +5,7 @@ import {
   TextInput,
   ToastAndroid,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -46,8 +47,17 @@ const Feedback = ({ navigation }) => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader title="Feedback" navigation={navigation} />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View>
           <Text style={styles.description}>
             Tem alguma sugestão ou ideia sensacional para o aplicativo ?
@@ -73,14 +83,7 @@ const Feedback = ({ navigation }) => {
             Caso prefira, pode enviar um email para shishapedia@outlook.com
           </Text>
         </View>
-      </View>
-
-      <ActivityIndicator
-        size="large"
-        color={colors.accentColor}
-        animating={isLoading}
-        style={styles.loading}
-      />
+      </SafeAreaView>
     </>
   );
 };

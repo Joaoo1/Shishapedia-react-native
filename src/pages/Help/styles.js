@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     padding: metrics.screenHorizontalPadding,
     backgroundColor: '#fff',
-    flex: 1,
+    marginBottom: 70,
   },
   headerContainer: {
     alignItems: 'center',
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+    marginBottom: 30,
   },
   buttonText: {
     color: colors.buttonText,

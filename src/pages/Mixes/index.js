@@ -79,27 +79,40 @@ const Mixes = ({ route }) => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader title="Mixes" backButton />
-      <ActivityIndicator
-        size="large"
-        color={colors.accentColor}
-        animating={isLoading}
-        style={styles.loading}
-      />
       <SafeAreaView style={styles.container}>
-        {!isLoading && mixes.length === 0 ? (
+        {!isLoading && mixes.length === 0 && (
           <>
             <Text style={styles.noFoundMixesTitle}>Nada por aqui...</Text>
-            <Text style={styles.noFoundMixesText}>
-              {
-                'Ainda não existe mixes cadastrados nesta categoria. \n Seja o primeiro a indicar um!'
-              }
-            </Text>
+
+            {route.params.userId ? (
+              <Text style={styles.noFoundMixesText}>
+                Não há nenhum favorito adicionado
+              </Text>
+            ) : (
+              <Text style={styles.noFoundMixesText}>
+                {
+                  'Ainda não existe mixes cadastrados nesta categoria. \n Seja o primeiro a indicar um!'
+                }
+              </Text>
+            )}
+
             <View style={styles.imageContainer}>
               <NotFoundImg />
             </View>
           </>
-        ) : (
+        )}
+
+        {!isLoading && mixes.length > 0 && (
           <>
             <View style={styles.inputContainer}>
               <TextInput

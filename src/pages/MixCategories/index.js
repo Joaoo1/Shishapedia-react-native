@@ -48,16 +48,19 @@ const MixCategories = ({ navigation }) => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader
         title="Mixes"
         drawerNavigation={navigation}
         onClickSearch={() => navigate('SearchMixes')}
-      />
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
       />
       <SafeAreaView style={styles.container}>
         <Text style={styles.headline}>Categorias</Text>

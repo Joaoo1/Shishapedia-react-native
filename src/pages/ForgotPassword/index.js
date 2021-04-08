@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import {
   TextInput,
-  View,
   ToastAndroid,
   Text,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
 
     try {
       setLoading(true);
-      const response = await api.post('/recover', { email });
+      const response = await api.post('/recover_password', { email });
       ToastAndroid.show(response.data.message, ToastAndroid.LONG);
     } catch (err) {
       crashlytics().recordError(err);
@@ -56,14 +56,17 @@ const ForgotPassword = () => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader title="Resetar senha" navigation={navigation} />
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.text}>
           Informe qual o seu email e será enviado um link para resetar sua
           senha.
@@ -80,7 +83,7 @@ const ForgotPassword = () => {
         <RectButton style={styles.button} onPress={handleButtonPress}>
           <Text style={styles.buttonText}>Resetar senha</Text>
         </RectButton>
-      </View>
+      </SafeAreaView>
     </>
   );
 };

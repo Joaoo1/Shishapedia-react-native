@@ -55,14 +55,17 @@ const SearchMixes = () => {
 
   return (
     <>
-      <PageHeader title="Buscar mixes" backButton />
-      <SafeAreaView style={styles.container}>
+      {isLoading && (
         <ActivityIndicator
           style={styles.loading}
           size="large"
           animating={isLoading}
           color={colors.accentColor}
         />
+      )}
+
+      <PageHeader title="Buscar mixes" backButton />
+      <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}

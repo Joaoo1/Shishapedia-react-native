@@ -57,14 +57,17 @@ const EssencesBrands = ({ navigation }) => {
 
   return (
     <>
-      <PageHeader title="Essências" drawerNavigation={navigation} />
-      <SafeAreaView style={styles.container}>
+      {isLoading && (
         <ActivityIndicator
           style={styles.loading}
           size="large"
           animating={isLoading}
           color={colors.accentColor}
         />
+      )}
+
+      <PageHeader title="Essências" drawerNavigation={navigation} />
+      <SafeAreaView style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}

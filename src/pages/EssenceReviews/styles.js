@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   rating: {
-    color: '#FFDD55',
     fontFamily: fonts.regular,
     fontSize: fonts.bigSize,
     marginLeft: 5,
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: '95%',
     marginLeft: '37%',
-    zIndex: 1000,
+    zIndex: 10,
   },
   notFound: {
     fontSize: fonts.regularSize,

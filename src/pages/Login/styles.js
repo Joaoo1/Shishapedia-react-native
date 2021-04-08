@@ -5,7 +5,6 @@ import { fonts, metrics, colors } from '../../styles';
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: metrics.screenHorizontalPadding,
-    alignItems: 'center',
     backgroundColor: colors.primaryColor,
     flex: 1,
   },
@@ -69,6 +68,7 @@ const styles = StyleSheet.create({
     color: colors.whiteText,
     fontSize: fonts.bigSize,
     fontFamily: fonts.bold,
+    alignSelf: 'center',
   },
   input: {
     height: metrics.inputHeight,
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     color: colors.whiteText,
     textDecorationLine: 'underline',
     marginTop: 30,
+    alignSelf: 'center',
   },
   loading: {
     position: 'absolute',
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 30,
     opacity: 0.8,
+    alignSelf: 'center',
   },
 });
 

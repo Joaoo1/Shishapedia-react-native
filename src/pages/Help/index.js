@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   View,
   Text,
+  SafeAreaView,
   TextInput,
   ToastAndroid,
   ScrollView,
@@ -50,15 +51,18 @@ const Help = ({ navigation }) => {
   }
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader title="Ajuda" navigation={navigation} />
-      <View style={styles.container}>
-        <ScrollView>
-          <ActivityIndicator
-            size="large"
-            color={colors.accentColor}
-            animating={isLoading}
-            style={styles.loading}
-          />
+      <SafeAreaView>
+        <ScrollView style={styles.container}>
           <View>
             <View style={styles.headerContainer}>
               <View style={styles.logo}>
@@ -97,7 +101,7 @@ const Help = ({ navigation }) => {
             </View>
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     </>
   );
 };

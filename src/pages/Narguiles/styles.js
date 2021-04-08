@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: fonts.bold,
     fontSize: fonts.titleSize,
-    marginVertical: 70,
+    marginVertical: 35,
+    marginHorizontal: 20,
     textAlign: 'center',
-    maxWidth: 250,
     color: colors.text,
   },
 });

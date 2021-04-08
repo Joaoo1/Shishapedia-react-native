@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   Text,
   SafeAreaView,
+  ScrollView,
   TextInput,
   Linking,
   ToastAndroid,
@@ -119,74 +120,78 @@ const Login = () => {
 
   return (
     <>
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Shishapedia</Text>
-        <RectButton
-          style={styles.googleButton}
-          onPress={handleGoogleButtonPress}
-        >
-          <GoogleIcon />
-          <Text style={styles.googleButtonText}>Entrar com Google</Text>
-        </RectButton>
-        <RectButton
-          style={styles.facebookButton}
-          onPress={handleFacebookButtonPress}
-        >
-          <EvilIcons name="sc-facebook" color="#fff" size={24} />
-          <Text style={styles.facebookButtonText}>Entrar com Facebook</Text>
-        </RectButton>
+        <ScrollView>
+          <Text style={styles.title}>Shishapedia</Text>
+          <RectButton
+            style={styles.googleButton}
+            onPress={handleGoogleButtonPress}
+          >
+            <GoogleIcon />
+            <Text style={styles.googleButtonText}>Entrar com Google</Text>
+          </RectButton>
+          <RectButton
+            style={styles.facebookButton}
+            onPress={handleFacebookButtonPress}
+          >
+            <EvilIcons name="sc-facebook" color="#fff" size={24} />
+            <Text style={styles.facebookButtonText}>Entrar com Facebook</Text>
+          </RectButton>
 
-        <Text style={styles.orText}>Ou</Text>
+          <Text style={styles.orText}>Ou</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#c1bccc"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          autoCapitalize="none"
-          onSubmitEditing={() => passwordInputRef.current.focus()}
-        />
-        <TextInput
-          ref={passwordInputRef}
-          style={styles.input}
-          placeholder="Senha"
-          secureTextEntry
-          placeholderTextColor="#c1bccc"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          onSubmitEditing={handleEmailButtonPress}
-        />
-        <Text
-          style={styles.forgotPasswordText}
-          onPress={handleForgotPasswordPress}
-        >
-          Esqueceu sua senha?
-        </Text>
-        <RectButton style={styles.button} onPress={handleEmailButtonPress}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </RectButton>
-
-        <Text
-          style={styles.createAccountText}
-          onPress={handleCreateAccountButtonPress}
-        >
-          Crie uma conta
-        </Text>
-        <TouchableOpacity
-          style={styles.continueWithoutLoginButton}
-          onPress={handleContinueWithoutLogin}
-        >
-          <Text style={styles.continueWithoutLoginText}>
-            Continuar sem fazer login
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#c1bccc"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            autoCapitalize="none"
+            onSubmitEditing={() => passwordInputRef.current.focus()}
+          />
+          <TextInput
+            ref={passwordInputRef}
+            style={styles.input}
+            placeholder="Senha"
+            secureTextEntry
+            placeholderTextColor="#c1bccc"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            onSubmitEditing={handleEmailButtonPress}
+          />
+          <Text
+            style={styles.forgotPasswordText}
+            onPress={handleForgotPasswordPress}
+          >
+            Esqueceu sua senha?
           </Text>
-        </TouchableOpacity>
+          <RectButton style={styles.button} onPress={handleEmailButtonPress}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </RectButton>
+
+          <Text
+            style={styles.createAccountText}
+            onPress={handleCreateAccountButtonPress}
+          >
+            Crie uma conta
+          </Text>
+          <TouchableOpacity
+            style={styles.continueWithoutLoginButton}
+            onPress={handleContinueWithoutLogin}
+          >
+            <Text style={styles.continueWithoutLoginText}>
+              Continuar sem fazer login
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
       </SafeAreaView>
     </>
   );

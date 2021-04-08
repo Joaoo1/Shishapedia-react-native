@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Text, ToastAndroid, View, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  ToastAndroid,
+  View,
+  ActivityIndicator,
+  SafeAreaView,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -89,18 +95,20 @@ const Notifications = () => {
 
   return (
     <>
-      <PageHeader notifications={false} backButton title="Notificações" />
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
 
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
+      <PageHeader notifications={false} backButton title="Notificações" />
       {!user || !user.id ? (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Text style={styles.text}>Faça login para receber notificações</Text>
-        </View>
+        </SafeAreaView>
       ) : (
         <ScrollView>{renderNotificationList()}</ScrollView>
       )}

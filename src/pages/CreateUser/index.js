@@ -74,13 +74,16 @@ const CreateUser = () => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader title="Criar conta" navigation={navigation} />
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
       <ScrollView style={styles.container}>
         <TextInput
           style={styles.input}
@@ -108,6 +111,10 @@ const CreateUser = () => {
           value={password}
           onSubmitEditing={() => confirmPasswordInputRef.current.focus()}
         />
+        <Text style={styles.passwordRequirements}>
+          Senha precisa conter letras maiúsculas, minúsculas, números e no
+          minímo 8 digítos.
+        </Text>
         <TextInput
           ref={confirmPasswordInputRef}
           style={styles.input}

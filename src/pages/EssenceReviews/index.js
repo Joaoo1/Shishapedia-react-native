@@ -10,7 +10,7 @@ import {
   LogBox,
   Alert,
 } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, TouchableHighlight } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -85,11 +85,12 @@ const EssenceReviews = ({ route }) => {
       onSendReview();
     } catch (err) {
       crashlytics().recordError(err);
-      if (err.response) {
-        ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show('Ocorreu um erro ao publicar avaliação');
-      }
+      ToastAndroid.show(
+        err.response?.data?.error ?? 'Ocorreu um erro ao publicar avaliação',
+        ToastAndroid.SHORT,
+      );
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -128,13 +129,16 @@ const EssenceReviews = ({ route }) => {
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <PageHeader backButton title="Informações" notifications={false} />
-      <ActivityIndicator
-        style={styles.loading}
-        size="large"
-        animating={isLoading}
-        color={colors.accentColor}
-      />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContainerStyle}

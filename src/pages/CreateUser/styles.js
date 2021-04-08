@@ -45,6 +45,13 @@ const styles = StyleSheet.create({
     marginLeft: '37%',
     zIndex: 1000,
   },
+  passwordRequirements: {
+    color: 'white',
+    fontSize: fonts.tinySize,
+    fontFamily: fonts.light,
+    marginTop: 5,
+    marginLeft: 5,
+  },
 });
 
 export default styles;

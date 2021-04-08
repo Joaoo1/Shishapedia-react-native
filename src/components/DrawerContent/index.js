@@ -1,7 +1,7 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, ToastAndroid } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InAppReview from 'react-native-in-app-review';
@@ -43,7 +43,9 @@ const DrawerContent = () => {
 
   function onReviewItemPress() {
     InAppReview.RequestInAppReview().then((hasFinished) => {
-      if (hasFinished) console.log('Success!');
+      if (hasFinished) {
+        ToastAndroid.show('Obrigado pela avaliação!', ToastAndroid.SHORT);
+      }
     });
   }
 
@@ -53,11 +55,11 @@ const DrawerContent = () => {
         <DrawerContentScrollView>
           <DrawerHeader style={styles.header}>
             <Icon name="account-circle" size={80} color="#fff" />
-            <TouchableHighlight onPress={handleLogin}>
+            <TouchableOpacity onPress={handleLogin}>
               <Text style={styles.name}>
                 {user ? user.name : 'Fazer login'}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             <Text style={styles.email}>{user && user.email}</Text>
           </DrawerHeader>
 
