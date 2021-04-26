@@ -50,6 +50,27 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
   },
+  noFoundEssenceTitle: {
+    fontFamily: fonts.bold,
+    fontSize: fonts.titleSize,
+    color: colors.text,
+    textAlign: 'center',
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  noFoundEssenceText: {
+    fontFamily: fonts.regular,
+    fontSize: fonts.regularSize,
+    color: colors.text,
+    textAlign: 'center',
+    paddingHorizontal: 20,
+    marginTop: 15,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 100,
+  },
 });
 
 export default styles;

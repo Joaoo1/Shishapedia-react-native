@@ -1,53 +1,56 @@
-import { useEffect, useRef } from 'react';
-import { TextInput } from 'react-native';
+import { useRef, useEffect, useCallback } from 'react';
+import { Text, TextInput } from 'react-native';
 import { useField } from '@unform/core';
-import PropTypes from 'prop-types';
 
-const propTypes = {
-  name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-};
-
-function Input({ name, placeholder, ...rest }) {
+function Input({ name, label, onChangeText, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField, defaultValue = '' } = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
   useEffect(() => {
     inputRef.current.value = defaultValue;
+  }, [defaultValue]);
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.value = defaultValue;
   }, [defaultValue]);
   useEffect(() => {
     registerField({
       name: fieldName,
       ref: inputRef.current,
-      path: 'value',
-      clearValue(ref) {
-        ref.value = '';
-        ref.clear();
+      getValue() {
+        if (inputRef.current) return inputRef.current.value;
+        return '';
       },
       setValue(ref, value) {
-        ref.setNativeProps({ text: value });
-        inputRef.current.value = value;
+        if (inputRef.current) {
+          inputRef.current.setNativeProps({ text: value });
+          inputRef.current.value = value;
+        }
       },
-      getValue(ref) {
-        return ref.value;
+      clearValue() {
+        if (inputRef.current) {
+          inputRef.current.setNativeProps({ text: '' });
+          inputRef.current.value = '';
+        }
       },
     });
   }, [fieldName, registerField]);
+  const handleChangeText = useCallback(
+    (text) => {
+      if (inputRef.current) inputRef.current.value = text;
+      if (onChangeText) onChangeText(text);
+    },
+    [onChangeText],
+  );
   return (
-    <TextInput
-      ref={inputRef}
-      defaultValue={defaultValue}
-      placeholderTextColor="#c1bccc"
-      placeholder={placeholder}
-      onChangeText={(value) => {
-        if (inputRef.current) {
-          inputRef.current.value = value;
-        }
-      }}
-      {...rest}
-    />
+    <>
+      {label && <Text>{label}</Text>}
+      <TextInput
+        ref={inputRef}
+        onChangeText={handleChangeText}
+        defaultValue={defaultValue}
+        {...rest}
+      />
+      {error && <Text style={{ color: '#ff0000', fontSize: 12 }}>{error}</Text>}
+    </>
   );
 }
-
-Input.propTypes = propTypes;
-
 export default Input;

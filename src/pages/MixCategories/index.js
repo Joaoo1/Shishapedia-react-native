@@ -8,20 +8,27 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixCategoryListItem from '../../components/MixCategoryListItem';
+import { useNotifications } from '../../hooks/notifications';
 
 import styles from './styles';
 import { colors } from '../../styles';
 
 const MixCategories = ({ navigation }) => {
   const { navigate } = useNavigation();
+  const { refreshNotifications } = useNotifications();
+
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
+
+  useFocusEffect(() => {
+    refreshNotifications();
+  }, []);
 
   useEffect(() => {
     async function fetchCategories() {

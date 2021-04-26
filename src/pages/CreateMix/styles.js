@@ -41,6 +41,12 @@ const styles = StyleSheet.create({
   inputCategory: {
     height: 200,
   },
+  loading: {
+    position: 'absolute',
+    marginTop: '65%',
+    marginLeft: '37%',
+    zIndex: 100000,
+  },
 });
 
 export default styles;

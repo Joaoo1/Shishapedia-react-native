@@ -8,6 +8,21 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="shishapedia" android:host="shishapedia.io"/>
       </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="shishapedianotification" />
+      </intent-filter>
+
+            <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="http" />
+        <data android:scheme="https" />
+        <data android:host="app.myapp.com"/>
+      </intent-filter>
     </activity>
     <activity android:name="com.zoontek.rnbootsplash.RNBootSplashActivity" android:windowSoftInputMode="adjustPan" android:theme="@style/customTheme" android:launchMode="singleTask">
       <intent-filter>

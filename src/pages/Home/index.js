@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import { useAuth } from '../../hooks/auth';
+import { useNotifications } from '../../hooks/notifications';
 
 import NarguileIcon from '../../assets/icons/Narguile';
 import EssenceIcon from '../../assets/icons/Essence';
@@ -14,9 +15,11 @@ import styles from './styles';
 
 const Home = ({ navigation }) => {
   const { user } = useAuth();
+  const { refreshNotifications } = useNotifications();
 
   useFocusEffect(
     useCallback(() => {
+      refreshNotifications();
       const handleBackButton = () => {
         BackHandler.exitApp();
         return true;

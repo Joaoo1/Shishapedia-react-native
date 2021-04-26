@@ -10,18 +10,26 @@ import {
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
+import { useFocusEffect } from '@react-navigation/native';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import EssenceBrandListItem from '../../components/EssenceBrandListItem';
 import api from '../../services/api';
+import { useNotifications } from '../../hooks/notifications';
 
 import { colors } from '../../styles';
 import styles from './styles';
 
 const EssencesBrands = ({ navigation }) => {
+  const { refreshNotifications } = useNotifications();
+
   const [brands, setBrands] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
   const [isLoading, setLoading] = useState(true);
+
+  useFocusEffect(() => {
+    refreshNotifications();
+  }, []);
 
   useEffect(() => {
     async function fetchBrands() {

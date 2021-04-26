@@ -14,6 +14,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import PageHeader from '../../components/DrawerPageHeader';
 import EssenceListItem from '../../components/EssenceListItem';
 import api from '../../services/api';
+import NotFoundImg from '../../assets/illustrations/not_found.svg';
 
 import { colors } from '../../styles';
 import styles from './styles';
@@ -25,7 +26,7 @@ const Essences = ({ route }) => {
 
   const [allEssences, setAllEssences] = useState({});
 
-  const { brandId, userId } = route.params;
+  const { brandId, brandName, userId } = route.params;
 
   useEffect(() => {
     async function fetchEssences() {
@@ -93,35 +94,59 @@ const Essences = ({ route }) => {
         />
       )}
 
-      <PageHeader title="Essências" backButton />
+      <PageHeader title={brandName ?? 'Essências'} backButton />
       <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite o nome da essência"
-            placeholderTextColor="#c1bccc"
-            value={searchString}
-            onChangeText={(text) => setSearchString(text)}
-            onSubmitEditing={handleSearchEssences}
-          />
-          <Icon name="search" size={28} color="#c1bccc" style={styles.icon} />
-        </View>
-        {essences.length === 0 ? (
-          <Text style={styles.notFound}>
-            {
-              // eslint-disable-next-line operator-linebreak
-              !isLoading &&
-                (userId ? 'Não há favoritos' : 'Nenhuma essência encontrada')
-            }
-          </Text>
-        ) : (
-          <FlatList
-            data={essences}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item, index }) => (
-              <EssenceListItem essence={item} isFirst={index === 0} />
+        {!isLoading && allEssences.length === 0 && (
+          <>
+            <Text style={styles.noFoundEssenceTitle}>Nada por aqui...</Text>
+
+            {userId ? (
+              <Text style={styles.noFoundEssenceText}>
+                Não há nenhum favorito adicionado
+              </Text>
+            ) : (
+              <Text style={styles.noFoundEssenceText}>
+                Ainda não existe essências cadastrados nesta marca.
+              </Text>
             )}
-          />
+
+            <View style={styles.imageContainer}>
+              <NotFoundImg />
+            </View>
+          </>
+        )}
+        {!isLoading && allEssences.length > 1 && (
+          <>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite o nome da essência"
+                placeholderTextColor="#c1bccc"
+                value={searchString}
+                onChangeText={(text) => setSearchString(text)}
+                onSubmitEditing={handleSearchEssences}
+              />
+              <Icon
+                name="search"
+                size={28}
+                color="#c1bccc"
+                style={styles.icon}
+              />
+            </View>
+            {essences.length === 0 ? (
+              <Text style={styles.noFoundEssenceText}>
+                Nenhuma essência encontrada
+              </Text>
+            ) : (
+              <FlatList
+                data={essences}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item, index }) => (
+                  <EssenceListItem essence={item} isFirst={index === 0} />
+                )}
+              />
+            )}
+          </>
         )}
       </SafeAreaView>
     </>

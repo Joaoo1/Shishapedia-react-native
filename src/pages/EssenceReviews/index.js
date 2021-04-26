@@ -10,7 +10,7 @@ import {
   LogBox,
   Alert,
 } from 'react-native';
-import { RectButton, TouchableHighlight } from 'react-native-gesture-handler';
+import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';

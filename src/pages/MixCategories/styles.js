@@ -5,7 +5,6 @@ import { fonts, metrics, colors } from '../../styles';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    paddingTop: 5,
     flex: 1,
   },
   headline: {

@@ -11,6 +11,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
+import NotificationListItem from '../../components/NotificationListItem';
+import { useNotifications } from '../../hooks/notifications';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import { FormatDate } from '../../helpers/FormatDate';
@@ -22,6 +24,7 @@ import { colors } from '../../styles';
 const Notifications = () => {
   const { user } = useAuth();
   const { navigate } = useNavigation();
+  const { refreshNotifications } = useNotifications();
 
   const [notificationList, setNotificationList] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -63,6 +66,13 @@ const Notifications = () => {
     setNotificationList(newList);
   }
 
+  function handleNotificationDelete(idx) {
+    const newList = [...notificationList];
+    newList.splice(idx, 1);
+    setNotificationList([...newList]);
+    refreshNotifications();
+  }
+
   function renderNotificationList() {
     if (notificationList.length === 0 && !isLoading) {
       return (
@@ -74,22 +84,13 @@ const Notifications = () => {
     }
 
     return notificationList.map((notification, idx) => (
-      <View
+      <NotificationListItem
         key={notification.id}
-        style={!notification.read ? styles.unread : styles.read}
-        onTouchStart={() => handleItemPress(notification, idx)}
-      >
-        <View style={styles.listItem}>
-          <View style={styles.headContainer}>
-            <Text style={styles.notificationTitle}>{notification.title}</Text>
-            <Text style={styles.notificationDate}>{notification.date}</Text>
-          </View>
-          <Text style={styles.notificationMessage}>
-            {`${notification.message.substring(0, 35)}...`}
-          </Text>
-          <View style={styles.divider} />
-        </View>
-      </View>
+        notification={notification}
+        idx={idx}
+        onItemPress={handleItemPress}
+        onDelete={() => handleNotificationDelete(idx)}
+      />
     ));
   }
 

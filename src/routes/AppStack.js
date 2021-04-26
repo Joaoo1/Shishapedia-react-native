@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import RNBootSplash from 'react-native-bootsplash';
+import messaging from '@react-native-firebase/messaging';
 
 import DrawerNavigation from './DrawerNavigation';
 import Essences from '../pages/Essences';
@@ -17,17 +18,39 @@ import CreateUser from '../pages/CreateUser';
 import SearchMixes from '../pages/SearchMixes';
 import ForgotPassword from '../pages/ForgotPassword';
 import CreateMix from '../pages/CreateMix';
+import NarguileItems from '../pages/NarguileItems';
+import NarguileInfo from '../pages/NarguileInfo';
 
 const { Navigator, Screen } = createStackNavigator();
+
 const Routes = () => {
   useEffect(() => {
     setTimeout(() => {
       RNBootSplash.hide({ fade: true });
-    }, 500);
+    }, 300);
   }, []);
+
+  const [loading, setLoading] = useState(true);
+  const [initialRoute, setInitialRoute] = useState('Under18');
+
+  useEffect(() => {
+    messaging()
+      .getInitialNotification()
+      .then((remoteMessage) => {
+        if (remoteMessage) {
+          setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+        }
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return null;
+  }
+
   return (
     <Navigator
-      initialRouteName="Under18"
+      initialRouteName={initialRoute}
       screenOptions={{
         headerShown: false,
       }}
@@ -47,6 +70,8 @@ const Routes = () => {
       <Screen name="ForgotPassword" component={ForgotPassword} />
       <Screen name="NotificationInfo" component={NotificationInfo} />
       <Screen name="CreateMix" component={CreateMix} />
+      <Screen name="NarguileItems" component={NarguileItems} />
+      <Screen name="NarguileInfo" component={NarguileInfo} />
     </Navigator>
   );
 };

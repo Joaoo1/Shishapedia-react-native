@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   footerText: {
     textAlign: 'right',
     fontFamily: fonts.light,
-    fontSize: fonts.regularSize,
+    fontSize: fonts.tinySize,
     color: colors.text,
   },
   loading: {

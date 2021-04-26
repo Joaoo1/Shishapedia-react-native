@@ -1,12 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { fonts, metrics, colors } from '../../styles';
+import { fonts, colors, metrics } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    alignItems: 'center',
-    backgroundColor: '#fff',
     flex: 1,
   },
   text: {
@@ -16,6 +13,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     textAlign: 'center',
     color: colors.text,
+  },
+  headline: {
+    paddingHorizontal: metrics.screenHorizontalPadding,
+    fontSize: fonts.bigSize,
+    fontFamily: fonts.bold,
+    color: '#000',
+    padding: 15,
   },
 });
 

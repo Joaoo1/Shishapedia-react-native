@@ -22,7 +22,7 @@ const EssenceBrandListItem = ({ brand, isFirst }) => {
   const { user } = useAuth();
 
   function handleItemPress() {
-    navigate('Essences', { brandId: brand.id });
+    navigate('Essences', { brandId: brand.id, brandName: brand.name });
   }
 
   function handleFavoriteItemPress() {

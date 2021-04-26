@@ -13,8 +13,7 @@ const defaultProps = {
   height: 65,
 };
 
-function News({ color, width, height }) {
-  return (
+const News = ({ color, width, height }) => (
     <Svg
       width={width}
       height={height}
@@ -32,7 +31,6 @@ function News({ color, width, height }) {
       />
     </Svg>
   );
-}
 
 News.propTypes = propTypes;
 News.defaultProps = defaultProps;

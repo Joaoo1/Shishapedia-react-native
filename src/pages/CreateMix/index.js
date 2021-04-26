@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
-import { Text, View, ScrollView, ToastAndroid } from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  ToastAndroid,
+  ActivityIndicator,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import crashlytics from '@react-native-firebase/crashlytics';
 
@@ -11,6 +17,7 @@ import { useAuth } from '../../hooks/auth';
 
 import styles from './styles';
 import api from '../../services/api';
+import { colors } from '../../styles';
 
 const CreateMix = () => {
   const navigation = useNavigation();
@@ -19,6 +26,7 @@ const CreateMix = () => {
 
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchCategoryList() {
@@ -44,28 +52,50 @@ const CreateMix = () => {
 
   async function handleFormSubmit(data) {
     try {
+      setLoading(true);
       await api.post('/mix_indication', {
         ...data,
         categoryId: selectedCategory,
-        authorId: user.id,
+        authorId: user?.id,
       });
       navigation.goBack();
       ToastAndroid.show('Enviado com sucesso!', ToastAndroid.SHORT);
     } catch (err) {
       crashlytics().recordError(err);
-      ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+      if (err.response) {
+        if (err.response.data.errors) {
+          form.current.setErrors(err.response.data.errors);
+        } else {
+          ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+        }
+      } else {
+        ToastAndroid.show(
+          'Ocorreu um erro ao cadastrar indicação de mix',
+          ToastAndroid.SHORT,
+        );
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <>
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          animating={isLoading}
+          color={colors.accentColor}
+        />
+      )}
+
       <SavePageHeader
         navigation={navigation}
         title="Indique um mix"
         onSave={handleSaveButtonPress}
         saveButtonText="ENVIAR"
       />
-
       <ScrollView>
         {!user && (
           <Text style={styles.warningText}>

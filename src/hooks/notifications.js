@@ -12,27 +12,31 @@ const NotificationProvider = ({ children }) => {
 
   const { user, loading: loadingUser } = useAuth();
 
-  useEffect(() => {
-    async function loadNotifications() {
-      try {
-        const response = await api.get('/unread_notifications');
-        setUnreadNotifications(response.data.notifications);
-      } catch (err) {
-        crashlytics().recordError(err);
-        ToastAndroid.show(
-          'Ocorreu um erro ao carregar notificações',
-          ToastAndroid.LONG,
-        );
-      }
+  async function loadNotifications() {
+    try {
+      const response = await api.get('/unread_notifications');
+      setUnreadNotifications(response.data.notifications);
+    } catch (err) {
+      crashlytics().recordError(err);
+      ToastAndroid.show(
+        'Ocorreu um erro ao carregar notificações',
+        ToastAndroid.LONG,
+      );
     }
+  }
 
+  const refreshNotifications = () => {
     if (loadingUser != null && !loadingUser) {
-      if (user && user.id) {
+      if (user?.id) {
         loadNotifications();
       } else {
         setUnreadNotifications(0);
       }
     }
+  };
+
+  useEffect(() => {
+    refreshNotifications();
   }, [loadingUser]);
 
   const setRead = () => {
@@ -44,6 +48,7 @@ const NotificationProvider = ({ children }) => {
       value={{
         unreadNotifications,
         setRead,
+        refreshNotifications,
       }}
     >
       {children}

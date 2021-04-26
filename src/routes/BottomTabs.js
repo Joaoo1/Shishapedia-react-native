@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../pages/Home';
 import EssencesBrandsScreen from '../pages/EssencesBrands';
 import MixCategoriesScreen from '../pages/MixCategories';
-import NarguilesScreen from '../pages/Narguiles';
+import NarguilesScreen from '../pages/NarguileItemTypes';
 import NewsScreen from '../pages/News';
 
 import NarguileIcon from '../assets/icons/Narguile';

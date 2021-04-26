@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -34,7 +34,16 @@ function DrawerPageHeader({
   const { unreadNotifications } = useNotifications();
 
   function handleBackPress() {
-    stackNavigation.goBack();
+    if (stackNavigation.dangerouslyGetState().routes.length === 1) {
+      stackNavigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: 'DrawerNavigation' }],
+        }),
+      );
+    } else {
+      stackNavigation.goBack();
+    }
   }
 
   function handleNotificationPress() {

@@ -168,7 +168,7 @@ const EssenceInfo = ({ navigation, route }) => {
               </Text>
             )}
             {essence.release_date !== null && (
-              <Text style={styles.boldText}>
+              <Text style={styles.descriptionText}>
                 {`Data da lançamento: ${essence.release_date}`}
               </Text>
             )}

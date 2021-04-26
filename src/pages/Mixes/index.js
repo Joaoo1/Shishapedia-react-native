@@ -90,7 +90,7 @@ const Mixes = ({ route }) => {
 
       <PageHeader title="Mixes" backButton />
       <SafeAreaView style={styles.container}>
-        {!isLoading && mixes.length === 0 && (
+        {!isLoading && allMixes.length === 0 && (
           <>
             <Text style={styles.noFoundMixesTitle}>Nada por aqui...</Text>
 
@@ -112,7 +112,7 @@ const Mixes = ({ route }) => {
           </>
         )}
 
-        {!isLoading && mixes.length > 0 && (
+        {!isLoading && allMixes.length > 0 && (
           <>
             <View style={styles.inputContainer}>
               <TextInput
@@ -131,13 +131,17 @@ const Mixes = ({ route }) => {
                 onPress={handleSearchMixes}
               />
             </View>
-            <FlatList
-              data={mixes}
-              keyExtractor={(item) => `${item.id}`}
-              renderItem={({ item, index }) => (
-                <MixListItem mix={item} isFirst={index === 0} />
-              )}
-            />
+            {mixes.length === 0 ? (
+              <Text style={styles.noFoundMixesText}>Nenhum mix encontrado</Text>
+            ) : (
+              <FlatList
+                data={mixes}
+                keyExtractor={(item) => `${item.id}`}
+                renderItem={({ item, index }) => (
+                  <MixListItem mix={item} isFirst={index === 0} />
+                )}
+              />
+            )}
           </>
         )}
       </SafeAreaView>
