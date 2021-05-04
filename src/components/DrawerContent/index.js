@@ -1,17 +1,18 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InAppReview from 'react-native-in-app-review';
 
 import { useAuth } from '../../hooks/auth';
-import DrawerHeader from '../DrawerHeader';
 
-import styles from './styles';
+import { Container, Header, Divider, Email, Name } from './styles';
+import { useTheme } from '../../hooks/theme';
 
 const DrawerContent = () => {
+  const { colors } = useTheme();
   const { user, signOut } = useAuth();
   const navigation = useNavigation();
 
@@ -51,65 +52,73 @@ const DrawerContent = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <Container backgroundColor={colors.white}>
         <DrawerContentScrollView>
-          <DrawerHeader style={styles.header}>
-            <Icon name="account-circle" size={80} color="#fff" />
+          <Header>
+            <Icon name="account-circle" size={80} color="white" />
             <TouchableOpacity onPress={handleLogin}>
-              <Text style={styles.name}>
-                {user ? user.name : 'Fazer login'}
-              </Text>
+              <Name>{user?.name || 'Fazer login'}</Name>
             </TouchableOpacity>
-            <Text style={styles.email}>{user && user.email}</Text>
-          </DrawerHeader>
+            <Email>{user?.email}</Email>
+          </Header>
 
-          <View style={styles.container}>
+          <Container>
             <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="person" size={size} color={color} />
+              icon={({ size }) => (
+                <Icon name="person" size={size} color={colors.text} />
               )}
               label="Perfil"
               onPress={onProfileItemPress}
+              labelStyle={{ color: colors.text }}
             />
             <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="settings" size={size} color={color} />
+              icon={({ size }) => (
+                <Icon name="settings" size={size} color={colors.text} />
               )}
               label="Configurações"
               onPress={() => {}}
+              labelStyle={{ color: colors.text }}
             />
-            <View style={styles.divider} />
+            <Divider />
             <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="feedback" size={size} color={color} />
+              icon={({ size }) => (
+                <Icon name="feedback" size={size} color={colors.text} />
               )}
               label="Deixe um feedback"
               onPress={onFeedbackItemPress}
+              labelStyle={{ color: colors.text }}
             />
             <DrawerItem
-              icon={({ color, size }) => (
-                <MaterialIcon name="google-play" size={size} color={color} />
+              icon={({ size }) => (
+                <MaterialIcon
+                  name="google-play"
+                  size={size}
+                  color={colors.text}
+                />
               )}
               label="Avalie o app"
               onPress={onReviewItemPress}
+              labelStyle={{ color: colors.text }}
             />
             <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="help" size={size} color={color} />
+              icon={({ size }) => (
+                <Icon name="help" size={size} color={colors.text} />
               )}
               label="Ajuda"
               onPress={onHelpItemPress}
+              labelStyle={{ color: colors.text }}
             />
             <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="exit-to-app" size={size} color={color} />
+              icon={({ size }) => (
+                <Icon name="exit-to-app" size={size} color={colors.text} />
               )}
               label="Logout"
               onPress={signOut}
+              labelStyle={{ color: colors.text }}
             />
-          </View>
+          </Container>
         </DrawerContentScrollView>
-      </View>
+      </Container>
     </>
   );
 };

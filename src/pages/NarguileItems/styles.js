@@ -1,15 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '65%',
-    marginLeft: '37%',
-    zIndex: 1000,
-  },
-});
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
 
-export default styles;
+export default Container;

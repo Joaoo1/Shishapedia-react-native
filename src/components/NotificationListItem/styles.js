@@ -1,53 +1,60 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
-import { metrics, fonts, colors } from '../../styles';
+import { metrics, fonts } from '../../styles';
 
-const styles = StyleSheet.create({
-  listItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingRight: 10,
-  },
-  unread: {
-    backgroundColor: '#e5e5e5',
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    paddingTop: 15,
-  },
-  read: {
-    backgroundColor: '#fff',
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    paddingTop: 15,
-  },
-  headContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  notificationTitle: {
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.regular,
-    color: colors.text,
-  },
-  notificationDate: {
-    fontSize: fonts.regularSize - 1,
-    fontFamily: fonts.regular,
-    color: colors.text,
-  },
-  notificationMessage: {
-    fontSize: fonts.tinySize,
-    fontFamily: fonts.light,
-    color: colors.text,
-  },
-  divider: {
-    marginTop: 15,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#c9c9c9',
-  },
-  icon: {
-    marginRight: 20,
-  },
-  infoContainer: {
-    flex: 1,
-  },
-});
+const horizontalPadding = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled.View`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  padding: ${() => `15px ${horizontalPadding}px 15px ${horizontalPadding}px`};
+`;
+
+const ListItem = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding-right: 10px;
+`;
+
+const HeadContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const NotificationTitle = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+`;
+
+const NotificationDate = styled.Text`
+  font-size: ${() => `${fonts.regularSize - 1}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+`;
+
+const NotificationMessage = styled.Text`
+  font-size: ${() => `${fonts.tinySize}px`};
+  font-family: ${() => fonts.light};
+  color: ${({ color }) => color};
+`;
+
+const Divider = styled.View`
+  margin-top: 15px;
+  border-bottom-width: 0.5px;
+  border-bottom-color: ${({ color }) => color};
+`;
+
+const InfoContainer = styled.View`
+  flex: 1;
+`;
+
+export {
+  Container,
+  ListItem,
+  HeadContainer,
+  Divider,
+  InfoContainer,
+  NotificationDate,
+  NotificationMessage,
+  NotificationTitle,
+};

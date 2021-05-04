@@ -1,31 +1,31 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
-import { fonts, metrics, colors } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    flex: 1,
-  },
-  text: {
-    fontFamily: fonts.regular,
-    fontSize: 17,
-    marginBottom: 80,
-    textAlign: 'center',
-    maxWidth: 250,
-    color: colors.text,
-  },
-  headline: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.titleSize,
-    textAlign: 'center',
-    maxWidth: 250,
-    color: colors.text,
-    marginTop: 50,
-    marginBottom: 20,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled.View`
+  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
+  align-items: center;
+  flex: 1;
+`;
+
+const Text = styled.Text`
+  font-family: ${() => fonts.regular};
+  font-size: 17px;
+  margin-bottom: 80px;
+  text-align: center;
+  max-width: 250px;
+  color: ${({ color }) => color};
+`;
+
+const Headline = styled.Text`
+  font-family: ${() => fonts.bold};
+  font-size: ${() => `${fonts.titleSize}px`};
+  margin: 50px 0 0 20px;
+  text-align: center;
+  max-width: 250px;
+  color: ${({ color }) => color};
+`;
+
+export { Container, Headline, Text };

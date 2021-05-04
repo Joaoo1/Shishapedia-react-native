@@ -1,14 +1,16 @@
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import { useNotifications } from '../../hooks/notifications';
+import { useTheme } from '../../hooks/theme';
 
 import NarguilesImg from '../../assets/illustrations/news_not_available.svg';
-import styles from './styles';
+import { Container, Headline, Text } from './styles';
 
 const News = ({ navigation }) => {
   const { refreshNotifications } = useNotifications();
+  const { colors } = useTheme();
 
   useFocusEffect(() => {
     refreshNotifications();
@@ -18,13 +20,13 @@ const News = ({ navigation }) => {
     <>
       <PageHeader title="Notícias" drawerNavigation={navigation} />
       <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.headline}>Ops...</Text>
-          <Text style={styles.text}>
+        <Container>
+          <Headline color={colors.text}>Ops...</Headline>
+          <Text color={colors.text}>
             Seção de notícias ainda não está disponível
           </Text>
           <NarguilesImg />
-        </View>
+        </Container>
       </ScrollView>
     </>
   );

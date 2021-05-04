@@ -1,37 +1,40 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { Image } from 'react-native';
 
-import { colors, fonts, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-    borderBottomColor: 'rgba(0, 0, 0, 0.15)',
-    borderBottomWidth: 0.5,
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    marginHorizontal: 5,
-  },
-  firstItem: {
-    borderTopColor: 'rgba(0, 0, 0, 0.15)',
-    borderTopWidth: 0.5,
-  },
-  leftContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  itemImage: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain',
-    marginRight: 20,
-  },
-  itemTitle: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    color: colors.text,
-  },
-});
+const horinzontalPadding = metrics.screenHorizontalPadding;
 
-export default styles;
+const ListItem = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${() => `12px ${horinzontalPadding}px 12px ${horinzontalPadding}px`};
+  border-bottom-color: ${({ dividerColor }) => dividerColor};
+  border-bottom-width: 0.5px;
+  margin: 0 5px 0 5px;
+`;
+
+const FirstItem = styled(ListItem)`
+  border-top-color: ${({ dividerColor }) => dividerColor};
+  border-top-width: 0.5px;
+`;
+
+const LeftContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const ItemImage = styled(Image)`
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+`;
+
+const ItemTitle = styled.Text`
+  font-family: ${() => fonts.regular};
+  font-size: ${() => `${fonts.regularSize}px`};
+  color: ${({ color }) => color};
+`;
+
+export { ListItem, FirstItem, LeftContainer, ItemImage, ItemTitle };

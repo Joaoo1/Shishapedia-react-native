@@ -1,66 +1,70 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { SafeAreaView, TextInput } from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { fonts, colors, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginBottom: metrics.BottomTabHeight + 35,
-  },
-  list: {
-    paddingHorizontal: 20,
-  },
-  input: {
-    height: metrics.inputHeight,
-    backgroundColor: colors.inputBackground,
-    fontSize: fonts.inputSize,
-    fontFamily: fonts.regular,
-    borderRadius: metrics.inputBorderRadius,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    paddingHorizontal: 16,
-    flex: 1,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 10,
-    margin: 20,
-    elevation: 1,
-  },
-  icon: {
-    position: 'absolute',
-    right: 16,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '65%',
-    marginLeft: '37%',
-    zIndex: 1000,
-  },
-  noFoundMixesTitle: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.titleSize,
-    color: colors.text,
-    textAlign: 'center',
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  noFoundMixesText: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    color: colors.text,
-    textAlign: 'center',
-    paddingHorizontal: 20,
-    marginTop: 15,
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled(SafeAreaView)`
+  margin-bottom: ${() => `${metrics.BottomTabHeight + 35}px`};
+`;
+
+const Input = styled(TextInput)`
+  height: ${() => `${metrics.inputHeight}px`};
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.regular};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  border-width: 1px;
+  border-color: ${({ borderColor }) => borderColor};
+  padding: ${() => '0 16px 0 16px'};
+  color: ${({ textColor }) => textColor};
+  flex: 1;
+`;
+
+const InputContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: 10px;
+  margin: 20px;
+`;
+
+const Icon = styled(MaterialIcon)`
+  position: absolute;
+  right: 16px;
+`;
+
+const NotFoundTitle = styled.Text`
+  font-size: ${() => `${fonts.titleSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+  align-self: center;
+  margin-top: 20px;
+  padding: ${() => `15px ${paddingHorizontal}px 15px ${paddingHorizontal}px`};
+`;
+
+const NoFoundMixesText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+  align-self: center;
+  text-align: center;
+  padding: ${() => `15px ${paddingHorizontal}px 15px ${paddingHorizontal}px`};
+`;
+
+const ImageContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+`;
+
+export {
+  Container,
+  Input,
+  InputContainer,
+  Icon,
+  ImageContainer,
+  NoFoundMixesText,
+  NotFoundTitle,
+};

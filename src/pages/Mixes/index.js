@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
-import {
-  View,
-  TextInput,
-  FlatList,
-  SafeAreaView,
-  ActivityIndicator,
-  ToastAndroid,
-  Text,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FlatList, ToastAndroid } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixListItem from '../../components/MixListItem';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useTheme } from '../../hooks/theme';
 
 import NotFoundImg from '../../assets/illustrations/not_found.svg';
-import styles from './styles';
-import { colors } from '../../styles';
+import {
+  Container,
+  Input,
+  InputContainer,
+  Icon,
+  ImageContainer,
+  NoFoundMixesText,
+  NotFoundTitle,
+} from './styles';
 
 const Mixes = ({ route }) => {
+  const { colors } = useTheme();
+
   const [mixes, setMixes] = useState([]);
   const [searchString, setSearchString] = useState('');
   const [allMixes, setAllMixes] = useState([]);
@@ -79,44 +81,30 @@ const Mixes = ({ route }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title="Mixes" backButton />
-      <SafeAreaView style={styles.container}>
+      <Container>
         {!isLoading && allMixes.length === 0 && (
           <>
-            <Text style={styles.noFoundMixesTitle}>Nada por aqui...</Text>
-
-            {route.params.userId ? (
-              <Text style={styles.noFoundMixesText}>
-                Não há nenhum favorito adicionado
-              </Text>
-            ) : (
-              <Text style={styles.noFoundMixesText}>
-                {
-                  'Ainda não existe mixes cadastrados nesta categoria. \n Seja o primeiro a indicar um!'
-                }
-              </Text>
-            )}
-
-            <View style={styles.imageContainer}>
+            <NotFoundTitle color={colors.text}>Nada por aqui...</NotFoundTitle>
+            <NoFoundMixesText color={colors.text}>
+              {route.params.userId
+                ? 'Não há nenhum favorito adicionado'
+                : 'Ainda não existe mixes cadastrados nesta categoria. \n Seja o primeiro a indicar um!'}
+            </NoFoundMixesText>
+            <ImageContainer>
               <NotFoundImg />
-            </View>
+            </ImageContainer>
           </>
         )}
 
         {!isLoading && allMixes.length > 0 && (
           <>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
+            <InputContainer backgroundColor={colors.inputBackground}>
+              <Input
+                borderColor={colors.inputBorder}
+                textColor={colors.text}
                 placeholder="Digite o nome da essência"
                 placeholderTextColor="#c1bccc"
                 value={searchString}
@@ -127,12 +115,13 @@ const Mixes = ({ route }) => {
                 name="search"
                 size={28}
                 color="#c1bccc"
-                style={styles.icon}
                 onPress={handleSearchMixes}
               />
-            </View>
+            </InputContainer>
             {mixes.length === 0 ? (
-              <Text style={styles.noFoundMixesText}>Nenhum mix encontrado</Text>
+              <NoFoundMixesText color={colors.text}>
+                Nenhum mix encontrado
+              </NoFoundMixesText>
             ) : (
               <FlatList
                 data={mixes}
@@ -144,7 +133,7 @@ const Mixes = ({ route }) => {
             )}
           </>
         )}
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

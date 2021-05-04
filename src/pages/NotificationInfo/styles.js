@@ -1,38 +1,40 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { SafeAreaView } from 'react-native';
 
-import { metrics, fonts, colors } from '../../styles';
+import { metrics, fonts } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    paddingVertical: metrics.screenHorizontalPadding,
-    backgroundColor: '#fff',
-  },
-  headContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  notificationTitle: {
-    fontSize: fonts.bigSize,
-    fontFamily: fonts.regular,
-    color: colors.text,
-  },
-  notificationDate: {
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.regular,
-    color: colors.text,
-  },
-  notificationMessage: {
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.light,
-    color: colors.text,
-    marginTop: 5,
-  },
-  text: {
-    fontSize: fonts.titleSize,
-    fontFamily: fonts.bold,
-    color: colors.text,
-  },
-});
+const Container = styled(SafeAreaView)`
+  padding: ${() => `${metrics.screenHorizontalPadding}px`};
+`;
 
-export default styles;
+const HeadContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const NotificationTitle = styled.Text`
+  font-size: ${() => `${fonts.bigSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+`;
+
+const NotificationMessage = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.light};
+  color: ${({ color }) => color};
+  margin-top: 5px;
+`;
+
+const NotificationDate = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+`;
+
+export {
+  Container,
+  HeadContainer,
+  NotificationDate,
+  NotificationMessage,
+  NotificationTitle,
+};

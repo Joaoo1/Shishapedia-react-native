@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react';
-import {
-  SafeAreaView,
-  FlatList,
-  Text,
-  ToastAndroid,
-  ActivityIndicator,
-} from 'react-native';
+import { FlatList, ToastAndroid } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixCategoryListItem from '../../components/MixCategoryListItem';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import { useNotifications } from '../../hooks/notifications';
+import { useTheme } from '../../hooks/theme';
 
-import styles from './styles';
-import { colors } from '../../styles';
+import { Container, Headline, FloatingButton } from './styles';
 
 const MixCategories = ({ navigation }) => {
   const { navigate } = useNavigation();
   const { refreshNotifications } = useNotifications();
+  const { colors } = useTheme();
 
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -55,22 +50,16 @@ const MixCategories = ({ navigation }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader
         title="Mixes"
         drawerNavigation={navigation}
         onClickSearch={() => navigate('SearchMixes')}
       />
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.headline}>Categorias</Text>
+
+      <Container>
+        <Headline color={colors.text}>Categorias</Headline>
         <FlatList
           data={categories}
           keyExtractor={(item) => item.id.toString()}
@@ -79,13 +68,13 @@ const MixCategories = ({ navigation }) => {
           )}
         />
 
-        <TouchableOpacity
-          style={styles.floatingButton}
+        <FloatingButton
           onPress={handleCreateMixButtonPress}
+          backgroundColor={colors.accentColor}
         >
           <Icon name="add" size={28} color="white" />
-        </TouchableOpacity>
-      </SafeAreaView>
+        </FloatingButton>
+      </Container>
     </>
   );
 };

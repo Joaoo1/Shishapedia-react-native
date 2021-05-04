@@ -1,135 +1,171 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { Image as RNImage, ScrollView, TextInput } from 'react-native';
 
-import { fonts, metrics, colors } from '../../styles';
+import { RectButton } from 'react-native-gesture-handler';
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'rgba(218,218,218,0.4)',
-  },
-  scrollViewContainerStyle: {
-    flexGrow: 1,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: metrics.screenHorizontalPadding,
-  },
-  reviewsContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderTopRightRadius: 60,
-    borderTopLeftRadius: 60,
-    borderWidth: 1,
-    borderColor: 'transparent',
-    paddingHorizontal: metrics.screenHorizontalPadding + 10,
-    paddingTop: 30,
-  },
-  reviewAuthor: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.regularSize,
-    color: colors.text,
-  },
-  reviewText: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    color: colors.text,
-    marginTop: 15,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flex: 1,
-  },
-  divider: {
-    borderBottomColor: colors.divider,
-    borderBottomWidth: 0.5,
-    marginTop: 15,
-    marginBottom: 30,
-  },
-  headerText: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.bigSize + 4,
-    color: colors.text,
-    marginLeft: 10,
-  },
-  rating: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.bigSize,
-    marginLeft: 5,
-  },
-  star: {
-    marginRight: 5,
-  },
-  image: {
-    width: 28,
-    height: 44,
-  },
-  makeReviewFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 15,
-    marginBottom: 40,
-  },
-  starsContainer: {
-    flexDirection: 'row',
-  },
-  reviewInfoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  reviewRatingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 2,
-  },
-  reviewDate: {
-    fontFamily: fonts.light,
-    fontSize: fonts.tinySize,
-    color: '#9b9b9b',
-    marginLeft: 10,
-  },
-  input: {
-    backgroundColor: colors.inputBackground,
-    fontSize: fonts.inputSize,
-    fontFamily: fonts.regular,
-    borderRadius: metrics.inputBorderRadius,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    paddingHorizontal: 16,
-    height: 130,
-    textAlignVertical: 'top',
-  },
-  button: {
-    padding: 20,
-    backgroundColor: colors.buttonBackground,
-    borderRadius: metrics.inputBorderRadius,
-    height: metrics.inputHeight,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    marginLeft: 15,
-  },
-  buttonText: {
-    color: colors.buttonText,
-    fontFamily: fonts.bold,
-    fontSize: fonts.inputSize,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '95%',
-    marginLeft: '37%',
-    zIndex: 10,
-  },
-  notFound: {
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.regular,
-    color: colors.text,
-    flexGrow: 1,
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-});
+import { fonts, metrics } from '../../styles';
 
-export default styles;
+const paddingHorizontal = metrics.screenHorizontalPadding;
+
+const Container = styled(ScrollView)`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
+
+const HeaderContainer = styled.View`
+  padding: ${() => `${paddingHorizontal}px`};
+  flex-direction: row;
+  align-items: center;
+`;
+
+const ReviewsContainer = styled.View`
+  flex: 1;
+  background-color: ${({ color }) => color};
+  border-top-right-radius: 60px;
+  border-top-left-radius: 60px;
+  border-width: 1px;
+  border-color: transparent;
+  padding-left: ${() => `${paddingHorizontal + 10}px`};
+  padding-right: ${() => `${paddingHorizontal + 10}px`};
+  padding-top: 30px;
+`;
+
+const ReviewAuthor = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+`;
+
+const ReviewText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+  margin-top: 15px;
+`;
+
+const RatingContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+`;
+
+const Divider = styled.View`
+  border-bottom-width: 0.5px;
+  border-bottom-color: ${({ color }) => color}; /* divider */
+  margin: 15px 0 30px 0;
+`;
+
+const HeaderText = styled.Text`
+  font-size: ${() => `${fonts.bigSize + 4}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+  margin-left: 10px;
+`;
+
+const Rating = styled.Text`
+  font-size: ${() => `${fonts.bigSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+  margin: 5px 0 0 5px;
+`;
+
+const StarContainer = styled.View`
+  margin-right: 5px;
+`;
+
+const Image = styled(RNImage)`
+  width: 28px;
+  height: 44px;
+`;
+
+const MakeReviewFooter = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 40px;
+`;
+
+const StarsContainer = styled.View`
+  flex-direction: row;
+`;
+
+const ReviewInfoContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ReviewRatingContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 2px;
+`;
+
+const ReviewDate = styled.Text`
+  font-size: ${() => `${fonts.tinySize}px`};
+  font-family: ${() => fonts.light};
+  color: #9b9b9b;
+  margin-left: 10px;
+`;
+
+const Input = styled(TextInput)`
+  height: 130px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.regular};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  border-width: 1px;
+  border-color: ${({ borderColor }) => borderColor};
+  padding: ${() => '10px 16px 0 16px'};
+  color: ${({ textColor }) => textColor};
+`;
+
+const Button = styled(RectButton)`
+  padding: 20px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  width: 100%;
+  height: ${() => `${metrics.inputHeight}px`};
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  flex: 1;
+`;
+
+const ButtonText = styled.Text`
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+`;
+
+const NotFound = styled.Text`
+  font-size: ${() => `${fonts.bigSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+  flex-grow: 1;
+  align-self: center;
+  margin-top: 20px;
+`;
+
+export {
+  Container,
+  HeaderContainer,
+  ReviewsContainer,
+  Button,
+  ButtonText,
+  Divider,
+  HeaderText,
+  Image,
+  Input,
+  MakeReviewFooter,
+  NotFound,
+  Rating,
+  RatingContainer,
+  ReviewAuthor,
+  ReviewDate,
+  ReviewInfoContainer,
+  ReviewRatingContainer,
+  ReviewText,
+  StarContainer,
+  StarsContainer,
+};

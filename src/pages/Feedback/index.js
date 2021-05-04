@@ -1,24 +1,27 @@
 import { useState } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  ToastAndroid,
-  ActivityIndicator,
-  SafeAreaView,
-} from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { ToastAndroid, View } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
+import LoadingIndicator from '../../components/LoadingIndicator';
 import PageHeader from '../../components/SavePageHeader';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
-import { colors } from '../../styles';
-import styles from './styles';
+import {
+  Container,
+  Input,
+  Description,
+  Button,
+  ButtonText,
+  FooterContainer,
+  FooterText,
+} from './styles';
 
 const Feedback = ({ navigation }) => {
   const { user } = useAuth();
+  const { colors } = useTheme();
+
   const [message, setMessage] = useState('');
   const [isLoading, setLoading] = useState(false);
 
@@ -47,43 +50,40 @@ const Feedback = ({ navigation }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title="Feedback" navigation={navigation} />
-      <SafeAreaView style={styles.container}>
+      <Container>
         <View>
-          <Text style={styles.description}>
+          <Description color={colors.text}>
             Tem alguma sugestão ou ideia sensacional para o aplicativo ?
             Compartilhe-a conosco, nós também queremos saber! Reclamações e
             críticas também serão muito bem-vindas.
-          </Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Escreva aqui sua mensagem"
-              placeholderTextColor="#c1bccc"
-              multiline
-              value={message}
-              onChangeText={(text) => setMessage(text)}
-            />
-          </View>
-          <RectButton style={styles.button} onPress={handleSubmitFeedbackPress}>
-            <Text style={styles.buttonText}>Enviar</Text>
-          </RectButton>
+          </Description>
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+            placeholder="Escreva aqui sua mensagem"
+            placeholderTextColor="#c1bccc"
+            multiline
+            value={message}
+            onChangeText={(text) => setMessage(text)}
+            style={{ textAlignVertical: 'top' }}
+          />
+          <Button
+            backgroundColor={colors.buttonBackground}
+            onPress={handleSubmitFeedbackPress}
+          >
+            <ButtonText color={colors.buttonText}>Enviar</ButtonText>
+          </Button>
         </View>
-        <View style={styles.footerContainer}>
-          <Text style={styles.footerText}>
+        <FooterContainer>
+          <FooterText color={colors.text}>
             Caso prefira, pode enviar um email para shishapedia@outlook.com
-          </Text>
-        </View>
-      </SafeAreaView>
+          </FooterText>
+        </FooterContainer>
+      </Container>
     </>
   );
 };

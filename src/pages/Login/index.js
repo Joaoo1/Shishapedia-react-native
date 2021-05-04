@@ -1,29 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Text,
-  SafeAreaView,
-  ScrollView,
-  TextInput,
-  Linking,
-  ToastAndroid,
-  ActivityIndicator,
-} from 'react-native';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, Linking, ToastAndroid } from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 import GetUrlParams from '../../helpers/GetUrlParams';
 import api from '../../services/api';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 import GoogleIcon from '../../assets/icons/google-icon.svg';
-import { colors } from '../../styles';
-import styles from './styles';
+import {
+  Container,
+  Headline,
+  Button,
+  ButtonText,
+  GoogleButton,
+  GoogleButtonText,
+  FacebookButton,
+  FacebookButtonText,
+  OrText,
+  Input,
+  ForgotPasswordText,
+  CreateAccountText,
+  ContinueWithoutLoginButton,
+  ContinueWithoutLoginText,
+} from './styles';
 
 const Login = () => {
   const navigation = useNavigation();
   const { signIn, user } = useAuth();
+  const { colors } = useTheme();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -120,36 +128,28 @@ const Login = () => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
-      <SafeAreaView style={styles.container}>
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
+
+      <Container backgroundColor={colors.primaryColor}>
         <ScrollView>
-          <Text style={styles.title}>Shishapedia</Text>
-          <RectButton
-            style={styles.googleButton}
-            onPress={handleGoogleButtonPress}
-          >
+          <Headline color={colors.whiteText}>Shishapedia</Headline>
+          <GoogleButton onPress={handleGoogleButtonPress}>
             <GoogleIcon />
-            <Text style={styles.googleButtonText}>Entrar com Google</Text>
-          </RectButton>
-          <RectButton
-            style={styles.facebookButton}
-            onPress={handleFacebookButtonPress}
-          >
+            <GoogleButtonText>Entrar com Google</GoogleButtonText>
+          </GoogleButton>
+          <FacebookButton onPress={handleFacebookButtonPress}>
             <EvilIcons name="sc-facebook" color="#fff" size={24} />
-            <Text style={styles.facebookButtonText}>Entrar com Facebook</Text>
-          </RectButton>
+            <FacebookButtonText color={colors.whiteText}>
+              Entrar com Facebook
+            </FacebookButtonText>
+          </FacebookButton>
 
-          <Text style={styles.orText}>Ou</Text>
+          <OrText color={colors.whiteText}>Ou</OrText>
 
-          <TextInput
-            style={styles.input}
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
             placeholder="Email"
             placeholderTextColor="#c1bccc"
             value={email}
@@ -157,9 +157,11 @@ const Login = () => {
             autoCapitalize="none"
             onSubmitEditing={() => passwordInputRef.current.focus()}
           />
-          <TextInput
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
             ref={passwordInputRef}
-            style={styles.input}
             placeholder="Senha"
             secureTextEntry
             placeholderTextColor="#c1bccc"
@@ -167,32 +169,35 @@ const Login = () => {
             onChangeText={(text) => setPassword(text)}
             onSubmitEditing={handleEmailButtonPress}
           />
-          <Text
-            style={styles.forgotPasswordText}
+          <ForgotPasswordText
+            color={colors.whiteText}
             onPress={handleForgotPasswordPress}
           >
             Esqueceu sua senha?
-          </Text>
-          <RectButton style={styles.button} onPress={handleEmailButtonPress}>
-            <Text style={styles.buttonText}>Entrar</Text>
-          </RectButton>
+          </ForgotPasswordText>
+          <Button
+            backgroundColor={colors.buttonBackground}
+            onPress={handleEmailButtonPress}
+          >
+            <ButtonText color={colors.buttonText}>Entrar</ButtonText>
+          </Button>
 
-          <Text
-            style={styles.createAccountText}
+          <CreateAccountText
+            color={colors.whiteText}
             onPress={handleCreateAccountButtonPress}
           >
             Crie uma conta
-          </Text>
-          <TouchableOpacity
-            style={styles.continueWithoutLoginButton}
+          </CreateAccountText>
+          <ContinueWithoutLoginButton
+            color={colors.whiteText}
             onPress={handleContinueWithoutLogin}
           >
-            <Text style={styles.continueWithoutLoginText}>
+            <ContinueWithoutLoginText color={colors.whiteText}>
               Continuar sem fazer login
-            </Text>
-          </TouchableOpacity>
+            </ContinueWithoutLoginText>
+          </ContinueWithoutLoginButton>
         </ScrollView>
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

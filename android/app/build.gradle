@@ -134,8 +134,8 @@ android {
         applicationId "com.joaovitor.shishapedia"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "0.4.1"
+        versionCode 9
+        versionName "0.5.0"
         multiDexEnabled true
     }
     splits {
@@ -201,6 +201,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation project(':react-native-navigation-bar-color')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

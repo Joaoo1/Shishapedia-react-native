@@ -1,9 +1,12 @@
-import { Text, View, BackHandler } from 'react-native';
+import { BackHandler, View } from 'react-native';
 
 import Logo from '../../assets/illustrations/Logo.svg';
-import styles from './styles';
+import { useTheme } from '../../hooks/theme';
+import { Container, Title, Headline, Text } from './styles';
 
 const Unallowed = () => {
+  const { colors } = useTheme();
+
   BackHandler.addEventListener('hardwareBackPress', () => {
     BackHandler.exitApp();
     return true;
@@ -11,20 +14,18 @@ const Unallowed = () => {
 
   return (
     <>
-      <View style={styles.container}>
-        <Text style={styles.title}>Shishapedia</Text>
+      <Container backgroundColor={colors.primaryColor}>
         <View>
-          <Text style={styles.headline}>PROIBIDO</Text>
-          <Text style={styles.text}>
+          <Title color={colors.whiteText}>Shishapedia</Title>
+          <Headline color={colors.whiteText}>PROIBIDO</Headline>
+          <Text color={colors.whiteText}>
             Infelizmente você não pode utilizar esse aplicativo por ser menor da
             idade.
           </Text>
         </View>
-        <View style={styles.logo}>
-          <Logo />
-          <Text style={styles.text}>2020 ©</Text>
-        </View>
-      </View>
+        <Logo />
+        <Text color={colors.whiteText}>{`${new Date().getFullYear()} ©`}</Text>
+      </Container>
     </>
   );
 };

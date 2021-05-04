@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
-import { Text, SafeAreaView, ToastAndroid } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { ToastAndroid } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import crashlytics from '@react-native-firebase/crashlytics';
 
-import styles from './styles';
+import { useTheme } from '../../hooks/theme';
+
+import { Container, Button, ButtonText, Title, Headline, Text } from './styles';
 
 const Under18 = () => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
 
   async function onYesPress() {
     // Reset the stack to exit app when back button is pressed on Home screen
@@ -31,7 +33,9 @@ const Under18 = () => {
         const [underAge, user] = await AsyncStorage.multiGet([
           '@Shishapedia/UnderAge',
           '@Shishapedia:user',
+          // '@Shishapedia/DarkTheme',
         ]);
+
         if (underAge[1] !== null) {
           if (underAge[1] === 'true') {
             navigation.navigate('Unallowed');
@@ -54,20 +58,22 @@ const Under18 = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Shishapedia</Text>
-        <Text style={styles.headline}>Você possui mais de 18 anos?</Text>
-        <RectButton style={styles.button} onPress={onYesPress}>
-          <Text style={styles.buttonText}>SIM</Text>
-        </RectButton>
-        <RectButton style={styles.button} onPress={onNoPress}>
-          <Text style={styles.buttonText}>NÃO</Text>
-        </RectButton>
-        <Text style={styles.text}>
+      <Container backgroundColor={colors.primaryColor}>
+        <Title color={colors.whiteText}>Shishapedia</Title>
+        <Headline color={colors.whiteText}>
+          Você possui mais de 18 anos?
+        </Headline>
+        <Button backgroundColor={colors.buttonBackground} onPress={onYesPress}>
+          <ButtonText color={colors.whiteText}>SIM</ButtonText>
+        </Button>
+        <Button backgroundColor={colors.buttonBackground} onPress={onNoPress}>
+          <ButtonText color={colors.buttonText}>NÃO</ButtonText>
+        </Button>
+        <Text color={colors.whiteText}>
           AVISO: Tabaco contém nicotina. Fumar é prejudicial a saúde e pode
           causar dependência. Aplicativo PROIBIDO PARA MENORES DE 18 ANOS.
         </Text>
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

@@ -1,6 +1,7 @@
 package com.joaovitor.shishapedia;
 
-import android.os.Bundle; 
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatDelegate; 
 
 import com.facebook.react.ReactActivity;
 import com.zoontek.rnbootsplash.RNBootSplash;
@@ -9,6 +10,7 @@ public class MainActivity extends ReactActivity {
 
  @Override
   protected void onCreate(Bundle savedInstanceState) {
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     super.onCreate(savedInstanceState);
     RNBootSplash.init(R.drawable.background_splash, MainActivity.this); // <- display the generated bootsplash.xml drawable over our MainActivity
   }

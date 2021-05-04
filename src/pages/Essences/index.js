@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
-import {
-  View,
-  TextInput,
-  FlatList,
-  SafeAreaView,
-  ActivityIndicator,
-  ToastAndroid,
-  Text,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FlatList } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import EssenceListItem from '../../components/EssenceListItem';
 import api from '../../services/api';
 import NotFoundImg from '../../assets/illustrations/not_found.svg';
+import { useTheme } from '../../hooks/theme';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-import { colors } from '../../styles';
-import styles from './styles';
+import {
+  Container,
+  Input,
+  InputContainer,
+  Icon,
+  ImageContainer,
+  NoFoundEssenceText,
+  NotFoundTitle,
+} from './styles';
 
 const Essences = ({ route }) => {
+  const { colors } = useTheme();
   const [searchString, setSearchString] = useState('');
   const [essences, setEssences] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const [allEssences, setAllEssences] = useState({});
+  const [allEssences, setAllEssences] = useState([]);
 
   const { brandId, brandName, userId } = route.params;
 
@@ -85,58 +86,41 @@ const Essences = ({ route }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title={brandName ?? 'Essências'} backButton />
-      <SafeAreaView style={styles.container}>
+      <Container>
         {!isLoading && allEssences.length === 0 && (
           <>
-            <Text style={styles.noFoundEssenceTitle}>Nada por aqui...</Text>
-
-            {userId ? (
-              <Text style={styles.noFoundEssenceText}>
-                Não há nenhum favorito adicionado
-              </Text>
-            ) : (
-              <Text style={styles.noFoundEssenceText}>
-                Ainda não existe essências cadastrados nesta marca.
-              </Text>
-            )}
-
-            <View style={styles.imageContainer}>
+            <NotFoundTitle color={colors.text}>Nada por aqui...</NotFoundTitle>
+            <NoFoundEssenceText color={colors.text}>
+              {userId
+                ? 'Não há nenhum favorito adicionado'
+                : 'Ainda não existe essências cadastrados nesta marca.'}
+            </NoFoundEssenceText>
+            <ImageContainer>
               <NotFoundImg />
-            </View>
+            </ImageContainer>
           </>
         )}
-        {!isLoading && allEssences.length > 1 && (
+        {!isLoading && allEssences.length > 0 && (
           <>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
+            <InputContainer backgroundColor={colors.inputBackground}>
+              <Input
+                borderColor={colors.inputBorder}
+                textColor={colors.text}
                 placeholder="Digite o nome da essência"
-                placeholderTextColor="#c1bccc"
+                placeholderTextColor={colors.inputPlaceholderText}
                 value={searchString}
                 onChangeText={(text) => setSearchString(text)}
                 onSubmitEditing={handleSearchEssences}
               />
-              <Icon
-                name="search"
-                size={28}
-                color="#c1bccc"
-                style={styles.icon}
-              />
-            </View>
+              <Icon name="search" size={28} color="#c1bccc" />
+            </InputContainer>
             {essences.length === 0 ? (
-              <Text style={styles.noFoundEssenceText}>
+              <NoFoundEssenceText color={colors.text}>
                 Nenhuma essência encontrada
-              </Text>
+              </NoFoundEssenceText>
             ) : (
               <FlatList
                 data={essences}
@@ -148,7 +132,7 @@ const Essences = ({ route }) => {
             )}
           </>
         )}
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

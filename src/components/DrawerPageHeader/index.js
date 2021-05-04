@@ -1,16 +1,24 @@
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNotifications } from '../../hooks/notifications';
+import { useTheme } from '../../hooks/theme';
 
-import styles from './styles';
-import { colors } from '../../styles';
+import {
+  Container,
+  RightIconContainer,
+  Title,
+  Badge,
+  BadgeText,
+} from './styles';
 
 const propTypes = {
   backButton: PropTypes.bool,
   notifications: PropTypes.bool,
+  toggleTheme: PropTypes.bool,
   title: PropTypes.string.isRequired,
   onClickSearch: PropTypes.func,
   drawerNavigation: PropTypes.object,
@@ -21,6 +29,7 @@ const defaultProps = {
   notifications: true,
   onClickSearch: null,
   drawerNavigation: null,
+  toggleTheme: false,
 };
 
 function DrawerPageHeader({
@@ -29,9 +38,11 @@ function DrawerPageHeader({
   title,
   drawerNavigation,
   onClickSearch,
+  toggleTheme,
 }) {
-  const stackNavigation = useNavigation();
+  const { colors, isDarkTheme, setDarkTheme } = useTheme();
   const { unreadNotifications } = useNotifications();
+  const stackNavigation = useNavigation();
 
   function handleBackPress() {
     if (stackNavigation.dangerouslyGetState().routes.length === 1) {
@@ -54,14 +65,22 @@ function DrawerPageHeader({
     drawerNavigation.openDrawer();
   }
 
+  function handleToggleTheme() {
+    AsyncStorage.setItem(
+      '@Shishapedia:darkTheme',
+      isDarkTheme ? 'false' : 'true',
+    );
+    setDarkTheme(!isDarkTheme);
+  }
+
   return (
-    <View style={styles.container}>
+    <Container backgroundColor={colors.primaryColor}>
       {backButton ? (
         <Icon
           name="chevron-left"
           size={32}
           color={colors.systemText}
-          style={styles.leftIcon}
+          style={{ marginRight: 30 }}
           onPress={handleBackPress}
         />
       ) : (
@@ -69,19 +88,27 @@ function DrawerPageHeader({
           name="menu"
           size={26}
           color={colors.systemText}
-          style={styles.leftIcon}
+          style={{ marginRight: 30 }}
           onPress={handleDrawerPress}
         />
       )}
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.rightIconContainer}>
+      <Title color={colors.systemText}>{title}</Title>
+      <RightIconContainer>
         {onClickSearch && (
           <Icon
             name="search"
             size={26}
             color={colors.systemText}
             onPress={onClickSearch}
-            style={styles.icon}
+            style={{ marginLeft: 20 }}
+          />
+        )}
+        {toggleTheme && (
+          <Icon
+            color="white"
+            name={isDarkTheme ? 'sun' : 'moon'}
+            size={24}
+            onPress={handleToggleTheme}
           />
         )}
 
@@ -91,17 +118,17 @@ function DrawerPageHeader({
               name="bell"
               size={26}
               color={colors.systemText}
-              style={styles.icon}
+              style={{ marginLeft: 20 }}
             />
             {unreadNotifications > 0 && (
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{unreadNotifications}</Text>
-              </View>
+              <Badge>
+                <BadgeText>{unreadNotifications}</BadgeText>
+              </Badge>
             )}
           </View>
         )}
-      </View>
-    </View>
+      </RightIconContainer>
+    </Container>
   );
 }
 

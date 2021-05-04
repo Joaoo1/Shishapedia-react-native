@@ -1,27 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Form } from '@unform/mobile';
-import {
-  Text,
-  View,
-  ScrollView,
-  ToastAndroid,
-  ActivityIndicator,
-} from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { ScrollView, ToastAndroid } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
-import Input from '../../components/Input';
 import SavePageHeader from '../../components/SavePageHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import { useAuth } from '../../hooks/auth';
-
-import styles from './styles';
 import api from '../../services/api';
-import { colors } from '../../styles';
+import { useTheme } from '../../hooks/theme';
+
+import { fonts, metrics } from '../../styles';
+import {
+  Form,
+  Input,
+  InputContainer,
+  InputCategory,
+  DropDownPicker,
+  InputLabel,
+  WarningText,
+  DescriptionInput,
+} from './styles';
 
 const CreateMix = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
+  const { colors } = useTheme();
+
   const form = useRef(null);
 
   const [categoryList, setCategoryList] = useState([]);
@@ -81,14 +85,7 @@ const CreateMix = () => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <SavePageHeader
         navigation={navigation}
@@ -98,88 +95,114 @@ const CreateMix = () => {
       />
       <ScrollView>
         {!user && (
-          <Text style={styles.warningText}>
+          <WarningText>
             Recomendamos que você faça o login para podermos saber quem indicou
             o mix.
-          </Text>
+          </WarningText>
         )}
-        <Form onSubmit={handleFormSubmit} style={styles.form} ref={form}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Nome da essência 1</Text>
+        <Form onSubmit={handleFormSubmit} ref={form}>
+          <InputContainer>
+            <InputLabel color={colors.text}>Nome da essência 1</InputLabel>
             <Input
               name="essence1Name"
-              style={styles.input}
               placeholder="Digite o nome da essência 1"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
+              textColor={colors.text}
             />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Marca da essência 1</Text>
+          </InputContainer>
+          <InputContainer>
+            <InputLabel color={colors.text}>Marca da essência 1</InputLabel>
             <Input
               name="essence1Brand"
-              style={styles.input}
               placeholder="Digite a marca da essência 1"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
+              textColor={colors.text}
             />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>
+          </InputContainer>
+          <InputContainer>
+            <InputLabel color={colors.text}>
               Proporção da essência 1 (em %)
-            </Text>
+            </InputLabel>
             <Input
               name="essence1Proportion"
-              style={styles.input}
               placeholder="Digite a proporção da essência 1"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
               keyboardType="numeric"
+              textColor={colors.text}
             />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Nome da essência 2</Text>
+          </InputContainer>
+          <InputContainer>
+            <InputLabel color={colors.text}>Nome da essência 2</InputLabel>
             <Input
               name="essence2Name"
-              style={styles.input}
               placeholder="Digite o nome da essência 2"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
+              textColor={colors.text}
             />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Marca da essência 2</Text>
+          </InputContainer>
+          <InputContainer>
+            <InputLabel color={colors.text}>Marca da essência 2</InputLabel>
             <Input
               name="essence2Brand"
-              style={styles.input}
               placeholder="Digite a marca da essência 2"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
+              textColor={colors.text}
             />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>
+          </InputContainer>
+          <InputContainer>
+            <InputLabel color={colors.text}>
               Proporção da essência 2 (em %)
-            </Text>
+            </InputLabel>
             <Input
               name="essence2Proportion"
-              style={styles.input}
               placeholder="Digite a proporção da essência 2"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
               keyboardType="numeric"
+              textColor={colors.text}
             />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Descrição</Text>
-            <Input
+          </InputContainer>
+          <InputContainer>
+            <InputLabel color={colors.text}>Descrição</InputLabel>
+            <DescriptionInput
               name="description"
-              style={[styles.input, styles.descriptionInput]}
               placeholder="Digite a descrição desse bellisímo mix (Opcional)"
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
               multiline
+              style={{ textAlignVertical: 'top' }}
+              textColor={colors.text}
             />
-          </View>
+          </InputContainer>
 
-          <View style={[styles.inputContainer, styles.inputCategory]}>
-            <Text style={styles.inputLabel}>Categoria do mix</Text>
+          <InputCategory>
+            <InputLabel color={colors.text}>Categoria do mix</InputLabel>
             <DropDownPicker
               name="categoryId"
               items={categoryList}
               defaultValue={selectedCategory}
               placeholder="Selecione uma categoria"
-              containerStyle={styles.dropdownContainer}
-              style={styles.input}
+              containerStyle={{
+                height: metrics.inputHeight,
+              }}
+              dropDownStyle={{
+                backgroundColor: colors.inputBackground,
+              }}
+              labelStyle={{
+                color: colors.text,
+                fontFamily: fonts.regular,
+                fontSize: fonts.regularSize,
+              }}
+              itemStyle={{ paddingBottom: 0, marginBottom: 3 }}
+              backgroundColor={colors.inputBackground}
               onChangeItem={(item) => setSelectedCategory(item.value)}
             />
-          </View>
+          </InputCategory>
         </Form>
       </ScrollView>
     </>

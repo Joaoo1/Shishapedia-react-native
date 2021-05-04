@@ -1,28 +1,39 @@
 import { useEffect, useState } from 'react';
-import {
-  View,
-  Image,
-  Text,
-  ScrollView,
-  TextInput,
-  ToastAndroid,
-  ActivityIndicator,
-  LogBox,
-  Alert,
-} from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { ToastAndroid, LogBox, Alert, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 import PageHeader from '../../components/DrawerPageHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import { FormatDateWithHour } from '../../helpers/FormatDate';
 
 import Star from '../../assets/icons/Star';
-import { colors } from '../../styles';
-import styles from './styles';
+import {
+  Container,
+  HeaderContainer,
+  ReviewsContainer,
+  Button,
+  ButtonText,
+  Divider,
+  HeaderText,
+  Image,
+  Input,
+  MakeReviewFooter,
+  NotFound,
+  Rating,
+  RatingContainer,
+  ReviewAuthor,
+  ReviewDate,
+  ReviewInfoContainer,
+  ReviewRatingContainer,
+  ReviewText,
+  StarContainer,
+  StarsContainer,
+} from './styles';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -30,6 +41,7 @@ LogBox.ignoreLogs([
 
 const EssenceReviews = ({ route }) => {
   const { user } = useAuth();
+  const { colors } = useTheme();
 
   const [isLoading, setLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
@@ -129,87 +141,83 @@ const EssenceReviews = ({ route }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader backButton title="Informações" notifications={false} />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollViewContainerStyle}
+      <Container
+        backgroundColor={colors.imageGrayBackground}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
-        <View style={styles.headerContainer}>
-          <Image
-            source={{ uri: route.params.essence.image.url }}
-            style={styles.image}
-          />
-          <Text style={styles.headerText}>{route.params.essence.name}</Text>
-          <View style={styles.ratingContainer}>
+        <HeaderContainer>
+          <Image source={{ uri: route.params.essence.image.url }} />
+          <HeaderText color={colors.text}>
+            {route.params.essence.name}
+          </HeaderText>
+          <RatingContainer>
             <Icon name="star" color="#FFDD55" size={16} />
-            <Text style={styles.rating}>{averageRating}</Text>
-          </View>
-        </View>
-        <View style={styles.reviewsContainer}>
-          <View style={styles.makeReviewContainer}>
-            <TextInput
-              style={styles.input}
+            <Rating color={colors.text}>{averageRating}</Rating>
+          </RatingContainer>
+        </HeaderContainer>
+        <ReviewsContainer color={colors.white}>
+          <View>
+            <Input
+              backgroundColor={colors.inputBackground}
+              borderColor={colors.inputBorder}
+              textColor={colors.text}
+              style={{ textAlignVertical: 'top' }}
               multiline
               placeholder={
                 user
                   ? 'Deixe sua opinião sobre a essência'
                   : 'Você precisa estar logado para poder deixar sua opinião sobre a essência'
               }
+              placeholderTextColor={colors.inputPlaceholderText}
               value={comment}
               onChangeText={(text) => setComment(text)}
               editable={!!user}
               maxLength={255}
             />
-            <View style={styles.makeReviewFooter}>
-              <View style={styles.starsContainer}>
-                <View style={styles.star} onTouchStart={() => setRating(1)}>
+            <MakeReviewFooter>
+              <StarsContainer>
+                <StarContainer onTouchStart={() => setRating(1)}>
                   <Star color="#FFDD55" size={28} active={rating >= 1} />
-                </View>
-                <View style={styles.star} onTouchStart={() => setRating(2)}>
+                </StarContainer>
+                <StarContainer onTouchStart={() => setRating(2)}>
                   <Star color="#FFDD55" size={28} active={rating >= 2} />
-                </View>
-                <View style={styles.star} onTouchStart={() => setRating(3)}>
+                </StarContainer>
+                <StarContainer onTouchStart={() => setRating(3)}>
                   <Star color="#FFDD55" size={28} active={rating >= 3} />
-                </View>
-                <View style={styles.star} onTouchStart={() => setRating(4)}>
+                </StarContainer>
+                <StarContainer onTouchStart={() => setRating(4)}>
                   <Star color="#FFDD55" size={28} active={rating >= 4} />
-                </View>
-                <View style={styles.star} onTouchStart={() => setRating(5)}>
+                </StarContainer>
+                <StarContainer onTouchStart={() => setRating(5)}>
                   <Star color="#FFDD55" size={28} active={rating >= 5} />
-                </View>
-              </View>
-              <RectButton
-                style={styles.button}
+                </StarContainer>
+              </StarsContainer>
+              <Button
+                backgroundColor={colors.buttonBackground}
                 onPress={onSubmitButtonPress}
                 enabled={!!user}
               >
-                <Text style={styles.buttonText}>Publicar</Text>
-              </RectButton>
-            </View>
+                <ButtonText color={colors.buttonText}>Publicar</ButtonText>
+              </Button>
+            </MakeReviewFooter>
           </View>
           <View>
             {reviews.length === 0 ? (
-              <Text style={styles.notFound}>
+              <NotFound color={colors.text}>
                 {!isLoading && 'Não há comentários, seja o primeiro!'}
-              </Text>
+              </NotFound>
             ) : (
               reviews.map((review) => (
-                <View style={styles.review} key={`${review.id}a`}>
-                  <View style={styles.reviewInfoContainer}>
+                <View key={`${review.id}a`}>
+                  <ReviewInfoContainer>
                     <View>
-                      <Text style={styles.reviewAuthor}>
+                      <ReviewAuthor color={colors.text}>
                         {review.user.name}
-                      </Text>
-                      <View style={styles.reviewRatingContainer}>
+                      </ReviewAuthor>
+                      <ReviewRatingContainer>
                         {[...Array(review.rating)].map((v, idx) => (
                           <Icon
                             // eslint-disable-next-line react/no-array-index-key
@@ -219,8 +227,8 @@ const EssenceReviews = ({ route }) => {
                             size={15}
                           />
                         ))}
-                        <Text style={styles.reviewDate}>{review.date}</Text>
-                      </View>
+                        <ReviewDate>{review.date}</ReviewDate>
+                      </ReviewRatingContainer>
                     </View>
                     {review.user.id === user?.id && (
                       <MaterialIcon
@@ -230,19 +238,21 @@ const EssenceReviews = ({ route }) => {
                         onPress={() => handleDeleteButtonPress(review.id)}
                       />
                     )}
-                  </View>
+                  </ReviewInfoContainer>
 
                   {review.comment !== '' && (
-                    <Text style={styles.reviewText}>{review.comment}</Text>
+                    <ReviewText color={colors.text}>
+                      {review.comment}
+                    </ReviewText>
                   )}
 
-                  <View style={styles.divider} />
+                  <Divider color={colors.divider} />
                 </View>
               ))
             )}
           </View>
-        </View>
-      </ScrollView>
+        </ReviewsContainer>
+      </Container>
     </>
   );
 };

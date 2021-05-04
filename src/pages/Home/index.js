@@ -1,21 +1,34 @@
 import { useCallback } from 'react';
-import { SafeAreaView, View, Text, BackHandler } from 'react-native';
+import { SafeAreaView, BackHandler } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 import { useNotifications } from '../../hooks/notifications';
 
 import NarguileIcon from '../../assets/icons/Narguile';
 import EssenceIcon from '../../assets/icons/Essence';
 import NewsIcon from '../../assets/icons/News';
-import styles from './styles';
+import {
+  HeaderContainer,
+  HeaderRect,
+  Headline,
+  SubHeadline,
+  ButtonsContainer,
+  EssenceButton,
+  NarguileButton,
+  MixButton,
+  NewsButton,
+  TextButton,
+} from './styles';
 
 const Home = ({ navigation }) => {
   const { user } = useAuth();
   const { refreshNotifications } = useNotifications();
+
+  const { colors, isDarkTheme } = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -51,49 +64,44 @@ const Home = ({ navigation }) => {
   }
   return (
     <>
-      <PageHeader title="" drawerNavigation={navigation} />
+      <PageHeader title="" drawerNavigation={navigation} toggleTheme />
       <SafeAreaView>
-        <View style={styles.headerBackground}>
-          <Text style={styles.headline}>
+        <HeaderContainer backgroundColor={colors.primaryColor}>
+          <Headline color={colors.whiteText}>
             Bem vindo,
             {user ? `\n${user.name}` : '\nNarguileiro'}
-          </Text>
-          <Text style={styles.subHeadline}>
+          </Headline>
+          <SubHeadline color={colors.whiteText}>
             Você está em um guia completo feito para os narguileiros de todo o
             mundo.
-          </Text>
-        </View>
-        <View style={styles.headerRect} />
-        <View style={styles.buttonsContainer}>
-          <RectButton
-            style={[styles.baseButton, styles.essenceButton]}
+          </SubHeadline>
+        </HeaderContainer>
+        <HeaderRect backgroundColor={colors.primaryColor} />
+
+        <ButtonsContainer>
+          <EssenceButton
+            darkTheme={isDarkTheme}
             onPress={handleEssencesButtonPress}
           >
             <EssenceIcon />
-            <Text style={styles.textButton}>Essências</Text>
-          </RectButton>
-          <RectButton
-            style={[styles.baseButton, styles.narguileButton]}
+            <TextButton color={colors.whiteText}>Essências</TextButton>
+          </EssenceButton>
+          <NarguileButton
+            darkTheme={isDarkTheme}
             onPress={handleNarguilesButtonPress}
           >
             <NarguileIcon />
-            <Text style={styles.textButton}>Narguiles</Text>
-          </RectButton>
-          <RectButton
-            style={[styles.baseButton, styles.mixButton]}
-            onPress={handleMixesButtonPress}
-          >
-            <Icon name="favorite" style={styles.buttonIcon} size={60} />
-            <Text style={styles.textButton}>Mixes</Text>
-          </RectButton>
-          <RectButton
-            style={[styles.baseButton, styles.newsButton]}
-            onPress={handleNewsButtonPress}
-          >
+            <TextButton color={colors.whiteText}>Narguiles</TextButton>
+          </NarguileButton>
+          <MixButton darkTheme={isDarkTheme} onPress={handleMixesButtonPress}>
+            <Icon name="favorite" color="white" size={60} />
+            <TextButton color={colors.whiteText}>Mixes</TextButton>
+          </MixButton>
+          <NewsButton darkTheme={isDarkTheme} onPress={handleNewsButtonPress}>
             <NewsIcon />
-            <Text style={styles.textButton}>Notícias</Text>
-          </RectButton>
-        </View>
+            <TextButton color={colors.whiteText}>Notícias</TextButton>
+          </NewsButton>
+        </ButtonsContainer>
       </SafeAreaView>
     </>
   );

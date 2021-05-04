@@ -1,24 +1,26 @@
 import { useState, useRef } from 'react';
+import { ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {
-  ScrollView,
-  ToastAndroid,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { RectButton } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
 
 import PageHeader from '../../components/SavePageHeader';
-import TextInput from '../../components/Input';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import api from '../../services/api';
+import { useTheme } from '../../hooks/theme';
 
-import { colors } from '../../styles';
-import styles from './styles';
+import {
+  Container,
+  Input,
+  Button,
+  ButtonText,
+  PasswordRequirements,
+} from './styles';
 
 const CreateUser = () => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
+
   const [isLoading, setLoading] = useState(false);
   const form = useRef(null);
 
@@ -51,43 +53,55 @@ const CreateUser = () => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title="Criar conta" navigation={navigation} />
-      <ScrollView style={styles.container}>
+      <Container backgroundColor={colors.primaryColor}>
         <Form ref={form} onSubmit={handleFormSubmit}>
-          <TextInput style={styles.input} name="name" placeholder="Nome" />
-          <TextInput style={styles.input} placeholder="E-mail" name="email" />
-          <TextInput
-            style={styles.input}
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+            name="name"
+            placeholder="Nome"
+          />
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+            placeholder="E-mail"
+            name="email"
+          />
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
             placeholder="Senha"
             name="password"
             secureTextEntry
           />
-          <Text style={styles.passwordRequirements}>
+          <PasswordRequirements>
             Senha precisa conter letras maiúsculas, minúsculas, números e no
             minímo 8 digítos.
-          </Text>
-          <TextInput
-            style={styles.input}
+          </PasswordRequirements>
+          <Input
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
             placeholder="Confirmar Senha"
             name="confirm_password"
             secureTextEntry
             onSubmitEditing={() => form.current.submitForm()}
           />
 
-          <RectButton style={styles.button} onPress={handleFormSubmit}>
-            <Text style={styles.buttonText}>Criar</Text>
-          </RectButton>
+          <Button
+            backgroundColor={colors.buttonBackground}
+            onPress={handleFormSubmit}
+          >
+            <ButtonText color={colors.buttonText}>Criar</ButtonText>
+          </Button>
         </Form>
-      </ScrollView>
+      </Container>
     </>
   );
 };

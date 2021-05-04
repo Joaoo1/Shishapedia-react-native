@@ -1,56 +1,52 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { ScrollView, TextInput } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 
-import { metrics, fonts, colors } from '../../styles';
+import { metrics, fonts } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: metrics.screenHorizontalPadding + 5,
-    backgroundColor: colors.primaryColor,
-    flex: 1,
-  },
-  input: {
-    height: metrics.inputHeight,
-    backgroundColor: colors.inputBackground,
-    fontSize: fonts.inputSize,
-    fontFamily: fonts.regular,
-    borderRadius: metrics.inputBorderRadius,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    paddingHorizontal: 16,
-    marginTop: 20,
-  },
-  inputLabel: {
-    color: colors.text,
-    fontFamily: fonts.regular,
-    fontSize: fonts.inputSize,
-  },
-  button: {
-    padding: metrics.screenHorizontalPadding,
-    backgroundColor: colors.buttonBackground,
-    borderRadius: metrics.inputBorderRadius,
-    width: '100%',
-    height: metrics.inputHeight,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  buttonText: {
-    color: colors.buttonText,
-    fontFamily: fonts.bold,
-    fontSize: fonts.inputSize,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '65%',
-    marginLeft: '37%',
-    zIndex: 1000,
-  },
-  text: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    color: colors.systemText,
-    marginTop: 10,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding + 5;
 
-export default styles;
+const Container = styled(ScrollView)`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
+  flex: 1;
+`;
+
+const Input = styled(TextInput)`
+  height: ${() => `${metrics.inputHeight}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.regular};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  border-width: 1px;
+  border-color: ${({ borderColor }) => borderColor};
+  padding: ${() => '0 16px 0 16px'};
+  margin-top: 20px;
+  color: ${({ textColor }) => textColor};
+`;
+
+const Button = styled(RectButton)`
+  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  width: 100%;
+  height: ${() => `${metrics.inputHeight}px`};
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const ButtonText = styled.Text`
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+`;
+
+const Text = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color}; /*systemText*/
+  margin-top: 10px;
+`;
+
+export { Container, Input, Button, ButtonText, Text };

@@ -1,9 +1,8 @@
-import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/Feather';
 
-import styles from './styles';
-import { colors } from '../../styles';
+import { useTheme } from '../../hooks/theme';
+
+import { Container, Title, LeftIcon, RightIconContainer, Save } from './styles';
 
 const propTypes = {
   title: PropTypes.string.isRequired,
@@ -17,6 +16,7 @@ const defaultProps = {
 };
 
 const DrawerPageHeader = ({ title, onSave, navigation, saveButtonText }) => {
+  const { colors } = useTheme();
   function handleBackPress() {
     navigation.goBack();
   }
@@ -26,23 +26,22 @@ const DrawerPageHeader = ({ title, onSave, navigation, saveButtonText }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Icon
+    <Container backgroundColor={colors.primaryColor}>
+      <LeftIcon
         name="chevron-left"
         size={32}
         color={colors.systemText}
-        style={styles.leftIcon}
         onPress={handleBackPress}
       />
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.rightIconContainer}>
+      <Title color={colors.systemText}>{title}</Title>
+      <RightIconContainer>
         {onSave && (
-          <Text style={styles.save} onPress={handleSavePress}>
+          <Save color={colors.systemText} onPress={handleSavePress}>
             {saveButtonText}
-          </Text>
+          </Save>
         )}
-      </View>
-    </View>
+      </RightIconContainer>
+    </Container>
   );
 };
 

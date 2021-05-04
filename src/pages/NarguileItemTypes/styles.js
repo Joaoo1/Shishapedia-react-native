@@ -1,26 +1,19 @@
-import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import styled from 'styled-components';
 
-import { fonts, colors, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  text: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.titleSize,
-    marginVertical: 35,
-    marginHorizontal: 20,
-    textAlign: 'center',
-    color: colors.text,
-  },
-  headline: {
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    fontSize: fonts.bigSize,
-    fontFamily: fonts.bold,
-    color: '#000',
-    padding: 15,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
+
+const Headline = styled.Text`
+  font-family: ${() => fonts.bold};
+  font-size: ${() => `${fonts.bigSize}px`};
+  color: ${({ color }) => color};
+  padding: ${() => `15px ${paddingHorizontal}px 15px ${paddingHorizontal}px`};
+`;
+
+export { Container, Headline };

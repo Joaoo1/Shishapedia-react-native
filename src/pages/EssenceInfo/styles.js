@@ -1,69 +1,99 @@
-import { StyleSheet } from 'react-native';
+import {
+  SafeAreaView,
+  Image as RNImage,
+  ScrollView as Scroll,
+} from 'react-native';
+import styled from 'styled-components';
 
-import { colors, fonts, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: { backgroundColor: 'rgba(218,218,218,0.6)' },
-  imageContainer: {
-    width: '100%',
-    height: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    resizeMode: 'contain',
-    flex: 1,
-    width: '100%',
-    maxHeight: 280,
-  },
-  infoContainer: {
-    height: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 60,
-    borderWidth: 1,
-    borderColor: 'transparent',
-    paddingHorizontal: metrics.screenHorizontalPadding + 10,
-    paddingTop: 30,
-    marginBottom: 80,
-  },
-  infoHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  essenceName: {
-    fontSize: 26,
-    fontFamily: fonts.bold,
-    color: colors.text,
-    maxWidth: 260,
-  },
-  boldText: {
-    color: colors.text,
-    fontFamily: fonts.bold,
-    marginBottom: 10,
-  },
-  descriptionText: {
-    color: colors.text,
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.light,
-    marginBottom: 10,
-    textAlign: 'justify',
-  },
-  ratesContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  rate: {
-    color: '#F2C94C',
-    marginStart: 3,
-  },
-  reviews: {
-    fontFamily: fonts.light,
-    marginStart: 10,
-    marginTop: 2,
-    color: '#9B9B9B',
-  },
-});
+const horizontalPadding = metrics.screenHorizontalPadding + 10;
 
-export default styles;
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
+
+const ScrollView = styled(Scroll)``;
+
+const ImageContainer = styled.View`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  width: 100%;
+  height: 370px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -60px;
+`;
+
+const Image = styled(RNImage)`
+  flex: 1;
+  width: 100%;
+  max-height: 280px;
+  margin-bottom: 60px;
+`;
+
+const InfoContainer = styled.View`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  height: 100%;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  border-width: 1px;
+  border-color: transparent;
+  padding: ${() => `30px ${horizontalPadding}px 40px ${horizontalPadding}px`};
+`;
+
+const InfoHeader = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const BoldText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+  margin-bottom: 10px;
+`;
+
+const DescriptionText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.light};
+  color: ${({ color }) => color};
+  margin-bottom: 10px;
+  text-align: justify;
+`;
+
+const EssenceName = styled(BoldText)`
+  font-size: 26px;
+  max-width: 260px;
+`;
+
+const RatesContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+`;
+
+const Rate = styled.Text`
+  color: #f2c94c;
+  margin-left: 3px;
+`;
+const Reviews = styled.Text`
+  font-family: ${() => fonts.light};
+  margin: 2px 0 0 10px;
+  color: #9b9b9b;
+`;
+
+export {
+  Container,
+  ScrollView,
+  ImageContainer,
+  Image,
+  BoldText,
+  EssenceName,
+  InfoContainer,
+  InfoHeader,
+  Rate,
+  RatesContainer,
+  Reviews,
+  DescriptionText,
+};

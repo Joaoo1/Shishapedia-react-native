@@ -1,28 +1,24 @@
 import { useState, useEffect } from 'react';
-import {
-  Text,
-  ToastAndroid,
-  View,
-  ActivityIndicator,
-  SafeAreaView,
-} from 'react-native';
+import { ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import NotificationListItem from '../../components/NotificationListItem';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import { useNotifications } from '../../hooks/notifications';
 import { useAuth } from '../../hooks/auth';
-import api from '../../services/api';
+import { useTheme } from '../../hooks/theme';
 import { FormatDate } from '../../helpers/FormatDate';
+import api from '../../services/api';
 
 import NoNotificationsImg from '../../assets/illustrations/no_notifications.svg';
-import styles from './styles';
-import { colors } from '../../styles';
+import { Container, Text } from './styles';
 
 const Notifications = () => {
   const { user } = useAuth();
+  const { colors } = useTheme();
   const { navigate } = useNavigation();
   const { refreshNotifications } = useNotifications();
 
@@ -76,10 +72,10 @@ const Notifications = () => {
   function renderNotificationList() {
     if (notificationList.length === 0 && !isLoading) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.text}>Não há novas notificações</Text>
+        <Container>
+          <Text color={colors.text}>Não há novas notificações</Text>
           <NoNotificationsImg />
-        </View>
+        </Container>
       );
     }
 
@@ -96,20 +92,13 @@ const Notifications = () => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader notifications={false} backButton title="Notificações" />
       {!user || !user.id ? (
-        <SafeAreaView style={styles.container}>
-          <Text style={styles.text}>Faça login para receber notificações</Text>
-        </SafeAreaView>
+        <Container>
+          <Text color={colors.text}>Faça login para receber notificações</Text>
+        </Container>
       ) : (
         <ScrollView>{renderNotificationList()}</ScrollView>
       )}

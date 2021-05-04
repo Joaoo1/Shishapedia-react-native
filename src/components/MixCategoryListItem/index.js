@@ -1,12 +1,19 @@
-import { Text, View, Image, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
 import FavoriteImg from '../../assets/images/ic_favorites.png';
-import styles from './styles';
+import {
+  ListItem,
+  FirstItem,
+  LeftContainer,
+  ItemImage,
+  ItemTitle,
+} from './styles';
 
 const propTypes = {
   category: PropTypes.object.isRequired,
@@ -20,6 +27,7 @@ const defaultProps = {
 const MixCategoryListItem = ({ category, isFirst }) => {
   const { navigate } = useNavigation();
   const { user } = useAuth();
+  const { colors } = useTheme();
 
   function handleItemPress() {
     navigate('Mixes', { categoryId: category.id });
@@ -40,29 +48,29 @@ const MixCategoryListItem = ({ category, isFirst }) => {
 
   function renderFavoriteIcon() {
     return (
-      <View
-        style={[styles.listItem, styles.firstItem]}
+      <FirstItem
         onTouchEnd={handleFavoriteItemPress}
+        dividerColor={colors.listDivider}
       >
-        <View style={styles.leftContainer}>
-          <Image source={FavoriteImg} style={styles.itemImage} />
-          <Text style={styles.itemTitle}>Favoritos</Text>
-        </View>
+        <LeftContainer>
+          <ItemImage source={FavoriteImg} resizeMode="contain" />
+          <ItemTitle color={colors.text}>Favoritos</ItemTitle>
+        </LeftContainer>
         <Icon name="chevron-right" size={30} onPress={handleItemPress} />
-      </View>
+      </FirstItem>
     );
   }
 
   return (
     <>
       {isFirst && renderFavoriteIcon()}
-      <View style={styles.listItem} onTouchEnd={handleItemPress}>
-        <View style={styles.leftContainer}>
-          <Image source={{ uri: category.icon.url }} style={styles.itemImage} />
-          <Text style={styles.itemTitle}>{category.name}</Text>
-        </View>
+      <ListItem onTouchEnd={handleItemPress} dividerColor={colors.listDivider}>
+        <LeftContainer>
+          <ItemImage source={{ uri: category.icon.url }} resizeMode="contain" />
+          <ItemTitle color={colors.text}>{category.name}</ItemTitle>
+        </LeftContainer>
         <Icon name="chevron-right" size={30} onPress={handleItemPress} />
-      </View>
+      </ListItem>
     </>
   );
 };

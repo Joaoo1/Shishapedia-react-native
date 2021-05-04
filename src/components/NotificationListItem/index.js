@@ -1,11 +1,22 @@
-import { View, Text, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import SwipeableListItem from '../SwipeableListItem';
-import styles from './styles';
 import api from '../../services/api';
+import { useTheme } from '../../hooks/theme';
+
+import {
+  Container,
+  ListItem,
+  HeadContainer,
+  Divider,
+  InfoContainer,
+  NotificationDate,
+  NotificationMessage,
+  NotificationTitle,
+} from './styles';
 
 const propTypes = {
   notification: PropTypes.object.isRequired,
@@ -15,6 +26,8 @@ const propTypes = {
 };
 
 const NotificationListItem = ({ notification, idx, onItemPress, onDelete }) => {
+  const { colors } = useTheme();
+
   async function handleDeleteNotification() {
     try {
       await api.delete(`/notifications/${notification.id}`);
@@ -26,31 +39,39 @@ const NotificationListItem = ({ notification, idx, onItemPress, onDelete }) => {
   }
 
   return (
-    <SwipeableListItem onSwipeableOpen={handleDeleteNotification}>
-      <View
-        key={notification.id}
-        style={!notification.read ? styles.unread : styles.read}
+    <SwipeableListItem
+      key={notification.id}
+      onSwipeableOpen={handleDeleteNotification}
+    >
+      <Container
+        backgroundColor={
+          notification.read ? colors.white : colors.unreadNotification
+        }
         onTouchEnd={() => onItemPress(notification, idx)}
       >
-        <View style={styles.listItem}>
+        <ListItem>
           <Icon
             name="message-square"
-            style={styles.icon}
             size={30}
             color="#adadad"
+            style={{ marginRight: 20 }}
           />
-          <View style={styles.infoContainer}>
-            <View style={styles.headContainer}>
-              <Text style={styles.notificationTitle}>{notification.title}</Text>
-              <Text style={styles.notificationDate}>{notification.date}</Text>
-            </View>
-            <Text style={styles.notificationMessage}>
+          <InfoContainer>
+            <HeadContainer>
+              <NotificationTitle color={colors.text}>
+                {notification.title}
+              </NotificationTitle>
+              <NotificationDate color={colors.text}>
+                {notification.date}
+              </NotificationDate>
+            </HeadContainer>
+            <NotificationMessage color={colors.text}>
               {`${notification.message.substring(0, 30)}...`}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.divider} />
-      </View>
+            </NotificationMessage>
+          </InfoContainer>
+        </ListItem>
+        <Divider color={colors.listDivider} />
+      </Container>
     </SwipeableListItem>
   );
 };

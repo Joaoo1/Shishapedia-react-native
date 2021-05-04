@@ -1,47 +1,45 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
-import { colors, fonts, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.primaryColor,
-    height: 60,
-    paddingHorizontal: metrics.screenHorizontalPadding,
-  },
-  title: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.titleSize,
-    color: colors.systemText,
-    marginTop: 2,
-  },
-  leftIcon: {
-    marginRight: 30,
-  },
-  rightIconContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  icon: {
-    marginLeft: 20,
-  },
-  badge: {
-    position: 'absolute',
-    top: -7,
-    right: -2,
-    backgroundColor: '#eb4034',
-    height: 18,
-    width: 18,
-    borderRadius: 50,
-    justifyContent: 'center',
-  },
-  badgeText: {
-    textAlign: 'center',
-    color: 'white',
-    fontFamily: fonts.bold,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  height: 60px;
+  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
+`;
+
+const RightIconContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+const Title = styled.Text`
+  font-family: ${() => fonts.regular};
+  font-size: ${() => `${fonts.titleSize}px`};
+  color: ${({ color }) => color};
+  margin-top: 2px;
+`;
+
+const Badge = styled.View`
+  position: absolute;
+  top: -7px;
+  right: -2px;
+  background-color: #eb4034;
+  height: 18px;
+  width: 18px;
+  border-radius: 50px;
+  justify-content: center;
+`;
+
+const BadgeText = styled.Text`
+  text-align: center;
+  color: white;
+  font-family: ${() => fonts.bold};
+`;
+
+export { Container, RightIconContainer, Title, Badge, BadgeText };

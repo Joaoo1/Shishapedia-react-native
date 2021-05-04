@@ -1,52 +1,66 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { Form as Unform } from '@unform/mobile';
+import RNDropDownPicker from 'react-native-dropdown-picker';
 
-import { metrics, fonts, colors } from '../../styles';
+import MyInput from '../../components/Input';
 
-const styles = StyleSheet.create({
-  form: {
-    marginHorizontal: metrics.screenHorizontalPadding,
-    marginBottom: 40,
-  },
-  input: {
-    height: metrics.inputHeight,
-    backgroundColor: colors.inputBackground,
-    fontSize: fonts.inputSize,
-    fontFamily: fonts.regular,
-    borderRadius: metrics.inputBorderRadius,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    paddingHorizontal: 16,
-    marginTop: 5,
-  },
-  descriptionInput: {
-    height: 150,
-    textAlignVertical: 'top',
-  },
-  inputContainer: {
-    marginTop: 25,
-  },
-  inputLabel: {
-    color: colors.text,
-    fontFamily: fonts.regular,
-    fontSize: fonts.inputSize,
-  },
-  warningText: {
-    color: 'red',
-    marginTop: 20,
-    marginHorizontal: metrics.screenHorizontalPadding,
-  },
-  dropdownContainer: {
-    height: metrics.inputHeight,
-  },
-  inputCategory: {
-    height: 200,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '65%',
-    marginLeft: '37%',
-    zIndex: 100000,
-  },
-});
+import { metrics, fonts } from '../../styles';
 
-export default styles;
+const horizontalPadding = metrics.screenHorizontalPadding;
+
+const Form = styled(Unform)`
+  margin: ${() => `0px ${horizontalPadding}px 40px ${horizontalPadding}px`};
+`;
+
+const Input = styled(MyInput)`
+  height: ${() => `${metrics.inputHeight}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.regular};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  border-width: 1px;
+  border-color: ${({ borderColor }) => borderColor}; /* inputBorder */
+  padding: ${() => '0 16px 0 16px'};
+  margin-top: 5px;
+  color: ${({ textColor }) => textColor};
+`;
+
+const DescriptionInput = styled(Input)`
+  height: 150px;
+  padding-top: 8px;
+`;
+
+const InputContainer = styled.View`
+  margin-top: 25px;
+`;
+
+const InputLabel = styled.Text`
+  font-family: ${() => fonts.regular};
+  font-size: ${() => `${fonts.inputSize}px`};
+  color: ${({ color }) => color};
+`;
+
+const WarningText = styled.Text`
+  color: red;
+  margin: ${() => `20px ${horizontalPadding}px 0px ${horizontalPadding}px`};
+`;
+
+const InputCategory = styled(InputContainer)`
+  height: 200px;
+`;
+
+const DropDownPicker = styled(RNDropDownPicker)`
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`;
+
+export {
+  Form,
+  Input,
+  DescriptionInput,
+  DropDownPicker,
+  InputCategory,
+  InputContainer,
+  InputLabel,
+  WarningText,
+};

@@ -1,26 +1,31 @@
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TextInput,
-  ToastAndroid,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, ToastAndroid } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/SavePageHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
 import Logo from '../../assets/illustrations/small_logo.svg';
-import styles from './styles';
-import { colors } from '../../styles';
+import {
+  Container,
+  ScrollView,
+  HeaderContainer,
+  LogoContainer,
+  HeaderText,
+  Input,
+  Button,
+  ButtonText,
+  Description,
+} from './styles';
 
 const Help = ({ navigation }) => {
   const { user } = useAuth();
+  const { colors } = useTheme();
+
   const [message, setMessage] = useState('');
   const [isLoading, setLoading] = useState(false);
 
@@ -51,57 +56,49 @@ const Help = ({ navigation }) => {
   }
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title="Ajuda" navigation={navigation} />
-      <SafeAreaView>
-        <ScrollView style={styles.container}>
+      <Container>
+        <ScrollView>
           <View>
-            <View style={styles.headerContainer}>
-              <View style={styles.logo}>
+            <HeaderContainer>
+              <LogoContainer backgroundColor={colors.primaryColor}>
                 <Logo />
-              </View>
-              <Text style={styles.headerText}>
-                Shishapedia - O guia do narguileiro
-              </Text>
-              <Text style={styles.headerText}>1.0.0</Text>
-              <Text style={styles.headerText}>
-                Desenvolvido por João Vitor da Silva
-              </Text>
-            </View>
+              </LogoContainer>
+              <HeaderText color={colors.text}>
+                {
+                  'Shishapedia - O guia do narguileiro \n 1.0.0 \n Desenvolvido por João Vitor da Silva'
+                }
+              </HeaderText>
+            </HeaderContainer>
             <View>
-              <Text style={styles.description}>
+              <Description color={colors.text}>
                 Está passando por algum problema ou bug? Deixe uma mensagem
                 descrevendo qual o problema e se necessário, entraremos em
                 contato.
-              </Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Escreva aqui sua mensagem"
-                  placeholderTextColor="#c1bccc"
-                  multiline
-                  value={message}
-                  onChangeText={(text) => setMessage(text)}
-                />
-              </View>
-              <RectButton
-                style={styles.button}
+              </Description>
+              <Input
+                backgroundColor={colors.inputBackground}
+                borderColor={colors.inputBorder}
+                textColor={colors.text}
+                style={{ textAlignVertical: 'top' }}
+                placeholder="Escreva aqui sua mensagem"
+                placeholderTextColor="#c1bccc"
+                multiline
+                value={message}
+                onChangeText={(text) => setMessage(text)}
+              />
+              <Button
+                backgroundColor={colors.buttonBackground}
                 onPress={handleSubmitFeedbackPress}
               >
-                <Text style={styles.buttonText}>Enviar</Text>
-              </RectButton>
+                <ButtonText color={colors.buttonText}>Enviar</ButtonText>
+              </Button>
             </View>
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

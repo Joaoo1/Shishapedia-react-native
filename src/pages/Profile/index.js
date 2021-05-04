@@ -1,30 +1,31 @@
 import { useRef, useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  ToastAndroid,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { ToastAndroid, Alert, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { RectButton } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/SavePageHeader';
-import Input from '../../components/Input';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
-import styles from './styles';
-import { colors } from '../../styles';
+import {
+  Container,
+  HeaderContainer,
+  HeaderButton,
+  TextButton,
+  Input,
+  Divider,
+  DeleteUserText,
+} from './styles';
 
 const Profile = ({ navigation }) => {
   const formRef = useRef(null);
   const { user, signOut } = useAuth();
+  const { colors } = useTheme();
   const { goBack } = useNavigation();
 
   const passwordInputRef = useRef(null);
@@ -132,82 +133,76 @@ const Profile = ({ navigation }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader
         title="Perfil"
         navigation={navigation}
         onSave={() => formRef.current.submitForm()}
       />
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Icon name="account-circle" size={140} color="#9B9B9B" />
-            <RectButton style={styles.headerButton} onPress={handleUploadImage}>
-              <Text style={styles.textButton}>Enviar foto</Text>
-            </RectButton>
+      <Container>
+        <HeaderContainer>
+          <Icon name="account-circle" size={140} color="#9B9B9B" />
+          <HeaderButton
+            backgroundColor={colors.buttonBackground}
+            onPress={handleUploadImage}
+          >
+            <TextButton color={colors.buttonText}>Enviar foto</TextButton>
+          </HeaderButton>
+        </HeaderContainer>
+        <Form ref={formRef} onSubmit={handleSubmit}>
+          <Input
+            name="name"
+            placeholder="Digite seu nome"
+            label="Nome"
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+          />
+          <Input
+            name="email"
+            placeholder="Digite um email"
+            editable={!isOAuth}
+            label="E-mail"
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+          />
+          <Divider color={colors.divider} />
+          <Input
+            name="old_password"
+            placeholder="Digite sua senha atual"
+            editable={!isOAuth}
+            onSubmitEditing={() => passwordInputRef.current.focus()}
+            label="Senha antiga"
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+          />
+          <Input
+            name="password"
+            placeholder="Digite a nova senha"
+            editable={!isOAuth}
+            onSubmitEditing={() => confirmPasswordInputRef.current.focus()}
+            label="Nova senha"
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+          />
+          <Input
+            name="confirm_password"
+            placeholder="Confirme a nova senha"
+            editable={!isOAuth}
+            label="Confirmar senha"
+            backgroundColor={colors.inputBackground}
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
+          />
+          <View onTouchStart={handleDeleteUserPress}>
+            <DeleteUserText>Excluir usuário</DeleteUserText>
           </View>
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Nome</Text>
-              <Input
-                name="name"
-                style={styles.input}
-                placeholder="Digite seu nome"
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>E-mail</Text>
-              <Input
-                style={styles.input}
-                name="email"
-                placeholder="Digite um email"
-                editable={!isOAuth}
-              />
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Senha antiga</Text>
-              <Input
-                style={styles.input}
-                name="old_password"
-                placeholder="Digite sua senha atual"
-                editable={!isOAuth}
-                onSubmitEditing={() => passwordInputRef.current.focus()}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Nova senha</Text>
-              <Input
-                style={styles.input}
-                name="password"
-                placeholder="Digite a nova senha"
-                editable={!isOAuth}
-                onSubmitEditing={() => confirmPasswordInputRef.current.focus()}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Confirmar senha</Text>
-              <Input
-                style={styles.input}
-                name="confirm_password"
-                placeholder="Confirme a nova senha"
-                editable={!isOAuth}
-              />
-            </View>
-            <View onTouchStart={handleDeleteUserPress}>
-              <Text style={styles.deleteUserText}>Excluir usuário</Text>
-            </View>
-          </Form>
-        </View>
-      </ScrollView>
+        </Form>
+      </Container>
     </>
   );
 };

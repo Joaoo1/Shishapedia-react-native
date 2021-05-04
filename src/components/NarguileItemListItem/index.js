@@ -1,8 +1,9 @@
-import { Text, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 
-import styles from './styles';
+import { useTheme } from '../../hooks/theme';
+
+import { ListItem, FirstItem, ItemImage, ItemTitle } from './styles';
 
 const propTypes = {
   narguile: PropTypes.object.isRequired,
@@ -15,19 +16,26 @@ const defaultProps = {
 
 const NarguileItemListItem = ({ narguile, isFirst }) => {
   const { navigate } = useNavigation();
+  const { colors } = useTheme();
 
   function handleItemPress() {
     navigate('NarguileInfo', { narguile });
   }
 
+  if (isFirst) {
+    return (
+      <FirstItem onTouchEnd={handleItemPress} dividerColor={colors.listDivider}>
+        <ItemImage source={{ uri: narguile.icon.url }} resizeMode="contain" />
+        <ItemTitle color={colors.text}>{narguile.name}</ItemTitle>
+      </FirstItem>
+    );
+  }
+
   return (
-    <View
-      style={isFirst ? [styles.listItem, styles.firstItem] : styles.listItem}
-      onTouchEnd={handleItemPress}
-    >
-      <Image source={{ uri: narguile.icon.url }} style={styles.itemImage} />
-      <Text style={styles.itemTitle}>{narguile.name}</Text>
-    </View>
+    <ListItem onTouchEnd={handleItemPress} dividerColor={colors.listDivider}>
+      <ItemImage source={{ uri: narguile.icon.url }} resizeMode="contain" />
+      <ItemTitle color={colors.text}>{narguile.name}</ItemTitle>
+    </ListItem>
   );
 };
 

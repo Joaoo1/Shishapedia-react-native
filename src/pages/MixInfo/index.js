@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Image, Text, SafeAreaView, ToastAndroid } from 'react-native';
+import { View, ToastAndroid } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
@@ -7,10 +7,22 @@ import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 
 import FavoriteIcon from '../../assets/icons/Favorite';
-import styles from './styles';
+import { useTheme } from '../../hooks/theme';
+
+import {
+  Container,
+  ImageContainer,
+  Image,
+  MixName,
+  InfoContainer,
+  DescriptionText,
+  BoldText,
+  InfoHeader,
+} from './styles';
 
 const MixInfo = ({ route }) => {
   const { user } = useAuth();
+  const { colors } = useTheme();
   const [isFavorite, setFavorite] = useState(null);
 
   const {
@@ -90,15 +102,15 @@ const MixInfo = ({ route }) => {
   return (
     <>
       <PageHeader backButton title="Informações" notifications={false} />
-      <SafeAreaView style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: image.url }} style={styles.image} />
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.infoHeader}>
-            <Text style={styles.mixName}>
+      <Container>
+        <ImageContainer backgroundColor={colors.imageGrayBackground}>
+          <Image source={{ uri: image.url }} resizeMode="contain" />
+        </ImageContainer>
+        <InfoContainer backgroundColor={colors.white}>
+          <InfoHeader>
+            <MixName color={colors.text}>
               {`${essence1.name} com ${essence2.name}`}
-            </Text>
+            </MixName>
             <View onTouchStart={handleFavoriteButtonPress}>
               <FavoriteIcon
                 enabled={isFavorite != null}
@@ -106,30 +118,30 @@ const MixInfo = ({ route }) => {
                 size={32}
               />
             </View>
-          </View>
+          </InfoHeader>
 
-          <Text style={styles.boldText}>
+          <BoldText color={colors.text}>
             {'Essência 1: '}
-            <Text style={styles.descriptionText}>
+            <DescriptionText color={colors.text}>
               {`${essence1.name} - (${essence1Proportion}%)`}
-            </Text>
-          </Text>
-          <Text style={styles.boldText}>
+            </DescriptionText>
+          </BoldText>
+          <BoldText color={colors.text}>
             {'Essência 2: '}
-            <Text style={styles.descriptionText}>
+            <DescriptionText color={colors.text}>
               {`${essence2.name} - (${essence2Proportion}%)`}
-            </Text>
-          </Text>
-          <Text style={styles.boldText}>
+            </DescriptionText>
+          </BoldText>
+          <BoldText color={colors.text}>
             {'Autor 1: '}
-            <Text style={styles.descriptionText}>{author.name}</Text>
-          </Text>
-          <Text style={styles.boldText}>
+            <DescriptionText color={colors.text}>{author.name}</DescriptionText>
+          </BoldText>
+          <BoldText color={colors.text}>
             {'Data: '}
-            <Text style={styles.descriptionText}>05/12/2020</Text>
-          </Text>
-        </View>
-      </SafeAreaView>
+            <DescriptionText color={colors.text}>05/12/2020</DescriptionText>
+          </BoldText>
+        </InfoContainer>
+      </Container>
     </>
   );
 };

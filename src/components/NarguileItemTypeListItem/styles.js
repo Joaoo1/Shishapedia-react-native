@@ -1,31 +1,29 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
-import { colors, fonts } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  listItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    paddingHorizontal: 20,
-    borderBottomColor: 'rgba(0, 0, 0, 0.15)',
-    borderBottomWidth: 0.5,
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  firstItem: {
-    borderTopColor: 'rgba(0, 0, 0, 0.15)',
-    borderTopWidth: 0.5,
-  },
-  itemImage: {
-    marginRight: 20,
-  },
-  itemTitle: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    color: colors.text,
-    flex: 1,
-  },
-});
+const horinzontalPadding = metrics.screenHorizontalPadding;
 
-export default styles;
+const ListItem = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: ${() => `12px ${horinzontalPadding}px 12px ${horinzontalPadding}px`};
+  border-bottom-color: ${({ dividerColor }) => dividerColor};
+  border-bottom-width: 0.5px;
+  flex: 1;
+  margin: 0 5px 0 5px;
+`;
+
+const FirstItem = styled(ListItem)`
+  border-top-color: ${({ dividerColor }) => dividerColor};
+  border-top-width: 0.5px;
+`;
+
+const ItemTitle = styled.Text`
+  font-family: ${() => fonts.regular};
+  font-size: ${() => `${fonts.regularSize}px`};
+  color: ${({ color }) => color};
+  flex: 1;
+`;
+
+export { ListItem, FirstItem, ItemTitle };

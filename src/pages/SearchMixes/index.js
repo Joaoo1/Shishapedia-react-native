@@ -1,24 +1,18 @@
 import { useState } from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  ActivityIndicator,
-  ToastAndroid,
-  Text,
-} from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FlatList, ToastAndroid } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
+import { useTheme } from '../../hooks/theme';
 import PageHeader from '../../components/DrawerPageHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import MixListItem from '../../components/MixListItem';
 import api from '../../services/api';
 
-import { colors } from '../../styles';
-import styles from './styles';
+import { Container, Input, InputContainer, Icon, NoFoundText } from './styles';
 
 const SearchMixes = () => {
+  const { colors } = useTheme();
+
   const [mixes, setMixes] = useState([]);
   const [searchString, setSearchString] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -55,22 +49,16 @@ const SearchMixes = () => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title="Buscar mixes" backButton />
-      <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
+      <Container>
+        <InputContainer backgroundColor={colors.inputBackground}>
+          <Input
+            borderColor={colors.inputBorder}
+            textColor={colors.text}
             placeholder="Digite o nome da essência"
-            placeholderTextColor="#c1bccc"
+            placeholderTextColor={colors.inputPlaceholderText}
             onChangeText={(text) => setSearchString(text)}
             onSubmitEditing={handleSearchMixes}
           />
@@ -79,13 +67,12 @@ const SearchMixes = () => {
             name="search"
             size={28}
             color="#c1bccc"
-            style={styles.icon}
           />
-        </View>
+        </InputContainer>
         {mixes.length > 0 && (
           <FlatList
             data={mixes}
-            style={styles.list}
+            style={{ paddingHorizontal: 20 }}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item, index }) => (
               <MixListItem mix={item} isFirst={index === 0} />
@@ -94,9 +81,9 @@ const SearchMixes = () => {
         )}
 
         {!isLoading && mixes.length === 0 && (
-          <Text style={styles.notFound}>{emptyMessage}</Text>
+          <NoFoundText color={colors.text}>{emptyMessage}</NoFoundText>
         )}
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

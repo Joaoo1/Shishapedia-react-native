@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import { ToastAndroid, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ToastAndroid } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
 
-import { colors } from '../../styles';
 import PageHeader from '../../components/DrawerPageHeader';
 import NarguileItemListItem from '../../components/NarguileItemListItem';
-
-import styles from './styles';
 import api from '../../services/api';
+import LoadingIndicator from '../../components/LoadingIndicator';
+
+import Container from './styles';
 
 const NarguileItems = ({ route }) => {
   const { type } = route.params;
@@ -35,17 +34,10 @@ const NarguileItems = ({ route }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title={type.name ?? 'Narguiles'} backButton />
-      <SafeAreaView style={styles.container}>
+      <Container>
         <FlatList
           data={narguileItems}
           keyExtractor={(item) => `${item.typeId}`}
@@ -53,7 +45,7 @@ const NarguileItems = ({ route }) => {
             <NarguileItemListItem narguile={item} isFirst={index === 0} />
           )}
         />
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

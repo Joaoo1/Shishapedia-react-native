@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  ActivityIndicator,
-  ToastAndroid,
-  Text,
-} from 'react-native';
+import { FlatList, ToastAndroid, Text } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -16,12 +8,14 @@ import PageHeader from '../../components/DrawerPageHeader';
 import EssenceBrandListItem from '../../components/EssenceBrandListItem';
 import api from '../../services/api';
 import { useNotifications } from '../../hooks/notifications';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useTheme } from '../../hooks/theme';
 
-import { colors } from '../../styles';
-import styles from './styles';
+import { Container, Input, InputContainer, Icon, NotFound } from './styles';
 
 const EssencesBrands = ({ navigation }) => {
   const { refreshNotifications } = useNotifications();
+  const { colors } = useTheme();
 
   const [brands, setBrands] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
@@ -65,20 +59,14 @@ const EssencesBrands = ({ navigation }) => {
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          animating={isLoading}
-          color={colors.accentColor}
-        />
-      )}
+      {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <PageHeader title="Essências" drawerNavigation={navigation} />
-      <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
+      <Container>
+        <InputContainer backgroundColor={colors.inputBackground}>
+          <Input
+            textColor={colors.text}
+            borderColor={colors.inputBorder}
             placeholder="Qual marca você procura?"
             placeholderTextColor="#c1bccc"
             onChangeText={(text) => handleSearchBrands(text)}
@@ -88,13 +76,12 @@ const EssencesBrands = ({ navigation }) => {
             name="search"
             size={28}
             color="#c1bccc"
-            style={styles.icon}
           />
-        </View>
+        </InputContainer>
         {brands.length > 0 && (
           <FlatList
             data={brands}
-            style={styles.list}
+            style={{ paddingHorizontal: 20 }}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item, index }) => (
               <EssenceBrandListItem brand={item} isFirst={index === 0} />
@@ -103,9 +90,11 @@ const EssencesBrands = ({ navigation }) => {
         )}
 
         {!isLoading && brands.length === 0 && (
-          <Text style={styles.notFound}>Nenhuma marca encontrada</Text>
+          <NotFound color={() => colors.text}>
+            Nenhuma marca encontrada
+          </NotFound>
         )}
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

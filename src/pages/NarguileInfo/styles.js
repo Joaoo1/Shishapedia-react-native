@@ -1,44 +1,61 @@
-import { StyleSheet } from 'react-native';
+import { SafeAreaView, Image as RNImage } from 'react-native';
+import styled from 'styled-components';
 
-import { colors, fonts, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: { backgroundColor: 'rgba(218,218,218,0.6)' },
-  imageContainer: {
-    width: '100%',
-    height: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    resizeMode: 'contain',
-    flex: 1,
-    width: '100%',
-    maxHeight: 280,
-  },
-  infoContainer: {
-    height: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 60,
-    borderWidth: 1,
-    borderColor: 'transparent',
-    paddingHorizontal: metrics.screenHorizontalPadding + 10,
-    paddingTop: 30,
-    marginBottom: 80,
-  },
-  narguileName: {
-    fontSize: 26,
-    fontFamily: fonts.bold,
-    color: colors.text,
-    maxWidth: 260,
-  },
-  descriptionText: {
-    color: colors.text,
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.light,
-    marginBottom: 10,
-    textAlign: 'justify',
-  },
-});
+const horizontalPadding = metrics.screenHorizontalPadding + 10;
 
-export default styles;
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
+
+const ImageContainer = styled.View`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  width: 100%;
+  height: 370px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -60px;
+`;
+
+const Image = styled(RNImage)`
+  flex: 1;
+  width: 95%;
+  max-height: 280px;
+  margin-bottom: 60px;
+`;
+
+const InfoContainer = styled.View`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  height: 100%;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  border-width: 1px;
+  border-color: transparent;
+  padding: ${() => `30px ${horizontalPadding}px 40px ${horizontalPadding}px`};
+`;
+
+const DescriptionText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.light};
+  color: ${({ color }) => color};
+  margin-bottom: 10px;
+  text-align: justify;
+`;
+
+const NarguileName = styled.Text`
+  font-size: 26px;
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+  max-width: 260px;
+  margin-bottom: 10px;
+`;
+
+export {
+  Container,
+  ImageContainer,
+  Image,
+  NarguileName,
+  InfoContainer,
+  DescriptionText,
+};

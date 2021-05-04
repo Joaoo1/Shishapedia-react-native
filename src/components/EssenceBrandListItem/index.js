@@ -1,12 +1,21 @@
-import { Text, View, Image, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
 import FavoriteIcon from '../../assets/images/ic_favorites.png';
-import styles from './styles';
+import {
+  ListItem,
+  FirstItem,
+  LeftContainer,
+  ItemImage,
+  ItemTitle,
+  ItemLabel,
+  TextContainer,
+} from './styles';
 
 const propTypes = {
   brand: PropTypes.object.isRequired,
@@ -20,6 +29,7 @@ const defaultProps = {
 const EssenceBrandListItem = ({ brand, isFirst }) => {
   const { navigate } = useNavigation();
   const { user } = useAuth();
+  const { colors } = useTheme();
 
   function handleItemPress() {
     navigate('Essences', { brandId: brand.id, brandName: brand.name });
@@ -40,35 +50,30 @@ const EssenceBrandListItem = ({ brand, isFirst }) => {
 
   function renderFavoriteItem() {
     return (
-      <View
-        style={[styles.listItem, styles.firstItem]}
-        onTouchEnd={handleFavoriteItemPress}
-      >
-        <View style={styles.leftContainer}>
-          <Image source={FavoriteIcon} style={styles.itemImage} />
-          <View style={styles.textContainer}>
-            <Text style={styles.itemTitle}>Favoritos</Text>
-          </View>
-        </View>
+      <FirstItem onTouchEnd={handleFavoriteItemPress}>
+        <LeftContainer>
+          <ItemImage source={FavoriteIcon} resizeMode="contain" />
+          <TextContainer>
+            <ItemTitle color={colors.text}>Favoritos</ItemTitle>
+          </TextContainer>
+        </LeftContainer>
         <Icon name="chevron-right" size={30} onPress={handleItemPress} />
-      </View>
+      </FirstItem>
     );
   }
   return (
     <>
       {isFirst && renderFavoriteItem()}
-      <View style={styles.listItem} onTouchEnd={handleItemPress}>
-        <View style={styles.leftContainer}>
-          <Image source={{ uri: brand.icon.url }} style={styles.itemImage} />
-          <View style={styles.textContainer}>
-            <Text style={styles.itemTitle}>{brand.name}</Text>
-            <Text style={styles.itemLabel}>
-              {`${brand.totalEssences} Essências`}
-            </Text>
-          </View>
-        </View>
+      <ListItem onTouchEnd={handleItemPress}>
+        <LeftContainer>
+          <ItemImage source={{ uri: brand.icon.url }} resizeMode="contain" />
+          <TextContainer>
+            <ItemTitle color={colors.text}>{brand.name}</ItemTitle>
+            <ItemLabel>{`${brand.totalEssences} Essências`}</ItemLabel>
+          </TextContainer>
+        </LeftContainer>
         <Icon name="chevron-right" size={30} onPress={handleItemPress} />
-      </View>
+      </ListItem>
     </>
   );
 };

@@ -1,15 +1,22 @@
 import { useEffect } from 'react';
-import { Text, View } from 'react-native';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import { useNotifications } from '../../hooks/notifications';
+import { useTheme } from '../../hooks/theme';
 import api from '../../services/api';
 
-import styles from './styles';
+import {
+  Container,
+  HeadContainer,
+  NotificationDate,
+  NotificationMessage,
+  NotificationTitle,
+} from './styles';
 
 const Notifications = ({ route }) => {
   const { notification } = route.params;
   const { setRead } = useNotifications();
+  const { colors } = useTheme();
 
   useEffect(() => {
     if (!notification.read) {
@@ -21,13 +28,19 @@ const Notifications = ({ route }) => {
   return (
     <>
       <PageHeader notifications={false} backButton title="Notificações" />
-      <View style={styles.container}>
-        <View style={styles.headContainer}>
-          <Text style={styles.notificationTitle}>{notification.title}</Text>
-          <Text style={styles.notificationDate}>{notification.date}</Text>
-        </View>
-        <Text style={styles.notificationMessage}>{notification.message}</Text>
-      </View>
+      <Container>
+        <HeadContainer>
+          <NotificationTitle color={colors.text}>
+            {notification.title}
+          </NotificationTitle>
+          <NotificationDate color={colors.text}>
+            {notification.date}
+          </NotificationDate>
+        </HeadContainer>
+        <NotificationMessage color={colors.text}>
+          {notification.message}
+        </NotificationMessage>
+      </Container>
     </>
   );
 };

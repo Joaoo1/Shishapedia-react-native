@@ -1,32 +1,36 @@
-import { StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import styled from 'styled-components';
 
-import { colors, fonts, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.primaryColor,
-    height: 60,
-    paddingHorizontal: metrics.screenHorizontalPadding,
-  },
-  title: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.titleSize,
-    color: colors.systemText,
-  },
-  leftIcon: {
-    marginRight: 30,
-    marginTop: 2,
-  },
-  rightIconContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  save: {
-    color: colors.systemText,
-  },
-});
+const horizontalPadding = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  height: 60px;
+  padding: ${() => `15px ${horizontalPadding}px 15px ${horizontalPadding}px`};
+`;
+
+const Title = styled.Text`
+  font-family: ${() => fonts.regular};
+  font-size: ${() => `${fonts.titleSize}px`};
+  color: ${({ color }) => color};
+`;
+
+const LeftIcon = styled(Icon)`
+  margin: 2px 30px 0 0;
+`;
+
+const RightIconContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+const Save = styled.Text`
+  color: ${({ color }) => color};
+`;
+
+export { Container, Title, LeftIcon, RightIconContainer, Save };

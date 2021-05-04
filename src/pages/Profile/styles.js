@@ -1,69 +1,69 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { ScrollView } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 
-import { metrics, fonts, colors } from '../../styles';
+import TextInput from '../../components/Input';
+import { metrics, fonts } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    padding: metrics.screenHorizontalPadding,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    alignItems: 'center',
-    width: '100%',
-  },
-  headerButton: {
-    backgroundColor: colors.buttonBackground,
-    width: 100,
-    height: 35,
-    borderRadius: 15,
-    top: -30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textButton: {
-    color: colors.buttonText,
-    fontFamily: fonts.bold,
-    fontSize: 13,
-  },
-  input: {
-    height: metrics.inputHeight,
-    backgroundColor: colors.inputBackground,
-    fontSize: fonts.inputSize,
-    fontFamily: fonts.regular,
-    borderRadius: metrics.inputBorderRadius,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    paddingHorizontal: 16,
-    marginTop: 5,
-  },
-  inputContainer: {
-    backgroundColor: '#fff',
-    borderRadius: metrics.inputBorderRadius,
-    marginTop: 25,
-  },
-  inputLabel: {
-    color: colors.text,
-    fontFamily: fonts.regular,
-    fontSize: fonts.inputSize,
-  },
-  divider: {
-    borderBottomColor: 'rgba(0,0,0,0.25)',
-    borderBottomWidth: 0.5,
-    marginTop: 35,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '75%',
-    marginLeft: '37%',
-    zIndex: 1,
-  },
-  deleteUserText: {
-    fontFamily: fonts.light,
-    fontSize: fonts.regularSize,
-    color: 'red',
-    textDecorationLine: 'underline',
-    marginTop: 30,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled(ScrollView)`
+  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
+`;
+
+const HeaderContainer = styled.View`
+  align-items: center;
+  width: 100%;
+`;
+
+const HeaderButton = styled(RectButton)`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  width: 100px;
+  height: 35px;
+  border-radius: 15px;
+  top: -30px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TextButton = styled.Text`
+  color: ${({ color }) => color};
+  font-family: ${() => fonts.bold};
+  font-size: 13px;
+`;
+
+const Input = styled(TextInput)`
+  height: ${() => `${metrics.inputHeight}px`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.regular};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  border-width: 1px;
+  border-color: ${({ borderColor }) => borderColor};
+  padding: ${() => '0 16px 0 16px'};
+  margin: 5px 0 20px 0;
+  color: ${({ textColor }) => textColor};
+`;
+const Divider = styled.View`
+  border-bottom-width: 0.5px;
+  border-bottom-color: ${({ color }) => color};
+  margin: 5px 0 20px 0;
+`;
+
+const DeleteUserText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.light};
+  color: red;
+  text-decoration: underline;
+  margin: 30px 0px 20px 0;
+`;
+
+export {
+  Container,
+  HeaderContainer,
+  HeaderButton,
+  TextButton,
+  Input,
+  Divider,
+  DeleteUserText,
+};

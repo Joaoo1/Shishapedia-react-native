@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  View,
-  Image,
-  Text,
-  SafeAreaView,
-  ToastAndroid,
-  ScrollView,
-} from 'react-native';
+import { View, ToastAndroid } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ImageView from 'react-native-image-viewing';
 import crashlytics from '@react-native-firebase/crashlytics';
@@ -17,10 +10,25 @@ import { FormatDate } from '../../helpers/FormatDate';
 import PageHeader from '../../components/DrawerPageHeader';
 
 import FavoriteIcon from '../../assets/icons/Favorite';
-import styles from './styles';
+import {
+  Container,
+  ScrollView,
+  ImageContainer,
+  Image,
+  BoldText,
+  EssenceName,
+  InfoContainer,
+  InfoHeader,
+  Rate,
+  RatesContainer,
+  Reviews,
+  DescriptionText,
+} from './styles';
+import { useTheme } from '../../hooks/theme';
 
 const EssenceInfo = ({ navigation, route }) => {
   const { user } = useAuth();
+  const { colors } = useTheme();
 
   const [isFavorite, setFavorite] = useState(null);
   const [essence, setEssence] = useState({});
@@ -130,20 +138,20 @@ const EssenceInfo = ({ navigation, route }) => {
         visible={showImage}
         onRequestClose={() => setShowImage(false)}
       />
-      <SafeAreaView style={styles.container}>
-        <ScrollView>
-          <View
-            style={styles.imageContainer}
+      <Container>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ImageContainer
+            backgroundColor={colors.imageGrayBackground}
             onTouchEnd={() => setShowImage(true)}
           >
             <Image
+              resizeMode="contain"
               source={essence.image && { uri: essence.image.url }}
-              style={styles.image}
             />
-          </View>
-          <View style={styles.infoContainer}>
-            <View style={styles.infoHeader}>
-              <Text style={styles.essenceName}>{essence.name}</Text>
+          </ImageContainer>
+          <InfoContainer backgroundColor={colors.white}>
+            <InfoHeader>
+              <EssenceName color={colors.text}>{essence.name}</EssenceName>
               <View onTouchStart={handleFavoriteButtonPress}>
                 <FavoriteIcon
                   enabled={isFavorite != null}
@@ -151,31 +159,28 @@ const EssenceInfo = ({ navigation, route }) => {
                   size={32}
                 />
               </View>
-            </View>
-            <View
-              style={styles.ratesContainer}
-              onTouchStart={handleNavigateToReviews}
-            >
+            </InfoHeader>
+            <RatesContainer onTouchStart={handleNavigateToReviews}>
               <Icon name="star" color="#FFDD55" size={14} />
-              <Text style={styles.rate}>{essence.averageRating}</Text>
-              <Text style={styles.reviews}>
-                {`${essence.reviews} Avaliações`}
-              </Text>
-            </View>
+              <Rate>{essence.averageRating}</Rate>
+              <Reviews>{`${essence.reviews} Avaliações`}</Reviews>
+            </RatesContainer>
             {essence.proposal && (
-              <Text style={styles.boldText}>
+              <BoldText color={colors.text}>
                 {`Proposta: ${essence.proposal}`}
-              </Text>
+              </BoldText>
             )}
             {essence.release_date !== null && (
-              <Text style={styles.descriptionText}>
+              <BoldText color={colors.text}>
                 {`Data da lançamento: ${essence.release_date}`}
-              </Text>
+              </BoldText>
             )}
-            <Text style={styles.descriptionText}>{essence.description}</Text>
-          </View>
+            <DescriptionText color={colors.text}>
+              {essence.description}
+            </DescriptionText>
+          </InfoContainer>
         </ScrollView>
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

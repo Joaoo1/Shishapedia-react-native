@@ -2,7 +2,11 @@ import { useRef, useEffect, useCallback } from 'react';
 import { Text, TextInput } from 'react-native';
 import { useField } from '@unform/core';
 
+import { useTheme } from '../../hooks/theme';
+import { fonts } from '../../styles';
+
 function Input({ name, label, onChangeText, ...rest }) {
+  const { colors } = useTheme();
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
   useEffect(() => {
@@ -42,11 +46,23 @@ function Input({ name, label, onChangeText, ...rest }) {
   );
   return (
     <>
-      {label && <Text>{label}</Text>}
+      {label && (
+        <Text
+          style={{
+            color: colors.text,
+            fontFamily: fonts.regular,
+            fontSize: fonts.regularSize,
+          }}
+        >
+          {label}
+        </Text>
+      )}
       <TextInput
         ref={inputRef}
         onChangeText={handleChangeText}
         defaultValue={defaultValue}
+        placeholderTextColor={colors.inputPlaceholderText}
+        style={{ color: colors.text }}
         {...rest}
       />
       {error && <Text style={{ color: '#ff0000', fontSize: 12 }}>{error}</Text>}

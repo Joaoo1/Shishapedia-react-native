@@ -1,52 +1,41 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { SafeAreaView } from 'react-native';
 
-import { fonts, metrics, colors } from '../../styles';
+import { metrics, fonts } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    alignItems: 'center',
-    backgroundColor: colors.primaryColor,
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.titleSize,
-    color: colors.whiteText,
-    textAlign: 'center',
-    marginBottom: 60,
-    marginTop: 15,
-  },
-  headline: {
-    fontFamily: fonts.bold,
-    fontSize: fonts.bigSize,
-    color: colors.whiteText,
-    textAlign: 'center',
-  },
-  text: {
-    fontFamily: fonts.regular,
-    fontSize: fonts.regularSize,
-    color: colors.whiteText,
-    textAlign: 'center',
-    marginTop: 10,
-    marginBottom: 40,
-  },
-  button: {
-    padding: metrics.screenHorizontalPadding,
-    backgroundColor: colors.buttonBackground,
-    borderRadius: metrics.inputBorderRadius,
-    width: '100%',
-    height: metrics.inputHeight,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  buttonText: {
-    color: colors.buttonText,
-    fontFamily: fonts.bold,
-    fontSize: fonts.inputSize,
-  },
-});
+const paddingHorizontal = metrics.screenHorizontalPadding;
 
-export default styles;
+const Container = styled(SafeAreaView)`
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Title = styled.Text`
+  font-size: ${() => `${fonts.titleSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 60px;
+`;
+const Headline = styled.Text`
+  font-size: ${() => `${fonts.bigSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 40px;
+`;
+const Text = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 40px;
+`;
+
+export { Container, Title, Headline, Text };

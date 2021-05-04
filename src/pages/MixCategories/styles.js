@@ -1,45 +1,32 @@
-import { StyleSheet } from 'react-native';
+import { SafeAreaView, TouchableOpacity } from 'react-native';
+import styled from 'styled-components';
 
-import { fonts, metrics, colors } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    flex: 1,
-  },
-  headline: {
-    paddingHorizontal: metrics.screenHorizontalPadding,
-    fontSize: fonts.bigSize,
-    fontFamily: fonts.bold,
-    color: '#000',
-    padding: 15,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '65%',
-    marginLeft: '37%',
-    zIndex: 1000,
-  },
-  floatingButton: {
-    borderRadius: 25,
-    width: 50,
-    height: 50,
-    backgroundColor: colors.accentColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+const horizontalPadding = metrics.screenHorizontalPadding;
 
-    alignSelf: 'flex-end',
-    marginRight: 20,
-    marginBottom: 20,
-  },
-});
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
 
-export default styles;
+const Headline = styled.Text`
+  padding: ${() => `15px ${horizontalPadding}px 15px ${horizontalPadding}px`};
+  font-size: ${() => `${fonts.bigSize}px`};
+  font-family: ${() => fonts.bold};
+  color: ${({ color }) => color};
+`;
+
+const FloatingButton = styled(TouchableOpacity)`
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 5px 12px rgba(0, 0, 0, 0.81);
+  align-self: flex-end;
+  margin-right: 20px;
+  margin-bottom: 20px;
+`;
+
+export { Container, Headline, FloatingButton };

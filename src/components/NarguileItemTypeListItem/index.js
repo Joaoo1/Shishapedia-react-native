@@ -1,9 +1,9 @@
-import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import styles from './styles';
+import { ListItem, FirstItem, ItemTitle } from './styles';
+import { useTheme } from '../../hooks/theme';
 
 const propTypes = {
   item: PropTypes.object.isRequired,
@@ -17,20 +17,48 @@ const defaultProps = {
 const NarguileItemTypeListItem = ({ item, isFirst }) => {
   const Icon = item.icon;
   const { navigate } = useNavigation();
+  const { colors } = useTheme();
 
   function handleItemPress() {
     navigate('NarguileItems', { type: item });
   }
 
+  if (isFirst) {
+    return (
+      <FirstItem onTouchEnd={handleItemPress} dividerColor={colors.listDivider}>
+        <Icon
+          color={colors.black}
+          width={42}
+          height={42}
+          style={{ marginRight: 20 }}
+        />
+        <ItemTitle color={colors.text}>{item.name}</ItemTitle>
+        <MaterialIcon
+          name="chevron-right"
+          size={30}
+          onPress={handleItemPress}
+          color={colors.black}
+        />
+      </FirstItem>
+    );
+  }
+
   return (
-    <View
-      style={isFirst ? [styles.listItem, styles.firstItem] : styles.listItem}
-      onTouchEnd={handleItemPress}
-    >
-      <Icon color="#000000" width={42} height={42} style={styles.itemImage} />
-      <Text style={styles.itemTitle}>{item.name}</Text>
-      <MaterialIcon name="chevron-right" size={30} onPress={handleItemPress} />
-    </View>
+    <ListItem onTouchEnd={handleItemPress} dividerColor={colors.listDivider}>
+      <Icon
+        color={colors.black}
+        width={42}
+        height={42}
+        style={{ marginRight: 20 }}
+      />
+      <ItemTitle color={colors.text}>{item.name}</ItemTitle>
+      <MaterialIcon
+        name="chevron-right"
+        size={30}
+        onPress={handleItemPress}
+        color={colors.black}
+      />
+    </ListItem>
   );
 };
 

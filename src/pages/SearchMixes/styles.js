@@ -1,51 +1,46 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { SafeAreaView, TextInput } from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { fonts, colors, metrics } from '../../styles';
+import { fonts, metrics } from '../../styles';
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    flex: 1,
-  },
-  input: {
-    height: metrics.inputHeight,
-    backgroundColor: colors.inputBackground,
-    fontSize: fonts.inputSize,
-    fontFamily: fonts.regular,
-    borderRadius: metrics.inputBorderRadius,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    paddingHorizontal: 16,
-    flex: 1,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    margin: 20,
-    elevation: 1,
-  },
-  icon: {
-    position: 'absolute',
-    right: 16,
-  },
-  list: {
-    paddingHorizontal: 20,
-  },
-  loading: {
-    position: 'absolute',
-    marginTop: '55%',
-    marginLeft: '37%',
-  },
-  notFound: {
-    fontSize: fonts.regularSize,
-    fontFamily: fonts.regular,
-    color: colors.text,
-    flexGrow: 1,
-    alignSelf: 'center',
-    marginTop: 15,
-  },
-});
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
 
-export default styles;
+const Input = styled(TextInput)`
+  height: ${() => `${metrics.inputHeight}px`};
+  font-size: ${() => `${fonts.inputSize}px`};
+  font-family: ${() => fonts.regular};
+  border-radius: ${() => `${metrics.inputBorderRadius}px`};
+  border-width: 1px;
+  border-color: ${({ borderColor }) => borderColor};
+  padding: ${() => '0 16px 0 16px'};
+  color: ${({ textColor }) => textColor};
+  flex: 1;
+`;
+
+const InputContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: 10px;
+  margin: 20px;
+`;
+
+const Icon = styled(MaterialIcon)`
+  position: absolute;
+  right: 16px;
+`;
+
+const NoFoundText = styled.Text`
+  font-size: ${() => `${fonts.regularSize}px`};
+  font-family: ${() => fonts.regular};
+  color: ${({ color }) => color};
+  align-self: center;
+  flex-grow: 1;
+  text-align: center;
+  margin-top: 15px;
+`;
+
+export { Container, Input, InputContainer, Icon, NoFoundText };

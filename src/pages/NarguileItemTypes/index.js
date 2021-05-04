@@ -1,6 +1,4 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
-import { Text } from 'react-native';
 
 import { FlatList } from 'react-native-gesture-handler';
 import PageHeader from '../../components/DrawerPageHeader';
@@ -11,8 +9,11 @@ import NarguileIcon from '../../assets/icons/Narguile';
 import RoshIcon from '../../assets/icons/Rosh';
 import DishIcon from '../../assets/icons/Dish';
 import HoseIcon from '../../assets/icons/Hose';
+import StemIcon from '../../assets/icons/Stem';
+import VaseIcon from '../../assets/icons/Vase';
 import AbafadorIcon from '../../assets/icons/Abafador';
-import styles from './styles';
+import { Container, Headline } from './styles';
+import { useTheme } from '../../hooks/theme';
 
 const types = [
   {
@@ -21,34 +22,40 @@ const types = [
     icon: NarguileIcon,
   },
   {
-    name: 'Mangueiras',
+    name: 'Stems',
     typeId: 2,
+    icon: StemIcon,
+  },
+  {
+    name: 'Mangueiras',
+    typeId: 3,
     icon: HoseIcon,
   },
   {
     name: 'Roshs',
-    typeId: 3,
+    typeId: 4,
     icon: RoshIcon,
   },
   {
-    name: 'Abafador',
-    typeId: 4,
+    name: 'Abafadores',
+    typeId: 5,
     icon: AbafadorIcon,
   },
   {
     name: 'Pratos',
-    typeId: 5,
+    typeId: 6,
     icon: DishIcon,
   },
   {
     name: 'Vasos',
-    typeId: 6,
-    icon: NarguileIcon,
+    typeId: 7,
+    icon: VaseIcon,
   },
 ];
 
 const NarguileItemTypes = ({ navigation }) => {
   const { refreshNotifications } = useNotifications();
+  const { colors } = useTheme();
 
   useFocusEffect(() => {
     refreshNotifications();
@@ -57,8 +64,8 @@ const NarguileItemTypes = ({ navigation }) => {
   return (
     <>
       <PageHeader title="Narguiles" drawerNavigation={navigation} />
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.headline}>Categorias</Text>
+      <Container>
+        <Headline color={colors.text}>Categorias</Headline>
         <FlatList
           data={types}
           keyExtractor={(item) => `${item.typeId}`}
@@ -66,7 +73,7 @@ const NarguileItemTypes = ({ navigation }) => {
             <NarguileItemTypeListItem item={item} isFirst={index === 0} />
           )}
         />
-      </SafeAreaView>
+      </Container>
     </>
   );
 };

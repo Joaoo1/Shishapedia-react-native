@@ -8,7 +8,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  color: '#ffffff',
+  color: 'white',
   width: 52,
   height: 65,
 };
