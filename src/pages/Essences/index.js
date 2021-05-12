@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ToastAndroid } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/DrawerPageHeader';
 import EssenceListItem from '../../components/EssenceListItem';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/Input';
 import api from '../../services/api';
 import NotFoundImg from '../../assets/illustrations/not_found.svg';
 import { useTheme } from '../../hooks/theme';
-import LoadingIndicator from '../../components/LoadingIndicator';
 
 import {
   Container,
-  Input,
   InputContainer,
-  Icon,
   ImageContainer,
   NoFoundEssenceText,
   NotFoundTitle,
@@ -105,17 +104,14 @@ const Essences = ({ route }) => {
         )}
         {!isLoading && allEssences.length > 0 && (
           <>
-            <InputContainer backgroundColor={colors.inputBackground}>
+            <InputContainer>
               <Input
-                borderColor={colors.inputBorder}
-                textColor={colors.text}
+                searchIcon
                 placeholder="Digite o nome da essência"
-                placeholderTextColor={colors.inputPlaceholderText}
                 value={searchString}
                 onChangeText={(text) => setSearchString(text)}
                 onSubmitEditing={handleSearchEssences}
               />
-              <Icon name="search" size={28} color="#c1bccc" />
             </InputContainer>
             {essences.length === 0 ? (
               <NoFoundEssenceText color={colors.text}>

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { SafeAreaView, TextInput } from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { SafeAreaView } from 'react-native';
 
 import { fonts, metrics } from '../../styles';
 
@@ -10,29 +9,8 @@ const Container = styled(SafeAreaView)`
   margin-bottom: ${() => `${metrics.BottomTabHeight + 35}px`};
 `;
 
-const Input = styled(TextInput)`
-  height: ${() => `${metrics.inputHeight}px`};
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.regular};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  border-width: 1px;
-  border-color: ${({ borderColor }) => borderColor};
-  padding: ${() => '0 16px 0 16px'};
-  color: ${({ textColor }) => textColor};
-  flex: 1;
-`;
-
 const InputContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border-radius: 10px;
-  margin: 20px;
-`;
-
-const Icon = styled(MaterialIcon)`
-  position: absolute;
-  right: 16px;
+  margin: 0 20px 20px 20px;
 `;
 
 const NotFoundTitle = styled.Text`
@@ -61,9 +39,7 @@ const ImageContainer = styled.View`
 
 export {
   Container,
-  Input,
   InputContainer,
-  Icon,
   ImageContainer,
   NoFoundMixesText,
   NotFoundTitle,

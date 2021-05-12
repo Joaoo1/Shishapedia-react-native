@@ -16,12 +16,12 @@ import {
   Container,
   HeaderContainer,
   ReviewsContainer,
+  Input,
   Button,
   ButtonText,
   Divider,
   HeaderText,
   Image,
-  Input,
   MakeReviewFooter,
   NotFound,
   Rating,
@@ -159,24 +159,20 @@ const EssenceReviews = ({ route }) => {
           </RatingContainer>
         </HeaderContainer>
         <ReviewsContainer color={colors.white}>
+          <Input
+            style={{ textAlignVertical: 'top' }}
+            multiline
+            placeholder={
+              user
+                ? 'Deixe sua opinião sobre a essência'
+                : 'Você precisa estar logado para poder deixar sua opinião sobre a essência'
+            }
+            value={comment}
+            onChangeText={(text) => setComment(text)}
+            editable={!!user}
+            maxLength={255}
+          />
           <View>
-            <Input
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              textColor={colors.text}
-              style={{ textAlignVertical: 'top' }}
-              multiline
-              placeholder={
-                user
-                  ? 'Deixe sua opinião sobre a essência'
-                  : 'Você precisa estar logado para poder deixar sua opinião sobre a essência'
-              }
-              placeholderTextColor={colors.inputPlaceholderText}
-              value={comment}
-              onChangeText={(text) => setComment(text)}
-              editable={!!user}
-              maxLength={255}
-            />
             <MakeReviewFooter>
               <StarsContainer>
                 <StarContainer onTouchStart={() => setRating(1)}>

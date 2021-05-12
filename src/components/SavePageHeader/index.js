@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 
 import { useTheme } from '../../hooks/theme';
 
@@ -15,8 +16,10 @@ const defaultProps = {
   saveButtonText: 'SALVAR',
 };
 
-const DrawerPageHeader = ({ title, onSave, navigation, saveButtonText }) => {
+const DrawerPageHeader = ({ title, onSave, saveButtonText }) => {
+  const navigation = useNavigation();
   const { colors } = useTheme();
+
   function handleBackPress() {
     navigation.goBack();
   }

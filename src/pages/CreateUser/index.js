@@ -6,16 +6,11 @@ import { Form } from '@unform/mobile';
 
 import PageHeader from '../../components/SavePageHeader';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/FormInput';
 import api from '../../services/api';
 import { useTheme } from '../../hooks/theme';
 
-import {
-  Container,
-  Input,
-  Button,
-  ButtonText,
-  PasswordRequirements,
-} from './styles';
+import { Container, Button, ButtonText, PasswordRequirements } from './styles';
 
 const CreateUser = () => {
   const navigation = useNavigation();
@@ -58,36 +53,14 @@ const CreateUser = () => {
       <PageHeader title="Criar conta" navigation={navigation} />
       <Container backgroundColor={colors.primaryColor}>
         <Form ref={form} onSubmit={handleFormSubmit}>
-          <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
-            name="name"
-            placeholder="Nome"
-          />
-          <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
-            placeholder="E-mail"
-            name="email"
-          />
-          <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
-            placeholder="Senha"
-            name="password"
-            secureTextEntry
-          />
+          <Input name="name" placeholder="Nome" />
+          <Input placeholder="E-mail" name="email" />
+          <Input placeholder="Senha" name="password" secureTextEntry />
           <PasswordRequirements>
             Senha precisa conter letras maiúsculas, minúsculas, números e no
             minímo 8 digítos.
           </PasswordRequirements>
           <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
             placeholder="Confirmar Senha"
             name="confirm_password"
             secureTextEntry

@@ -1,9 +1,5 @@
 import { SafeAreaView } from 'react-native';
-import {
-  RectButton,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 
 import { fonts, metrics } from '../../styles';
@@ -84,19 +80,6 @@ const OrText = styled.Text`
   text-align: center;
 `;
 
-const Input = styled(TextInput)`
-  height: ${() => `${metrics.inputHeight}px`};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.regular};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  border-width: 1px;
-  border-color: ${({ borderColor }) => borderColor};
-  padding: ${() => '0 16px 0 16px'};
-  margin-top: 20px;
-  color: ${({ textColor }) => textColor};
-`;
-
 const ForgotPasswordText = styled.Text`
   color: ${({ color }) => color};
   font-size: ${() => `${fonts.regularSize}px`};
@@ -140,7 +123,6 @@ export {
   FacebookButton,
   FacebookButtonText,
   OrText,
-  Input,
   ForgotPasswordText,
   CreateAccountText,
   ContinueWithoutLoginButton,

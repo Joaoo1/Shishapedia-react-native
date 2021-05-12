@@ -9,6 +9,7 @@ import { useTheme } from '../../hooks/theme';
 import GetUrlParams from '../../helpers/GetUrlParams';
 import api from '../../services/api';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/Input';
 
 import GoogleIcon from '../../assets/icons/google-icon.svg';
 import {
@@ -21,7 +22,6 @@ import {
   FacebookButton,
   FacebookButtonText,
   OrText,
-  Input,
   ForgotPasswordText,
   CreateAccountText,
   ContinueWithoutLoginButton,
@@ -147,24 +147,16 @@ const Login = () => {
           <OrText color={colors.whiteText}>Ou</OrText>
 
           <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
             placeholder="Email"
-            placeholderTextColor="#c1bccc"
             value={email}
             onChangeText={(text) => setEmail(text)}
             autoCapitalize="none"
             onSubmitEditing={() => passwordInputRef.current.focus()}
           />
           <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
             ref={passwordInputRef}
             placeholder="Senha"
             secureTextEntry
-            placeholderTextColor="#c1bccc"
             value={password}
             onChangeText={(text) => setPassword(text)}
             onSubmitEditing={handleEmailButtonPress}

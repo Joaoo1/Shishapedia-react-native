@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-import TextInput from '../../components/Input';
 import { metrics, fonts } from '../../styles';
 
 const paddingHorizontal = metrics.screenHorizontalPadding;
@@ -32,22 +31,10 @@ const TextButton = styled.Text`
   font-size: 13px;
 `;
 
-const Input = styled(TextInput)`
-  height: ${() => `${metrics.inputHeight}px`};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.regular};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  border-width: 1px;
-  border-color: ${({ borderColor }) => borderColor};
-  padding: ${() => '0 16px 0 16px'};
-  margin: 5px 0 20px 0;
-  color: ${({ textColor }) => textColor};
-`;
 const Divider = styled.View`
   border-bottom-width: 0.5px;
   border-bottom-color: ${({ color }) => color};
-  margin: 5px 0 20px 0;
+  margin: 25px 0 5px 0;
 `;
 
 const DeleteUserText = styled.Text`
@@ -63,7 +50,6 @@ export {
   HeaderContainer,
   HeaderButton,
   TextButton,
-  Input,
   Divider,
   DeleteUserText,
 };

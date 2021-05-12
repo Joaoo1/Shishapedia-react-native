@@ -6,14 +6,13 @@ import api from '../../services/api';
 import PageHeader from '../../components/DrawerPageHeader';
 import MixListItem from '../../components/MixListItem';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/Input';
 import { useTheme } from '../../hooks/theme';
 
 import NotFoundImg from '../../assets/illustrations/not_found.svg';
 import {
   Container,
-  Input,
   InputContainer,
-  Icon,
   ImageContainer,
   NoFoundMixesText,
   NotFoundTitle,
@@ -103,19 +102,11 @@ const Mixes = ({ route }) => {
           <>
             <InputContainer backgroundColor={colors.inputBackground}>
               <Input
-                borderColor={colors.inputBorder}
-                textColor={colors.text}
+                searchIcon
                 placeholder="Digite o nome da essência"
-                placeholderTextColor="#c1bccc"
                 value={searchString}
                 onChangeText={(text) => setSearchString(text)}
                 onSubmitEditing={handleSearchMixes}
-              />
-              <Icon
-                name="search"
-                size={28}
-                color="#c1bccc"
-                onPress={handleSearchMixes}
               />
             </InputContainer>
             {mixes.length === 0 ? (

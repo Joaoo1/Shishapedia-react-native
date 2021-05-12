@@ -61,11 +61,7 @@ const Feedback = ({ navigation }) => {
             críticas também serão muito bem-vindas.
           </Description>
           <Input
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
             placeholder="Escreva aqui sua mensagem"
-            placeholderTextColor="#c1bccc"
             multiline
             value={message}
             onChangeText={(text) => setMessage(text)}

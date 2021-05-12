@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { SafeAreaView, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
+import MyInput from '../../components/Input';
 import { metrics, fonts } from '../../styles';
 
 const paddingHorizontal = metrics.screenHorizontalPadding;
@@ -12,17 +13,9 @@ const Container = styled(SafeAreaView)`
   flex: 1;
 `;
 
-const Input = styled(TextInput)`
+const Input = styled(MyInput)`
   height: 250px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.regular};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  border-width: 1px;
-  border-color: ${({ borderColor }) => borderColor};
-  padding: ${() => '10px 16px 0 16px'};
-  margin: 15px 0 20px 0;
-  color: ${({ textColor }) => textColor};
+  padding-top: 10px;
 `;
 
 const Description = styled.Text`

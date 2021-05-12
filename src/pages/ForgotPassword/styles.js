@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ScrollView, TextInput } from 'react-native';
+import { ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import { metrics, fonts } from '../../styles';
@@ -10,19 +10,6 @@ const Container = styled(ScrollView)`
   background-color: ${({ backgroundColor }) => backgroundColor};
   padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
   flex: 1;
-`;
-
-const Input = styled(TextInput)`
-  height: ${() => `${metrics.inputHeight}px`};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.regular};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  border-width: 1px;
-  border-color: ${({ borderColor }) => borderColor};
-  padding: ${() => '0 16px 0 16px'};
-  margin-top: 20px;
-  color: ${({ textColor }) => textColor};
 `;
 
 const Button = styled(RectButton)`
@@ -49,4 +36,4 @@ const Text = styled.Text`
   margin-top: 10px;
 `;
 
-export { Container, Input, Button, ButtonText, Text };
+export { Container, Button, ButtonText, Text };

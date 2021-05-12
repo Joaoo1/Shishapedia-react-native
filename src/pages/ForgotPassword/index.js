@@ -5,9 +5,10 @@ import crashlytics from '@react-native-firebase/crashlytics';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
 import PageHeader from '../../components/SavePageHeader';
+import Input from '../../components/Input';
 import api from '../../services/api';
 
-import { Container, Input, Button, ButtonText, Text } from './styles';
+import { Container, Button, ButtonText, Text } from './styles';
 import { useTheme } from '../../hooks/theme';
 
 const ForgotPassword = () => {
@@ -60,11 +61,7 @@ const ForgotPassword = () => {
           senha.
         </Text>
         <Input
-          backgroundColor={colors.inputBackground}
-          borderColor={colors.inputBorder}
-          textColor={colors.text}
           placeholder="E-mail"
-          placeholderTextColor="#c1bccc"
           onChangeText={(text) => setEmail(text)}
           value={email}
           onSubmitEditing={handleButtonPress}

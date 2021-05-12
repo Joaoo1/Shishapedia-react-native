@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { View, ToastAndroid } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/SavePageHeader';
@@ -16,7 +15,6 @@ import {
   HeaderContainer,
   LogoContainer,
   HeaderText,
-  Input,
   Button,
   ButtonText,
   Description,

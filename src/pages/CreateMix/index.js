@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { ScrollView, ToastAndroid } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import SavePageHeader from '../../components/SavePageHeader';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/FormInput';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import { useTheme } from '../../hooks/theme';
@@ -12,8 +13,6 @@ import { useTheme } from '../../hooks/theme';
 import { fonts, metrics } from '../../styles';
 import {
   Form,
-  Input,
-  InputContainer,
   InputCategory,
   DropDownPicker,
   InputLabel,
@@ -22,9 +21,9 @@ import {
 } from './styles';
 
 const CreateMix = () => {
-  const navigation = useNavigation();
   const { user } = useAuth();
   const { colors } = useTheme();
+  const navigation = useNavigation();
 
   const form = useRef(null);
 
@@ -88,10 +87,9 @@ const CreateMix = () => {
       {isLoading && <LoadingIndicator isAnimating={isLoading} />}
 
       <SavePageHeader
-        navigation={navigation}
         title="Indique um mix"
-        onSave={handleSaveButtonPress}
         saveButtonText="ENVIAR"
+        onSave={handleSaveButtonPress}
       />
       <ScrollView>
         {!user && (
@@ -101,85 +99,45 @@ const CreateMix = () => {
           </WarningText>
         )}
         <Form onSubmit={handleFormSubmit} ref={form}>
-          <InputContainer>
-            <InputLabel color={colors.text}>Nome da essência 1</InputLabel>
-            <Input
-              name="essence1Name"
-              placeholder="Digite o nome da essência 1"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              textColor={colors.text}
-            />
-          </InputContainer>
-          <InputContainer>
-            <InputLabel color={colors.text}>Marca da essência 1</InputLabel>
-            <Input
-              name="essence1Brand"
-              placeholder="Digite a marca da essência 1"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              textColor={colors.text}
-            />
-          </InputContainer>
-          <InputContainer>
-            <InputLabel color={colors.text}>
-              Proporção da essência 1 (em %)
-            </InputLabel>
-            <Input
-              name="essence1Proportion"
-              placeholder="Digite a proporção da essência 1"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              keyboardType="numeric"
-              textColor={colors.text}
-            />
-          </InputContainer>
-          <InputContainer>
-            <InputLabel color={colors.text}>Nome da essência 2</InputLabel>
-            <Input
-              name="essence2Name"
-              placeholder="Digite o nome da essência 2"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              textColor={colors.text}
-            />
-          </InputContainer>
-          <InputContainer>
-            <InputLabel color={colors.text}>Marca da essência 2</InputLabel>
-            <Input
-              name="essence2Brand"
-              placeholder="Digite a marca da essência 2"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              textColor={colors.text}
-            />
-          </InputContainer>
-          <InputContainer>
-            <InputLabel color={colors.text}>
-              Proporção da essência 2 (em %)
-            </InputLabel>
-            <Input
-              name="essence2Proportion"
-              placeholder="Digite a proporção da essência 2"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              keyboardType="numeric"
-              textColor={colors.text}
-            />
-          </InputContainer>
-          <InputContainer>
-            <InputLabel color={colors.text}>Descrição</InputLabel>
-            <DescriptionInput
-              name="description"
-              placeholder="Digite a descrição desse bellisímo mix (Opcional)"
-              backgroundColor={colors.inputBackground}
-              borderColor={colors.inputBorder}
-              multiline
-              style={{ textAlignVertical: 'top' }}
-              textColor={colors.text}
-            />
-          </InputContainer>
-
+          <Input
+            label="Nome da essência 1"
+            name="essence1Name"
+            placeholder="Digite o nome da essência 1"
+          />
+          <Input
+            label="Marca da essência 1"
+            name="essence1Brand"
+            placeholder="Digite a marca da essência 1"
+          />
+          <Input
+            label=" Proporção da essência 1 (em %)"
+            name="essence1Proportion"
+            placeholder="Digite a proporção da essência 1"
+            keyboardType="numeric"
+          />
+          <Input
+            label="Nome da essência 2"
+            name="essence2Name"
+            placeholder="Digite o nome da essência 2"
+          />
+          <Input
+            label="Marca da essência 2"
+            name="essence2Brand"
+            placeholder="Digite a marca da essência 2"
+          />
+          <Input
+            label="Proporção da essência 2 (em %)"
+            name="essence2Proportion"
+            placeholder="Digite a proporção da essência 2"
+            keyboardType="numeric"
+          />
+          <DescriptionInput
+            label="Descrição"
+            name="description"
+            placeholder="Digite a descrição desse bellisímo mix (Opcional)"
+            multiline
+            style={{ textAlignVertical: 'top' }}
+          />
           <InputCategory>
             <InputLabel color={colors.text}>Categoria do mix</InputLabel>
             <DropDownPicker
@@ -199,8 +157,8 @@ const CreateMix = () => {
                 fontSize: fonts.regularSize,
               }}
               itemStyle={{ paddingBottom: 0, marginBottom: 3 }}
-              backgroundColor={colors.inputBackground}
               onChangeItem={(item) => setSelectedCategory(item.value)}
+              backgroundColor={colors.inputBackground}
             />
           </InputCategory>
         </Form>

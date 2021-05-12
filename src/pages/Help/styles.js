@@ -1,6 +1,8 @@
 import { SafeAreaView, ScrollView as Scroll } from 'react-native';
-import { RectButton, TextInput } from 'react-native-gesture-handler';
+import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components';
+
+import MyInput from '../../components/Input';
 
 import { fonts, metrics } from '../../styles';
 
@@ -34,17 +36,9 @@ const HeaderText = styled.Text`
   color: ${({ color }) => color};
 `;
 
-const Input = styled(TextInput)`
+const Input = styled(MyInput)`
   height: 200px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.regular};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  border-width: 1px;
-  border-color: ${({ borderColor }) => borderColor};
-  padding: ${() => '10px 16px 0 16px'};
-  margin: 15px 0 20px 0;
-  color: ${({ textColor }) => textColor};
+  padding-top: 10px;
 `;
 
 const Button = styled(RectButton)`

@@ -8,6 +8,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/SavePageHeader';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/Input';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 import { useTheme } from '../../hooks/theme';
@@ -17,7 +18,6 @@ import {
   HeaderContainer,
   HeaderButton,
   TextButton,
-  Input,
   Divider,
   DeleteUserText,
 } from './styles';
@@ -151,22 +151,12 @@ const Profile = ({ navigation }) => {
           </HeaderButton>
         </HeaderContainer>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            name="name"
-            placeholder="Digite seu nome"
-            label="Nome"
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
-          />
+          <Input name="name" placeholder="Digite seu nome" label="Nome" />
           <Input
             name="email"
             placeholder="Digite um email"
             editable={!isOAuth}
             label="E-mail"
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
           />
           <Divider color={colors.divider} />
           <Input
@@ -175,9 +165,6 @@ const Profile = ({ navigation }) => {
             editable={!isOAuth}
             onSubmitEditing={() => passwordInputRef.current.focus()}
             label="Senha antiga"
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
           />
           <Input
             name="password"
@@ -185,18 +172,12 @@ const Profile = ({ navigation }) => {
             editable={!isOAuth}
             onSubmitEditing={() => confirmPasswordInputRef.current.focus()}
             label="Nova senha"
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
           />
           <Input
             name="confirm_password"
             placeholder="Confirme a nova senha"
             editable={!isOAuth}
             label="Confirmar senha"
-            backgroundColor={colors.inputBackground}
-            borderColor={colors.inputBorder}
-            textColor={colors.text}
           />
           <View onTouchStart={handleDeleteUserPress}>
             <DeleteUserText>Excluir usuário</DeleteUserText>
