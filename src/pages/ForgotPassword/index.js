@@ -8,7 +8,7 @@ import PageHeader from '../../components/SavePageHeader';
 import Input from '../../components/Input';
 import api from '../../services/api';
 
-import { Container, Button, ButtonText, Text } from './styles';
+import { Container, Button, Text } from './styles';
 import { useTheme } from '../../hooks/theme';
 
 const ForgotPassword = () => {
@@ -70,9 +70,8 @@ const ForgotPassword = () => {
         <Button
           backgroundColor={colors.buttonBackground}
           onPress={handleButtonPress}
-        >
-          <ButtonText color={colors.buttonText}>Resetar senha</ButtonText>
-        </Button>
+          text="Resetar senha"
+        />
       </Container>
     </>
   );

@@ -67,12 +67,7 @@ const CreateUser = () => {
             onSubmitEditing={() => form.current.submitForm()}
           />
 
-          <Button
-            backgroundColor={colors.buttonBackground}
-            onPress={handleFormSubmit}
-          >
-            <ButtonText color={colors.buttonText}>Criar</ButtonText>
-          </Button>
+          <Button text="Criar" onPress={handleFormSubmit} />
         </Form>
       </Container>
     </>

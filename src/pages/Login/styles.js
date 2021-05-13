@@ -1,6 +1,7 @@
 import { SafeAreaView } from 'react-native';
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components';
+import MyButton from '../../components/Button';
 
 import { fonts, metrics } from '../../styles';
 
@@ -20,21 +21,8 @@ const Headline = styled.Text`
   text-align: center;
 `;
 
-const Button = styled(RectButton)`
-  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  width: 100%;
-  height: ${() => `${metrics.inputHeight}px`};
-  align-items: center;
-  justify-content: center;
+const Button = styled(MyButton)`
   margin-top: 20px;
-`;
-
-const ButtonText = styled.Text`
-  font-family: ${() => fonts.bold};
-  font-size: ${() => `${fonts.inputSize}px`};
-  color: ${({ color }) => color};
 `;
 
 const BaseSocialButton = styled(RectButton)`
@@ -117,7 +105,6 @@ export {
   Container,
   Headline,
   Button,
-  ButtonText,
   GoogleButton,
   GoogleButtonText,
   FacebookButton,

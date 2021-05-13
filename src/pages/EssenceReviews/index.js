@@ -192,12 +192,10 @@ const EssenceReviews = ({ route }) => {
                 </StarContainer>
               </StarsContainer>
               <Button
-                backgroundColor={colors.buttonBackground}
+                text="Publicar"
                 onPress={onSubmitButtonPress}
                 enabled={!!user}
-              >
-                <ButtonText color={colors.buttonText}>Publicar</ButtonText>
-              </Button>
+              />
             </MakeReviewFooter>
           </View>
           <View>

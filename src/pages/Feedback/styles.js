@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { SafeAreaView } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
 
 import MyInput from '../../components/Input';
 import { metrics, fonts } from '../../styles';
+import MyButton from '../../components/Button';
 
 const paddingHorizontal = metrics.screenHorizontalPadding;
 
@@ -25,21 +25,8 @@ const Description = styled.Text`
   text-align: justify;
 `;
 
-const Button = styled(RectButton)`
-  padding: ${() => `0px ${paddingHorizontal}px 0px ${paddingHorizontal}px`};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  width: 100%;
-  height: ${() => `${metrics.inputHeight}px`};
-  align-items: center;
-  justify-content: center;
+const Button = styled(MyButton)`
   margin-top: 20px;
-`;
-
-const ButtonText = styled.Text`
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.bold};
-  color: ${({ color }) => color};
 `;
 
 const FooterContainer = styled.View`
@@ -56,12 +43,4 @@ const FooterText = styled.Text`
   color: ${({ color }) => color};
 `;
 
-export {
-  Container,
-  Input,
-  Description,
-  Button,
-  ButtonText,
-  FooterContainer,
-  FooterText,
-};
+export { Container, Input, Description, Button, FooterContainer, FooterText };

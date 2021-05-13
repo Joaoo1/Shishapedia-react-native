@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 import PageHeader from '../../components/SavePageHeader';
@@ -16,8 +16,7 @@ import {
   LogoContainer,
   HeaderText,
   Button,
-  ButtonText,
-  Description,
+  Input,
 } from './styles';
 
 const Help = ({ navigation }) => {
@@ -59,42 +58,27 @@ const Help = ({ navigation }) => {
       <PageHeader title="Ajuda" navigation={navigation} />
       <Container>
         <ScrollView>
-          <View>
-            <HeaderContainer>
-              <LogoContainer backgroundColor={colors.primaryColor}>
-                <Logo />
-              </LogoContainer>
-              <HeaderText color={colors.text}>
-                {
-                  'Shishapedia - O guia do narguileiro \n 1.0.0 \n Desenvolvido por João Vitor da Silva'
-                }
-              </HeaderText>
-            </HeaderContainer>
-            <View>
-              <Description color={colors.text}>
-                Está passando por algum problema ou bug? Deixe uma mensagem
+          <HeaderContainer>
+            <LogoContainer backgroundColor={colors.primaryColor}>
+              <Logo />
+            </LogoContainer>
+            <HeaderText color={colors.text}>
+              {
+                'Shishapedia - O guia do narguileiro \n 1.0.0 \n Desenvolvido por João Vitor da Silva'
+              }
+            </HeaderText>
+          </HeaderContainer>
+          <Input
+            style={{ textAlignVertical: 'top' }}
+            placeholder="Escreva aqui sua mensagem"
+            label="Está passando por algum problema ou bug? Deixe uma mensagem
                 descrevendo qual o problema e se necessário, entraremos em
-                contato.
-              </Description>
-              <Input
-                backgroundColor={colors.inputBackground}
-                borderColor={colors.inputBorder}
-                textColor={colors.text}
-                style={{ textAlignVertical: 'top' }}
-                placeholder="Escreva aqui sua mensagem"
-                placeholderTextColor="#c1bccc"
-                multiline
-                value={message}
-                onChangeText={(text) => setMessage(text)}
-              />
-              <Button
-                backgroundColor={colors.buttonBackground}
-                onPress={handleSubmitFeedbackPress}
-              >
-                <ButtonText color={colors.buttonText}>Enviar</ButtonText>
-              </Button>
-            </View>
-          </View>
+                contato."
+            multiline
+            value={message}
+            onChangeText={(text) => setMessage(text)}
+          />
+          <Button onPress={handleSubmitFeedbackPress} text="Enviar" />
         </ScrollView>
       </Container>
     </>

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Image as RNImage, ScrollView } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
 
 import MyInput from '../../components/Input';
 
 import { fonts, metrics } from '../../styles';
+import MyButton from '../../components/Button';
 
 const paddingHorizontal = metrics.screenHorizontalPadding;
 
@@ -109,24 +109,10 @@ const ReviewDate = styled.Text`
   margin-left: 10px;
 `;
 
-const Button = styled(RectButton)`
-  padding: 20px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border-radius: ${() => `${metrics.inputBorderRadius}px`};
-  width: 100%;
-  height: ${() => `${metrics.inputHeight}px`};
-  align-items: center;
-  justify-content: center;
+const Button = styled(MyButton)`
   margin-left: 15px;
   flex: 1;
 `;
-
-const ButtonText = styled.Text`
-  font-size: ${() => `${fonts.inputSize}px`};
-  font-family: ${() => fonts.bold};
-  color: ${({ color }) => color};
-`;
-
 const NotFound = styled.Text`
   font-size: ${() => `${fonts.bigSize}px`};
   font-family: ${() => fonts.regular};
@@ -147,7 +133,6 @@ export {
   ReviewsContainer,
   Input,
   Button,
-  ButtonText,
   Divider,
   HeaderText,
   Image,

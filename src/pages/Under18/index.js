@@ -6,7 +6,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 
 import { useTheme } from '../../hooks/theme';
 
-import { Container, Button, ButtonText, Title, Headline, Text } from './styles';
+import { Container, Button, Title, Headline, Text } from './styles';
 
 const Under18 = () => {
   const navigation = useNavigation();
@@ -63,12 +63,8 @@ const Under18 = () => {
         <Headline color={colors.whiteText}>
           Você possui mais de 18 anos?
         </Headline>
-        <Button backgroundColor={colors.buttonBackground} onPress={onYesPress}>
-          <ButtonText color={colors.whiteText}>SIM</ButtonText>
-        </Button>
-        <Button backgroundColor={colors.buttonBackground} onPress={onNoPress}>
-          <ButtonText color={colors.buttonText}>NÃO</ButtonText>
-        </Button>
+        <Button text="SIM" onPress={onYesPress} />
+        <Button text="NÃO" onPress={onNoPress} />
         <Text color={colors.whiteText}>
           AVISO: Tabaco contém nicotina. Fumar é prejudicial a saúde e pode
           causar dependência. Aplicativo PROIBIDO PARA MENORES DE 18 ANOS.

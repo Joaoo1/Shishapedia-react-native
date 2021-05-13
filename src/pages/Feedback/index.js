@@ -13,7 +13,6 @@ import {
   Input,
   Description,
   Button,
-  ButtonText,
   FooterContainer,
   FooterText,
 } from './styles';
@@ -54,26 +53,19 @@ const Feedback = ({ navigation }) => {
 
       <PageHeader title="Feedback" navigation={navigation} />
       <Container>
-        <View>
-          <Description color={colors.text}>
-            Tem alguma sugestão ou ideia sensacional para o aplicativo ?
-            Compartilhe-a conosco, nós também queremos saber! Reclamações e
-            críticas também serão muito bem-vindas.
-          </Description>
-          <Input
-            placeholder="Escreva aqui sua mensagem"
-            multiline
-            value={message}
-            onChangeText={(text) => setMessage(text)}
-            style={{ textAlignVertical: 'top' }}
-          />
-          <Button
-            backgroundColor={colors.buttonBackground}
-            onPress={handleSubmitFeedbackPress}
-          >
-            <ButtonText color={colors.buttonText}>Enviar</ButtonText>
-          </Button>
-        </View>
+        <Description color={colors.text}>
+          Tem alguma sugestão ou ideia sensacional para o aplicativo ?
+          Compartilhe-a conosco, nós também queremos saber! Reclamações e
+          críticas também serão muito bem-vindas.
+        </Description>
+        <Input
+          placeholder="Escreva aqui sua mensagem"
+          multiline
+          value={message}
+          onChangeText={(text) => setMessage(text)}
+          style={{ textAlignVertical: 'top' }}
+        />
+        <Button text="Enviar" onPress={handleSubmitFeedbackPress} />
         <FooterContainer>
           <FooterText color={colors.text}>
             Caso prefira, pode enviar um email para shishapedia@outlook.com

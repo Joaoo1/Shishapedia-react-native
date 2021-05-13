@@ -16,7 +16,6 @@ import {
   Container,
   Headline,
   Button,
-  ButtonText,
   GoogleButton,
   GoogleButtonText,
   FacebookButton,
@@ -167,12 +166,7 @@ const Login = () => {
           >
             Esqueceu sua senha?
           </ForgotPasswordText>
-          <Button
-            backgroundColor={colors.buttonBackground}
-            onPress={handleEmailButtonPress}
-          >
-            <ButtonText color={colors.buttonText}>Entrar</ButtonText>
-          </Button>
+          <Button text="Entrar" onPress={handleEmailButtonPress} />
 
           <CreateAccountText
             color={colors.whiteText}
